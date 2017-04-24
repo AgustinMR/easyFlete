@@ -33,7 +33,7 @@ public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -72,8 +72,15 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public Solicitud(Integer id, BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax) {
-        this.id = id;
+    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax) {
+        this.latitudOrigen = latitudOrigen;
+        this.longitudOrigen = longitudOrigen;
+        this.latitudDestino = latitudDestino;
+        this.longitudDestino = longitudDestino;
+        this.precioMax = precioMax;
+    }
+    
+    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;

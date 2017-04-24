@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -48,6 +50,12 @@ public class SolicitudCliente implements Serializable {
     public SolicitudCliente(Integer solicitudId, Date fecha) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
+    }
+    
+    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente email) {
+        this.solicitudId = solicitudId;
+        this.fecha = fecha;
+        this.clienteEmail = email;
     }
 
     public Integer getSolicitudId() {
