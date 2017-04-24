@@ -7,6 +7,8 @@ import com.grupo15.easyflete.SolicitudCliente;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class BLSolicitud implements IBLSolicitud {
@@ -20,18 +22,31 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, int cliId) {
+    public boolean addSolicitud(double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
+        System.out.println(latOrigen);
         BigInteger latOrigenBI = new BigDecimal(latOrigen).toBigInteger();
+        System.out.println(latOrigenBI);
         BigInteger lonOrigenBI = new BigDecimal(lonOrigen).toBigInteger();
         BigInteger latDestinoBI = new BigDecimal(latDestino).toBigInteger();
         BigInteger lonDestinoBI = new BigDecimal(lonDestino).toBigInteger();
         Solicitud s = new Solicitud(latOrigenBI, lonOrigenBI, latDestinoBI, lonDestinoBI, precioMax, peso, volumen, descripcion);
+        //Calendar calendar = new GregorianCalendar(2013,01,31);
+        //System.out.println(calendar.toString());
+        System.out.println(
+                "latOri: "+ s.getLatitudDestino() + 
+                "\nlonOri: " + s.getLongitudOrigen()+
+                "\nlatDes: " + s.getLatitudDestino()+
+                "\nlonDes: " + s.getLongitudDestino()+
+                "\nprecioMax: " + s.getPrecioMax() +
+                "\npeso: " + s.getPeso()+
+                "\nvol: " + s.getVolumen()+
+                "\ndesc: " + s.getDescripcion());
         boolean ingreso = DLsol.addSolicitud(s);
-        if(ingreso){
-            System.out.println(Date.valueOf(fecha));
+        /*if(ingreso){
+            
             Cliente cli = BLusu.getCliente(cliId);
-            //SolicitudCliente solCli = new SolicitudCliente(s.getId(), fecha, cli);
-        }
+            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar, cli);
+        }*/
         return true;
     }
 
