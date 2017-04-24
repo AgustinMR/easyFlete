@@ -26,35 +26,35 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public boolean updateFletero(int id, String nombre, String password, String email, String telefono) {
+    public boolean updateFletero(String nombre, String password, String email, String telefono) {
         Fletero f = new Fletero(email, nombre, password, telefono);
         return DLusu.updateUsuario(f);
     }
 
     @Override
-    public boolean updateCliente(int id, String nombre, String password, String email, String telefono) {
+    public boolean updateCliente(String nombre, String password, String email, String telefono) {
         Cliente c = new Cliente(email, nombre, telefono, password);
         return DLusu.updateUsuario(c);
     }
 
     @Override
-    public boolean deleteFletero(int id) {
-        return DLusu.deleteFletero(id);
+    public boolean deleteFletero(String email) {
+        return DLusu.deleteFletero(email);
     }
 
     @Override
-    public boolean deleteCliente(int id) {
-        return DLusu.deleteCliente(id);
+    public boolean deleteCliente(String email) {
+        return DLusu.deleteCliente(email);
     }
 
     @Override
-    public Fletero getFletero(int id) {
-        return DLusu.getFletero(id);
+    public Fletero getFletero(String email) {
+        return DLusu.getFletero(email);
     }
 
     @Override
-    public Cliente getCliente(int id) {
-        return DLusu.getCliente(id);
+    public Cliente getCliente(String email) {
+        return DLusu.getCliente(email);
     }
 
     @Override

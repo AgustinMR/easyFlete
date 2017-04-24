@@ -23,20 +23,20 @@ public class ClienteController implements ISLCliente {
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public boolean updateCliente(@RequestParam(name = "id") int id, @RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email,@RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
-        return new BLUsuario().updateCliente(id, nombre, password, email, telefono);
+    public boolean updateCliente(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email,@RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
+        return new BLUsuario().updateCliente(nombre, password, email, telefono);
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean deleteCliente(@PathVariable(name = "id") int id) {
-        return new BLUsuario().deleteCliente(id);
+    @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
+    public boolean deleteCliente(@PathVariable(name = "email") String email) {
+        return new BLUsuario().deleteCliente(email);
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Cliente getCliente(@PathVariable(name = "id") int id) {
-        return new BLUsuario().getCliente(id);
+    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
+    public Cliente getCliente(@PathVariable(name = "email") String email) {
+        return new BLUsuario().getCliente(email);
     }
 
     @Override

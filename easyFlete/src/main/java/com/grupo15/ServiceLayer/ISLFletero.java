@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface ISLFletero {
     public boolean addFletero(String nombre, String email, String password, String telefono);
-    public boolean updateFletero(int id, String nombre, String email, String password, String telefono);
-    public boolean deleteFletero(int id);
-    public Fletero getFletero(int id);
+    public boolean updateFletero(String nombre, String email, String password, String telefono);
+    public boolean deleteFletero(String email);
+    public Fletero getFletero(String email);
     public List<Fletero> getAllFleteros();
 }
