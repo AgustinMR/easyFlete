@@ -1,7 +1,6 @@
 package com.grupo15.easyflete;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,19 +28,19 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "latitud_origen")
-    private BigInteger latitudOrigen;
+    private double latitudOrigen;
     @Basic(optional = false)
     @NotNull
     @Column(name = "longitud_origen")
-    private BigInteger longitudOrigen;
+    private double longitudOrigen;
     @Basic(optional = false)
     @NotNull
     @Column(name = "latitud_destino")
-    private BigInteger latitudDestino;
+    private double latitudDestino;
     @Basic(optional = false)
     @NotNull
     @Column(name = "longitud_destino")
-    private BigInteger longitudDestino;
+    private double longitudDestino;
     @Column(name = "peso")
     private Integer peso;
     @Column(name = "volumen")
@@ -61,7 +60,7 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax) {
+    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;
@@ -69,7 +68,7 @@ public class Solicitud implements Serializable {
         this.precioMax = precioMax;
     }
 
-    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
+    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;
@@ -88,35 +87,35 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getLatitudOrigen() {
+    public double getLatitudOrigen() {
         return latitudOrigen;
     }
 
-    public void setLatitudOrigen(BigInteger latitudOrigen) {
+    public void setLatitudOrigen(double latitudOrigen) {
         this.latitudOrigen = latitudOrigen;
     }
 
-    public BigInteger getLongitudOrigen() {
+    public double getLongitudOrigen() {
         return longitudOrigen;
     }
 
-    public void setLongitudOrigen(BigInteger longitudOrigen) {
+    public void setLongitudOrigen(double longitudOrigen) {
         this.longitudOrigen = longitudOrigen;
     }
 
-    public BigInteger getLatitudDestino() {
+    public double getLatitudDestino() {
         return latitudDestino;
     }
 
-    public void setLatitudDestino(BigInteger latitudDestino) {
+    public void setLatitudDestino(double latitudDestino) {
         this.latitudDestino = latitudDestino;
     }
 
-    public BigInteger getLongitudDestino() {
+    public double getLongitudDestino() {
         return longitudDestino;
     }
 
-    public void setLongitudDestino(BigInteger longitudDestino) {
+    public void setLongitudDestino(double longitudDestino) {
         this.longitudDestino = longitudDestino;
     }
 

@@ -4,15 +4,12 @@ import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class BLSolicitud implements IBLSolicitud {
-    
+
     private static DALSolicitud DLsol = null;
     private static BLUsuario BLusu = null;
 
@@ -23,30 +20,15 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean addSolicitud(double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
-        System.out.println(latOrigen);
-        BigInteger latOrigenBI = new BigDecimal(latOrigen).toBigInteger();
-        System.out.println(latOrigenBI);
-        BigInteger lonOrigenBI = new BigDecimal(lonOrigen).toBigInteger();
-        BigInteger latDestinoBI = new BigDecimal(latDestino).toBigInteger();
-        BigInteger lonDestinoBI = new BigDecimal(lonDestino).toBigInteger();
-        Solicitud s = new Solicitud(latOrigenBI, lonOrigenBI, latDestinoBI, lonDestinoBI, precioMax, peso, volumen, descripcion);
-        //Calendar calendar = new GregorianCalendar(2013,01,31);
-        //System.out.println(calendar.toString());
-        System.out.println(
-                "latOri: "+ s.getLatitudDestino() + 
-                "\nlonOri: " + s.getLongitudOrigen()+
-                "\nlatDes: " + s.getLatitudDestino()+
-                "\nlonDes: " + s.getLongitudDestino()+
-                "\nprecioMax: " + s.getPrecioMax() +
-                "\npeso: " + s.getPeso()+
-                "\nvol: " + s.getVolumen()+
-                "\ndesc: " + s.getDescripcion());
+        Solicitud s = new Solicitud(latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);  
         boolean ingreso = DLsol.addSolicitud(s);
-        /*if(ingreso){
-            
-            Cliente cli = BLusu.getCliente(cliId);
-            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar, cli);
-        }*/
+        if(ingreso){
+            Calendar calendar = new GregorianCalendar(2015,5,5);
+            Cliente cli = BLusu.getCliente(email);
+            System.out.println(calendar.getTime());
+            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli);
+            DLsol.addSolicitudCliente(solCli);
+        }
         return true;
     }
 
@@ -69,5 +51,5 @@ public class BLSolicitud implements IBLSolicitud {
     public List<Solicitud> getAllSolicitudes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

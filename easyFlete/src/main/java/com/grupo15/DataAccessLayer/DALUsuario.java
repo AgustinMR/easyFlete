@@ -49,20 +49,20 @@ public class DALUsuario implements IUsuario{
     }
 
     @Override
-    public boolean deleteCliente(int id) {
+    public boolean deleteCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
         em.getTransaction().begin();
-        Cliente c = em.find(Cliente.class, id);
+        Cliente c = em.find(Cliente.class, email);
         em.remove(c);
         em.getTransaction().commit();
         return true;
     }
     
     @Override
-    public boolean deleteFletero(int id) {
+    public boolean deleteFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
         em.getTransaction().begin();
-        Fletero f = em.find(Fletero.class, id);
+        Fletero f = em.find(Fletero.class, email);
         em.remove(f);
         em.getTransaction().commit();
         return true;
@@ -70,17 +70,17 @@ public class DALUsuario implements IUsuario{
 
 
     @Override
-    public Fletero getFletero(int id) {
+    public Fletero getFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
-        Fletero F =  em.find(Fletero.class, id);
+        Fletero F =  em.find(Fletero.class, email);
         em.close();
         return F;
     }
 
     @Override
-    public Cliente getCliente(int id) {
+    public Cliente getCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
-        Cliente C =  em.find(Cliente.class, id);
+        Cliente C =  em.find(Cliente.class, email);
         em.close();
         return C;
     }

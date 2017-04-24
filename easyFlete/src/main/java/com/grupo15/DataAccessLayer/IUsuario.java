@@ -10,10 +10,10 @@ public abstract interface IUsuario {
     public abstract boolean addUsuario(Fletero f);
     public abstract boolean updateUsuario(Cliente c);
     public abstract boolean updateUsuario(Fletero f);
-    public abstract boolean deleteCliente(int id);
-    public abstract boolean deleteFletero(int id);
-    public abstract Fletero getFletero(int id);
-    public abstract Cliente getCliente(int id);
+    public abstract boolean deleteCliente(String email);
+    public abstract boolean deleteFletero(String email);
+    public abstract Fletero getFletero(String email);
+    public abstract Cliente getCliente(String email);
     public abstract List<Fletero> getAllFleteros();
     public abstract List<Cliente> getAllClientes();
 }
