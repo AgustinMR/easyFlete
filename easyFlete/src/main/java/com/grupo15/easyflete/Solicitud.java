@@ -18,22 +18,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "solicitudes")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")
-    , @NamedQuery(name = "Solicitud.findById", query = "SELECT s FROM Solicitud s WHERE s.id = :id")
-    , @NamedQuery(name = "Solicitud.findByLatitudOrigen", query = "SELECT s FROM Solicitud s WHERE s.latitudOrigen = :latitudOrigen")
-    , @NamedQuery(name = "Solicitud.findByLongitudOrigen", query = "SELECT s FROM Solicitud s WHERE s.longitudOrigen = :longitudOrigen")
-    , @NamedQuery(name = "Solicitud.findByLatitudDestino", query = "SELECT s FROM Solicitud s WHERE s.latitudDestino = :latitudDestino")
-    , @NamedQuery(name = "Solicitud.findByLongitudDestino", query = "SELECT s FROM Solicitud s WHERE s.longitudDestino = :longitudDestino")
-    , @NamedQuery(name = "Solicitud.findByPeso", query = "SELECT s FROM Solicitud s WHERE s.peso = :peso")
-    , @NamedQuery(name = "Solicitud.findByVolumen", query = "SELECT s FROM Solicitud s WHERE s.volumen = :volumen")
-    , @NamedQuery(name = "Solicitud.findByPrecioMax", query = "SELECT s FROM Solicitud s WHERE s.precioMax = :precioMax")
-    , @NamedQuery(name = "Solicitud.findByDescripcion", query = "SELECT s FROM Solicitud s WHERE s.descripcion = :descripcion")})
 public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -79,13 +68,16 @@ public class Solicitud implements Serializable {
         this.longitudDestino = longitudDestino;
         this.precioMax = precioMax;
     }
-    
+
     public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
         this.precioMax = precioMax;
+        this.peso = peso;
+        this.volumen = volumen;
+        this.descripcion = descripcion;
     }
 
     public Integer getId() {
@@ -159,5 +151,5 @@ public class Solicitud implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-   
+
 }
