@@ -7,8 +7,6 @@ import com.grupo15.easyflete.SolicitudCliente;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class BLSolicitud implements IBLSolicitud {
@@ -30,9 +28,9 @@ public class BLSolicitud implements IBLSolicitud {
         Solicitud s = new Solicitud(latOrigenBI, lonOrigenBI, latDestinoBI, lonDestinoBI, precioMax, peso, volumen, descripcion);
         boolean ingreso = DLsol.addSolicitud(s);
         if(ingreso){
-            Calendar calendar = new GregorianCalendar(2013,01,31);
+            System.out.println(Date.valueOf(fecha));
             Cliente cli = BLusu.getCliente(cliId);
-            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar, cli);
+            //SolicitudCliente solCli = new SolicitudCliente(s.getId(), fecha, cli);
         }
         return true;
     }
