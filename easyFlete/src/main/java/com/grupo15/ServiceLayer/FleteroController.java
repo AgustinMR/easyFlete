@@ -3,13 +3,16 @@ package com.grupo15.ServiceLayer;
 import com.grupo15.BusinessLogic.BLUsuario;
 import com.grupo15.easyflete.Fletero;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("fleteros")
+@CrossOrigin
+@RestController
+@RequestMapping("fleteros")
 public class FleteroController implements ISLFletero {
     
     @Override
@@ -25,13 +28,13 @@ public class FleteroController implements ISLFletero {
     }
 
     @Override
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public boolean deleteFletero(@PathVariable(name = "id")int id) {
         return new BLUsuario().deleteFletero(id);// corregir lpm
     }
 
     @Override
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Fletero getFletero(@PathVariable(name = "id") int id) {
         return new BLUsuario().getFletero(id);
     }

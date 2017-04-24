@@ -1,4 +1,4 @@
-package com.grupo15.Main;
+package com.grupo15.ServiceLayer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +13,12 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/","/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
+        http.authorizeRequests().antMatchers("/login", "/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
     }
 
     @Autowired
     public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("ochoa").password("ochoa").roles("USER");
+        auth.inMemoryAuthentication().withUser("easyFlete").password("admin").roles("USER");
     }
 
 }
