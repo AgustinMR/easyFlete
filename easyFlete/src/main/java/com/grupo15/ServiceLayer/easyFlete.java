@@ -9,6 +9,7 @@ public class easyFlete {
     
     public static void main(String args[]){
         SpringApplication.run(easyFlete.class, args);
+        new BLUsuario().addCliente("nombre", "pass", "email", "145");
     }
 
 }
