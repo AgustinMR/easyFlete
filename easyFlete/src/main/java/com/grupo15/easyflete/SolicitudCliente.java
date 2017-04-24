@@ -1,7 +1,6 @@
 package com.grupo15.easyflete;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ public class SolicitudCliente implements Serializable {
     @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
+    private java.util.Calendar fecha;
     @JoinColumn(name = "cliente_email", referencedColumnName = "email")
     @ManyToOne(optional = false)
     private Cliente clienteEmail;
@@ -47,12 +46,12 @@ public class SolicitudCliente implements Serializable {
         this.solicitudId = solicitudId;
     }
 
-    public SolicitudCliente(Integer solicitudId, Date fecha) {
+    public SolicitudCliente(Integer solicitudId, java.util.Calendar fecha) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
     }
     
-    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente email) {
+    public SolicitudCliente(Integer solicitudId, java.util.Calendar fecha, Cliente email) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
         this.clienteEmail = email;
@@ -66,11 +65,11 @@ public class SolicitudCliente implements Serializable {
         this.solicitudId = solicitudId;
     }
 
-    public Date getFecha() {
+    public java.util.Calendar getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Calendar fecha) {
         this.fecha = fecha;
     }
 
