@@ -4,13 +4,16 @@ package com.grupo15.ServiceLayer;
 import com.grupo15.BusinessLogic.BLSolicitud;
 import com.grupo15.easyflete.Solicitud;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("solicitudes")
+@RestController
+@CrossOrigin
+@RequestMapping("solicitudes")
 public class SolicitudController implements ISLSolicitud {
 
     @Override
