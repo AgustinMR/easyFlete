@@ -5,7 +5,7 @@ import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
 import java.util.List;
 
-public class BLUsuario implements IBLUsuario{
+public class BLUsuario implements IBLUsuario {
 
     private static DALUsuario DLusu = null;
 
@@ -15,52 +15,56 @@ public class BLUsuario implements IBLUsuario{
 
     @Override
     public boolean addFletero(String nombre, String password, String email, String telefono) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Fletero f = new Fletero(email, nombre, password, telefono);
+        return DLusu.addUsuario(f);
     }
 
     @Override
     public boolean addCliente(String nombre, String password, String email, String telefono) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente c = new Cliente(email, nombre, telefono, password);
+        return DLusu.addUsuario(c);
     }
 
     @Override
     public boolean updateFletero(int id, String nombre, String password, String email, String telefono) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Fletero f = new Fletero(email, nombre, password, telefono);
+        return DLusu.updateUsuario(f);
     }
 
     @Override
     public boolean updateCliente(int id, String nombre, String password, String email, String telefono) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente c = new Cliente(email, nombre, telefono, password);
+        return DLusu.updateUsuario(c);
     }
 
     @Override
     public boolean deleteFletero(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.deleteFletero(id);
     }
 
     @Override
     public boolean deleteCliente(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.deleteCliente(id);
     }
 
     @Override
     public Fletero getFletero(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.getFletero(id);
     }
 
     @Override
     public Cliente getCliente(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.getCliente(id);
     }
 
     @Override
     public List<Fletero> getAllFleteros() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.getAllFleteros();
     }
 
     @Override
     public List<Cliente> getAllClientes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLusu.getAllClientes();
     }
 
 }
