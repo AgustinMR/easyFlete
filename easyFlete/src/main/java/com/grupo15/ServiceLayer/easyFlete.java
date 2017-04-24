@@ -1,4 +1,4 @@
-package com.grupo15.Main;
+package com.grupo15.ServiceLayer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,9 +8,6 @@ public class easyFlete {
     
     public static void main(String args[]){
         SpringApplication.run(easyFlete.class, args);
-        
-        //BLUsuario BLusu = new BLUsuario();
-        //BLusu.addCliente("Bruno", "bruno.carballido@gmail.com","hola","23085099");
     }
 
 }

@@ -8,5 +8,5 @@ public interface ISLCliente {
     public boolean updateCliente(int id, String nombre, String email, String password, String telefono);
     public boolean deleteCliente(int id);
     public Cliente getCliente(int id);
-    public List<Cliente> getAllSolicitudes();
+    public List<Cliente> getAllClientes();
 }

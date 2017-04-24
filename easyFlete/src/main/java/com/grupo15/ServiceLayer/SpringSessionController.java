@@ -1,4 +1,4 @@
-package com.grupo15.Main;
+package com.grupo15.ServiceLayer;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.MapAttributeConfig;
