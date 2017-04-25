@@ -51,17 +51,18 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean deleteSolicitud(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DLsol.deleteSolicitudCliente(id);
+        return DLsol.deleteSolicitud(id);
     }
 
     @Override
     public Solicitud getSolicitud(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLsol.getSolicitud(id);
     }
 
     @Override
     public List<Solicitud> getAllSolicitudes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLsol.getAllSolicitudes();
     }
 
 }

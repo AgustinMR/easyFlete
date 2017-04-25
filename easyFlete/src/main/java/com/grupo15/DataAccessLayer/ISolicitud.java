@@ -12,6 +12,7 @@ public abstract interface ISolicitud {
     public boolean updateSolicitud(int id,double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion);
     public boolean updateSolicitudCliente(int id, Date fecha);
     public boolean deleteSolicitud(int id);
+    public boolean deleteSolicitudCliente(int id);
     public Solicitud getSolicitud(int id);
     public SolicitudCliente getSolicitudCli(int id);
     public List<Solicitud> getAllSolicitudes();

@@ -57,8 +57,18 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public boolean deleteSolicitud(int id) {
         EntityManager em = new EMHandler().entityManager();
-        em.getTransaction().begin();
         Solicitud s = em.find(Solicitud.class, id);
+        em.getTransaction().begin();
+        em.remove(s);
+        em.getTransaction().commit();
+        return true;
+    }
+    
+    @Override
+    public boolean deleteSolicitudCliente(int id) {
+        EntityManager em = new EMHandler().entityManager();
+        SolicitudCliente s = em.find(SolicitudCliente.class, id);
+        em.getTransaction().begin();
         em.remove(s);
         em.getTransaction().commit();
         return true;
