@@ -34,13 +34,18 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
-        SolicitudCliente s = DLsol.getSolicitudCli(id);
-        System.out.println(s.getFecha().toString());
-        if (s.getFecha().toString().equals(fecha)){
-        
+    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax) {
+        SolicitudCliente solCli = DLsol.getSolicitudCli(id);
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(solCli.getFecha());
+
+        String fech[] = fecha.split("/");
+        Calendar cal2 = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));
+
+        if (!cal.getTime().equals(cal2.getTime())) {
+            DLsol.updateSolicitudCliente(id, cal2.getTime());
         }
-        return true;
+        return DLsol.updateSolicitud(id,latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);
     }
 
     @Override
