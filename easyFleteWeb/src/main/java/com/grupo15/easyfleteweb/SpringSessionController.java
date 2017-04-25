@@ -1,4 +1,4 @@
-package com.grupo15.easyflete.frontend;
+package com.grupo15.easyfleteweb;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.MapAttributeConfig;

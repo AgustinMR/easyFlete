@@ -1,4 +1,4 @@
-package com.grupo15.easyflete.frontend;
+package com.grupo15.easyfleteweb;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +15,8 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/", "/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
     }
-    /*
-    @Autowired
+
+    /*@Autowired
     public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(ConfigHandler.getinstance().getUser()).password(ConfigHandler.getinstance().getPass()).roles("USER");
     }*/
