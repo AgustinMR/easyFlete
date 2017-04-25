@@ -1,5 +1,6 @@
 package com.grupo15.BusinessLogic;
 
+import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.DataAccessLayer.DALUsuario;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class BLUsuario implements IBLUsuario {
 
-    private static DALUsuario DLusu = null;
+    private static IUsuario DLusu = null;
 
     public BLUsuario() {
         DLusu = new DALUsuario();

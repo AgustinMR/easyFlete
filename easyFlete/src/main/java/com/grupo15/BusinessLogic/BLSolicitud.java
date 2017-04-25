@@ -1,5 +1,6 @@
 package com.grupo15.BusinessLogic;
 
+import com.grupo15.DataAccessLayer.ISolicitud;
 import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class BLSolicitud implements IBLSolicitud {
 
-    private static DALSolicitud DLsol = null;
-    private static BLUsuario BLusu = null;
+    private static ISolicitud DLsol = null;
+    private static IBLUsuario BLusu = null;
 
     public BLSolicitud() {
         DLsol = new DALSolicitud();
