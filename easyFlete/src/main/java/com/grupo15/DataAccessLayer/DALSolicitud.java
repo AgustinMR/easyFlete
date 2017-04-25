@@ -30,8 +30,8 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public boolean updateSolicitud(int id, double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
         EntityManager em = new EMHandler().entityManager();
+        Solicitud sol = em.find(Solicitud.class, id);
         em.getTransaction().begin();
-        Solicitud sol = this.getSolicitud(id);
         sol.setLatitudOrigen(latitudOrigen);
         sol.setLongitudOrigen(longitudOrigen);
         sol.setLatitudDestino(latitudDestino);
@@ -47,8 +47,9 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public boolean updateSolicitudCliente(int id, Date fecha) {
         EntityManager em = new EMHandler().entityManager();
+        SolicitudCliente solCli = em.find(SolicitudCliente.class, id);
         em.getTransaction().begin();
-        this.getSolicitudCli(id).setFecha(fecha);
+        solCli.setFecha(fecha);
         em.getTransaction().commit();
         return true;
     }
@@ -66,17 +67,13 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public Solicitud getSolicitud(int id) {
         EntityManager em = new EMHandler().entityManager();
-        Solicitud S = em.find(Solicitud.class, id);
-        em.close();
-        return S;
+        return em.find(Solicitud.class, id);
     }
 
     @Override
     public SolicitudCliente getSolicitudCli(int id) {
         EntityManager em = new EMHandler().entityManager();
-        SolicitudCliente S = em.find(SolicitudCliente.class, id);
-        em.close();
-        return S;
+        return em.find(SolicitudCliente.class, id);
     }
 
     @Override
