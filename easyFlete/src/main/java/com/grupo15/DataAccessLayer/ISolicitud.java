@@ -11,6 +11,7 @@ public abstract interface ISolicitud {
     public boolean updateSolicitud(Solicitud s);
     public boolean deleteSolicitud(int id);
     public Solicitud getSolicitud(int id);
+    public SolicitudCliente getSolicitudCli(int id);
     public List<Solicitud> getAllSolicitudes();
     
 }

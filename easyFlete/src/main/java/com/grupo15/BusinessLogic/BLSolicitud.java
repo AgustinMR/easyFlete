@@ -20,21 +20,27 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean addSolicitud(double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
-        Solicitud s = new Solicitud(latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);  
+        Solicitud s = new Solicitud(latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);
         boolean ingreso = DLsol.addSolicitud(s);
-        if(ingreso){
-            Calendar calendar = new GregorianCalendar(2015,5,5);
+        if (ingreso) {
+            String fech[] = fecha.split("/");
+            Calendar calendar = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));
             Cliente cli = BLusu.getCliente(email);
-            System.out.println(calendar.getTime());
+
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli);
-            DLsol.addSolicitudCliente(solCli);
+            return DLsol.addSolicitudCliente(solCli);
         }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
+        SolicitudCliente s = DLsol.getSolicitudCli(id);
+        System.out.println(s.getFecha().toString());
+        if (s.getFecha().toString().equals(fecha)){
+        
+        }
+        return true;
     }
 
     @Override
