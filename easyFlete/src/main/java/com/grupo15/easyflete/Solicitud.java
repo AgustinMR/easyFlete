@@ -1,7 +1,6 @@
 package com.grupo15.easyflete;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,41 +17,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "solicitudes")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")
-    , @NamedQuery(name = "Solicitud.findById", query = "SELECT s FROM Solicitud s WHERE s.id = :id")
-    , @NamedQuery(name = "Solicitud.findByLatitudOrigen", query = "SELECT s FROM Solicitud s WHERE s.latitudOrigen = :latitudOrigen")
-    , @NamedQuery(name = "Solicitud.findByLongitudOrigen", query = "SELECT s FROM Solicitud s WHERE s.longitudOrigen = :longitudOrigen")
-    , @NamedQuery(name = "Solicitud.findByLatitudDestino", query = "SELECT s FROM Solicitud s WHERE s.latitudDestino = :latitudDestino")
-    , @NamedQuery(name = "Solicitud.findByLongitudDestino", query = "SELECT s FROM Solicitud s WHERE s.longitudDestino = :longitudDestino")
-    , @NamedQuery(name = "Solicitud.findByPeso", query = "SELECT s FROM Solicitud s WHERE s.peso = :peso")
-    , @NamedQuery(name = "Solicitud.findByVolumen", query = "SELECT s FROM Solicitud s WHERE s.volumen = :volumen")
-    , @NamedQuery(name = "Solicitud.findByPrecioMax", query = "SELECT s FROM Solicitud s WHERE s.precioMax = :precioMax")
-    , @NamedQuery(name = "Solicitud.findByDescripcion", query = "SELECT s FROM Solicitud s WHERE s.descripcion = :descripcion")})
 public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "latitud_origen")
-    private BigInteger latitudOrigen;
+    private double latitudOrigen;
     @Basic(optional = false)
     @NotNull
     @Column(name = "longitud_origen")
-    private BigInteger longitudOrigen;
+    private double longitudOrigen;
     @Basic(optional = false)
     @NotNull
     @Column(name = "latitud_destino")
-    private BigInteger latitudDestino;
+    private double latitudDestino;
     @Basic(optional = false)
     @NotNull
     @Column(name = "longitud_destino")
-    private BigInteger longitudDestino;
+    private double longitudDestino;
     @Column(name = "peso")
     private Integer peso;
     @Column(name = "volumen")
@@ -72,20 +60,23 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax) {
+    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
         this.precioMax = precioMax;
     }
-    
-    public Solicitud(BigInteger latitudOrigen, BigInteger longitudOrigen, BigInteger latitudDestino, BigInteger longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
+
+    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
         this.latitudOrigen = latitudOrigen;
         this.longitudOrigen = longitudOrigen;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
         this.precioMax = precioMax;
+        this.peso = peso;
+        this.volumen = volumen;
+        this.descripcion = descripcion;
     }
 
     public Integer getId() {
@@ -96,35 +87,35 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getLatitudOrigen() {
+    public double getLatitudOrigen() {
         return latitudOrigen;
     }
 
-    public void setLatitudOrigen(BigInteger latitudOrigen) {
+    public void setLatitudOrigen(double latitudOrigen) {
         this.latitudOrigen = latitudOrigen;
     }
 
-    public BigInteger getLongitudOrigen() {
+    public double getLongitudOrigen() {
         return longitudOrigen;
     }
 
-    public void setLongitudOrigen(BigInteger longitudOrigen) {
+    public void setLongitudOrigen(double longitudOrigen) {
         this.longitudOrigen = longitudOrigen;
     }
 
-    public BigInteger getLatitudDestino() {
+    public double getLatitudDestino() {
         return latitudDestino;
     }
 
-    public void setLatitudDestino(BigInteger latitudDestino) {
+    public void setLatitudDestino(double latitudDestino) {
         this.latitudDestino = latitudDestino;
     }
 
-    public BigInteger getLongitudDestino() {
+    public double getLongitudDestino() {
         return longitudDestino;
     }
 
-    public void setLongitudDestino(BigInteger longitudDestino) {
+    public void setLongitudDestino(double longitudDestino) {
         this.longitudDestino = longitudDestino;
     }
 
@@ -159,5 +150,5 @@ public class Solicitud implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-   
+
 }

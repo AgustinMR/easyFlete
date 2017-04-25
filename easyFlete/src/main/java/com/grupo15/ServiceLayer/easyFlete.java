@@ -1,5 +1,6 @@
 package com.grupo15.ServiceLayer;
 
+import com.grupo15.BusinessLogic.BLSolicitud;
 import com.grupo15.BusinessLogic.BLUsuario;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +10,9 @@ public class easyFlete {
     
     public static void main(String args[]){
         SpringApplication.run(easyFlete.class, args);
-        new BLUsuario().addCliente("nombre", "pass", "email", "145");
+
+        //new BLUsuario().addCliente("nombre", "pass", "email", "145");
+        new BLSolicitud().updateSolicitud(12,-34.917822, -56.166215,34.920267, 56.150364, 500, 50, "assafsaff", "13/1/2008", 5000, "email");
     }
 
 }

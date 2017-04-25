@@ -23,20 +23,20 @@ public class FleteroController implements ISLFletero {
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public boolean updateFletero(@RequestParam(name = "id")int id,@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
-        return new BLUsuario().updateFletero(id, nombre, password, email, telefono);
+    public boolean updateFletero(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
+        return new BLUsuario().updateFletero(nombre, password, email, telefono);
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean deleteFletero(@PathVariable(name = "id")int id) {
-        return new BLUsuario().deleteFletero(id);// corregir lpm
+    @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
+    public boolean deleteFletero(@PathVariable(name = "email")String email) {
+        return new BLUsuario().deleteFletero(email);// corregir lpm
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Fletero getFletero(@PathVariable(name = "id") int id) {
-        return new BLUsuario().getFletero(id);
+    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
+    public Fletero getFletero(@PathVariable(name = "email") String email) {
+        return new BLUsuario().getFletero(email);
     }
 
     @Override

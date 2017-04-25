@@ -18,17 +18,17 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public boolean addSolicitud(@RequestParam(name = "latOrigen") double latOrigen,@RequestParam(name = "lonOrigen") double lonOrigen,@RequestParam(name = "latDestino") double latDestino,@RequestParam(name = "lonDestino") double lonDestino,@RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "cliId") Integer cliId) {
+    public boolean addSolicitud(@RequestParam(name = "latOrigen") double latOrigen,@RequestParam(name = "lonOrigen") double lonOrigen,@RequestParam(name = "latDestino") double latDestino,@RequestParam(name = "lonDestino") double lonDestino,@RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.addSolicitud(latOrigen, lonOrigen, latDestino, lonDestino, peso, volumen, descripcion, fecha, precioMax, cliId);
+        return bl.addSolicitud(latOrigen, lonOrigen, latDestino, lonDestino, peso, volumen, descripcion, fecha, precioMax, email);
        
     }
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.PUT)
-    public boolean updateSolicitud(@RequestParam(name = "id")int id,@RequestParam(name = "latOrigen") double latOrigen,@RequestParam(name = "lonOrigen") double lonOrigen,@RequestParam(name = "latDestino") double latDestino,@RequestParam(name = "lonDestino") double lonDestino,@RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax) {
+    public boolean updateSolicitud(@RequestParam(name = "id")int id,@RequestParam(name = "latOrigen") double latOrigen,@RequestParam(name = "lonOrigen") double lonOrigen,@RequestParam(name = "latDestino") double latDestino,@RequestParam(name = "lonDestino") double lonDestino,@RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax,@RequestParam(name = "email") String email) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.updateSolicitud(id, latOrigen, lonOrigen, latDestino, lonDestino, peso, volumen, descripcion, fecha, precioMax);
+        return bl.updateSolicitud(id, latOrigen, lonOrigen, latDestino, lonDestino, peso, volumen, descripcion, fecha, precioMax, email);
     }
 
     @Override
