@@ -54,6 +54,12 @@
             <type>jar</type>
             <version>3.6.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>3.0.5.RELEASE</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
