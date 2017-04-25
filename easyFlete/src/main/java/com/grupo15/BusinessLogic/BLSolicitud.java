@@ -1,5 +1,6 @@
 package com.grupo15.BusinessLogic;
 
+import com.grupo15.DataAccessLayer.ISolicitud;
 import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class BLSolicitud implements IBLSolicitud {
 
-    private static DALSolicitud DLsol = null;
-    private static BLUsuario BLusu = null;
+    private static ISolicitud DLsol = null;
+    private static IBLUsuario BLusu = null;
 
     public BLSolicitud() {
         DLsol = new DALSolicitud();
@@ -34,28 +35,34 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
-        SolicitudCliente s = DLsol.getSolicitudCli(id);
-        System.out.println(s.getFecha().toString());
-        if (s.getFecha().toString().equals(fecha)){
-        
+    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax) {
+        SolicitudCliente solCli = DLsol.getSolicitudCli(id);
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(solCli.getFecha());
+
+        String fech[] = fecha.split("/");
+        Calendar cal2 = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));
+
+        if (!cal.getTime().equals(cal2.getTime())) {
+            DLsol.updateSolicitudCliente(id, cal2.getTime());
         }
-        return true;
+        return DLsol.updateSolicitud(id,latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);
     }
 
     @Override
     public boolean deleteSolicitud(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DLsol.deleteSolicitudCliente(id);
+        return DLsol.deleteSolicitud(id);
     }
 
     @Override
     public Solicitud getSolicitud(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLsol.getSolicitud(id);
     }
 
     @Override
     public List<Solicitud> getAllSolicitudes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DLsol.getAllSolicitudes();
     }
 
 }
