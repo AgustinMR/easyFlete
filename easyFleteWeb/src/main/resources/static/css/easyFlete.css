@@ -14,11 +14,11 @@ body, html {
     background-size: cover;
 }
 .bgimg-1 {
-    background-image: url(2004944.jpg);
+    background-image: url(../img/2004944.jpg);
     min-height: 100%;
 }
 .bgimg-2 {
-    background-image: url(ub1604v2.jpg);
+    background-image: url(../img/ub1604v2.jpg);
     min-height: 100%;
 }
 .bgimg-3 {
