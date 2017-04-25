@@ -52,6 +52,14 @@ public class DALSolicitud implements ISolicitud{
         em.close();
         return S;
     }
+    
+    @Override
+    public SolicitudCliente getSolicitudCli(int id) {
+        EntityManager em = new EMHandler().entityManager();
+        SolicitudCliente S =  em.find(SolicitudCliente.class, id);
+        em.close();
+        return S;
+    }
 
     @Override
     public List<Solicitud> getAllSolicitudes() {

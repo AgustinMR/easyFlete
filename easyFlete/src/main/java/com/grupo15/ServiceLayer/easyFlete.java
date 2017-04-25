@@ -12,7 +12,7 @@ public class easyFlete {
         SpringApplication.run(easyFlete.class, args);
 
         //new BLUsuario().addCliente("nombre", "pass", "email", "145");
-        new BLSolicitud().addSolicitud(-34.917822, -56.166215,34.920267, 56.150364, 500, 50, "assafsaff", "safsafsa", 5000, "email");
+        new BLSolicitud().updateSolicitud(12,-34.917822, -56.166215,34.920267, 56.150364, 500, 50, "assafsaff", "13/1/2008", 5000, "email");
     }
 
 }
