@@ -16,8 +16,8 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public boolean addFletero(String nombre, String password, String email, String telefono) {
-        Fletero f = new Fletero(email, nombre, password, telefono);
+    public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, String vehiculoCarga) {
+        Fletero f = new Fletero(email, nombre, password, telefono, vehiculoNombre, vehiculoCarga);
         return DLusu.addUsuario(f);
     }
 

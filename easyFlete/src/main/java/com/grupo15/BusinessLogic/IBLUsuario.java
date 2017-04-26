@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract interface IBLUsuario {
     
-    public abstract boolean addFletero(String nombre, String password, String email, String telefono);
+    public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, String vehiculoCarga);
     public abstract boolean addCliente(String nombre, String password, String email, String telefono);
     public abstract boolean updateFletero(String nombre, String password, String email, String telefono);
     public abstract boolean updateCliente(String nombre, String password, String email, String telefono);
