@@ -32,7 +32,7 @@ function registrarCliente(){
     });
 }
 
-function registrarCliente(){
+function registrarFletero(){
     $.post("http://localhost:10070/feleteros", "nombre=" + document.getElementById("nombre").value + "email=" + document.getElementById("email").value +"&password=" + document.getElementById("pass").value +"&telefono=" + document.getElementById("telefono").value  , function(result){
         alert(result);
     });
