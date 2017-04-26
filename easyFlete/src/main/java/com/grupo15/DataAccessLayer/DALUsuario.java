@@ -6,6 +6,7 @@ import com.grupo15.easyflete.TipoUsuario;
 import com.grupo15.handlers.EMHandler;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class DALUsuario implements IUsuario {
 
@@ -104,14 +105,16 @@ public class DALUsuario implements IUsuario {
     @Override
     public TipoUsuario login(String email, String pass) {
         EntityManager em = new EMHandler().entityManager();
-        Cliente cli = em.createQuery("SELECT c FROM Cliente c WHERE c.email = " + email, Cliente.class).getSingleResult();
+        TypedQuery<Cliente> queryC = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :email", Cliente.class);
+        Cliente cli = queryC.setParameter("email", email).getSingleResult();
         if (cli != null && pass.equals(cli.getPassword())) {
             return TipoUsuario.OK_CLIENTE;
         } else {
-            Fletero flet = em.createQuery("SELECT f FROM Cliente f WHERE f.email = " + email, Fletero.class).getSingleResult();
+            TypedQuery<Fletero> queryF = em.createQuery("SELECT f FROM Fletero f WHERE f.email = :email", Fletero.class);
+            Fletero flet = queryF.setParameter("email", email).getSingleResult();
             if (flet != null && pass.equals(flet.getPassword())) {
                 return TipoUsuario.OK_FLETERO;
-            }else{
+            } else {
                 return TipoUsuario.ERROR;
             }
         }
