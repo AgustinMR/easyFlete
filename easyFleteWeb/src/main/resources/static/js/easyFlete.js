@@ -21,5 +21,7 @@ function toggleFunction() {
     }
 }
 function iniciarSesion(){
-    
+    $.post("http://localhost:10070/autenticar", "email=" + document.getElementById("email").value +"&pass=" + document.getElementById("pass").value  , function(result){
+        alert("OK" + result);
+    });
 }
