@@ -22,6 +22,18 @@ function toggleFunction() {
 }
 function iniciarSesion(){
     $.post("http://localhost:10070/autenticar", "email=" + document.getElementById("email").value +"&pass=" + document.getElementById("pass").value  , function(result){
-        alert("OK" + result);
+        alert(result);
+    });
+}
+
+function registrarCliente(){
+    $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "email=" + document.getElementById("email").value +"&password=" + document.getElementById("pass").value +"&telefono=" + document.getElementById("telefono").value  , function(result){
+        alert(result);
+    });
+}
+
+function registrarCliente(){
+    $.post("http://localhost:10070/feleteros", "nombre=" + document.getElementById("nombre").value + "email=" + document.getElementById("email").value +"&password=" + document.getElementById("pass").value +"&telefono=" + document.getElementById("telefono").value  , function(result){
+        alert(result);
     });
 }
