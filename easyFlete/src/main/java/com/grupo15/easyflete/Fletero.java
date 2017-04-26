@@ -66,6 +66,15 @@ public class Fletero implements Serializable {
         this.password = password;
         this.telefono = telefono;
     }
+    
+    public Fletero(String email, String nombre, String password, String telefono, String vehiculoNombre, String vehiculoCarga) {
+        this.email = email;
+        this.nombre = nombre;
+        this.password = password;
+        this.telefono = telefono;
+        this.vehiculoNombre = vehiculoNombre;
+        this. vehiculoCarga = vehiculoCarga;
+    }
 
     public String getNombre() {
         return nombre;
