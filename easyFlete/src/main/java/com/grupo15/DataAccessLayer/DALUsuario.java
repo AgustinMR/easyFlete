@@ -2,6 +2,7 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.TipoUsuario;
 import com.grupo15.handlers.EMHandler;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -98,6 +99,22 @@ public class DALUsuario implements IUsuario {
         EntityManager em = new EMHandler().entityManager();
         List<Cliente> C = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
         return C;
+    }
+
+    @Override
+    public TipoUsuario login(String email, String pass) {
+        EntityManager em = new EMHandler().entityManager();
+        Cliente cli = em.createQuery("SELECT c FROM Cliente c WHERE c.email = " + email, Cliente.class).getSingleResult();
+        if (cli != null && pass.equals(cli.getPassword())) {
+            return TipoUsuario.OK_CLIENTE;
+        } else {
+            Fletero flet = em.createQuery("SELECT f FROM Cliente f WHERE f.email = " + email, Fletero.class).getSingleResult();
+            if (flet != null && pass.equals(flet.getPassword())) {
+                return TipoUsuario.OK_FLETERO;
+            }else{
+                return TipoUsuario.ERROR;
+            }
+        }
     }
 
 }
