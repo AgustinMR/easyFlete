@@ -19,9 +19,9 @@
                 <div class="w3-row w3-white w3-card w3-round w3-topbar w3-border-green">
                     <div class="w3-container">
                         <h3 class="w3-center w3-text-grey">Registrarse</h3><hr>
-                        <input class="w3-radio" type="radio" name="tipo" value="Cliente" checked>
+                        <input id="radio" class="w3-radio" type="radio" name="tipo" value="Cliente" checked>
                         <label>Cliente</label>
-                        <input class="w3-radio" type="radio" name="tipo" value="Fletero">
+                        <input id="radio2" class="w3-radio" type="radio" name="tipo" value="Fletero">
                         <label>Fletero</label><hr>
                         <label for="nombre" class="w3-text-grey">Nombre:</label>
                         <input id="nombre" type="text" name="nombre" class="w3-input w3-margin-bottom w3-light-gray w3-bottombar w3-round w3-hover-border-grey" style="height: 40px" placeholder="Ingrese aqu&iacute; su nombre..." required>
@@ -31,10 +31,41 @@
                         <input id="email" type="email" name="email" class="w3-input w3-margin-bottom w3-light-gray w3-bottombar w3-round w3-hover-border-grey" style="height: 40px" placeholder="Ingrese aqu&iacute; su email..." required>
                         <label for="pass" class="w3-text-grey">Contrase&ntilde;a:</label>
                         <input id="pass" type="password" name="pass" class="w3-input w3-margin-bottom w3-light-gray w3-bottombar w3-round w3-hover-border-grey" style="height: 40px" placeholder="Ingrese aqu&iacute; su contrase&ntilde;a..." required><hr>
+                        <label id="tipoV" class="w3-text-grey" style="display:none;">Tipo de Veh&iacute;culo:</label>
+                        <select id="tipoVehiculo" style="display:none;" class="w3-select w3-margin-bottom w3-round w3-bottombar w3-light-gray w3-hover-border-grey">
+                            <option>Camion peque&ntilde;o</option>
+                            <option>Camion mediano</option>
+                            <option>Camion grande</option>
+                            <option>Camion con zorra</option>
+                            <option>Camioneta</option>
+                            <option selected="true">Batimovil</option>
+                        </select>
+                        <label for="carga" class="w3-text-grey" style="display:none;">Carga del Veh&iacute;culo:</label>
+                        <input id="cargaVehiculo" type="text" name="carga" class="w3-input w3-margin-bottom w3-light-gray w3-bottombar w3-round w3-hover-border-grey" style="height: 40px; display: none" placeholder="Ingrese aqu&iacute; la carga m&aacute;xima del vehiculo..." required>
                         <div class="w3-center w3-margin"><input type="button" class="w3-button w3-green w3-round w3-hover-shadow w3-hover-green" value="INGRESAR"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            var radio = document.getElementById('radio');
+            var radio2 = document.getElementById('radio2');
+            radio.onchange = function(){
+            if(radio.checked === true){
+            document.getElementById('tipoVehiculo').style.display = "none";
+            document.getElementById('cargaVehiculo').style.display = "none";
+            document.getElementById('carga').style.display = "none";
+            document.getElementById('tipoV').style.display = "none";
+            }
+            };
+            radio2.onchange = function(){
+            if(radio2.checked === true){
+            document.getElementById('tipoVehiculo').style.display = "block";
+            document.getElementById('cargaVehiculo').style.display = "block";
+            document.getElementById('carga').style.display = "block";
+            document.getElementById('tipoV').style.display = "block";
+            }
+            }
+        </script>
     </body>
 </html>
