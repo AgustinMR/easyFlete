@@ -15,7 +15,7 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().anonymous()
-            .and().cors().disable();
+            .and().cors().disable().csrf().disable();
     }
     
     /*
