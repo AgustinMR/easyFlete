@@ -32,11 +32,9 @@ function registrar() {
             alert(result);
         });
     } else {
-        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (result) {
+        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value + "&vehiculo_nombre=" + document.getElementById("tipoVehiculo").value + "&vehiculo_carga=" + document.getElementById("cargaVehiculo").value, function (result) {
             alert(result);
         });
     }
-
-
 
 }
