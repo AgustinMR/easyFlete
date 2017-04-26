@@ -15,7 +15,7 @@
                 <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">OFERTAS</a>
                 <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">CONTACTO</a>
                 <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-right w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">REGISTRARSE</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-right w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">INICIAR SESI&Oacute;N</a>
+                <a href="javascript:void(0);" onclick="document.getElementById('modalLogin').style.display='block'" class="w3-bar-item w3-button w3-mobile w3-padding w3-right w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">INICIAR SESI&Oacute;N</a>
             </div>
             <div id="navMobile" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
                 <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="bgimg-1 w3-display-container w3-animate-opacity w3-card" id="home">
-            <div class="w3-display-middle bgimg-2 w3-opacity" style="white-space:nowrap;width:100%"></div>
+            <div class="w3-display-middle bgimg-2 w3-opacity-min" style="white-space:nowrap;width:100%"></div>
             <div class="w3-display-middle" style="white-space:nowrap;">
                 <img src="img/easyFlete.png" alt="easyFlete" class="w3-display-middle" style="height: 47px; margin-top: -40px">
                 <h1 class="w3-text-dark-grey w3-display-middle" style="margin-top: 20px">easyFlete</h1>
@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="w3-content w3-container w3-padding-64" id="portfolio">
-            
+
         </div>
         <div class="bgimg-3 w3-display-container">
             <div class="w3-display-middle">
@@ -92,15 +92,21 @@
             </div>
         </div>
         <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
-            <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
-            <div class="w3-xlarge w3-section">
-                <i class="fa fa-facebook-official w3-hover-opacity"></i>
-                <i class="fa fa-instagram w3-hover-opacity"></i>
-                <i class="fa fa-snapchat w3-hover-opacity"></i>
-                <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-                <i class="fa fa-twitter w3-hover-opacity"></i>
-                <i class="fa fa-linkedin w3-hover-opacity"></i>
-            </div>
         </footer>
+        <div id="modalLogin" class="w3-modal">
+            <div class="w3-modal-content w3-round w3-animate-top w3-card-4">
+                <header class="w3-container">
+                    <span onclick="document.getElementById('modalLogin').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h2 class="w3-text-green w3-greyscale-min">Iniciar Sesi&oacute;n</h2>
+                </header>
+                <div class="w3-container">
+                    <center><input name="username" type="text" class="w3-input w3-margin-top w3-bottombar w3-hover-light-grey w3-round" placeholder="Usuario" style="width: 50%; min-width: 250px" required/></center>
+                    <center><input name="password" type="password" class="w3-input w3-margin-top w3-bottombar w3-hover-light-gray w3-round" placeholder="Contrase&ntilde;a" style="width: 50%; min-width: 250px" required/></center>
+                    <hr class="w3-green">
+                    <center><input type="submit" class="w3-button w3-dark-gray w3-margin-bottom w3-round w3-hover-shadow" style="background-color: #388d6a" value="INICIAR SESI&Oacute;N"/></center>
+                </div>
+            </div>
+        </div><p>Some text..</p>
+        <p>Some text..</p>
     </body>
 </html>
