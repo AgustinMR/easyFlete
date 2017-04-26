@@ -17,8 +17,8 @@ public class FleteroController implements ISLFletero {
     
     @Override
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public boolean addFletero(@RequestParam(name = "nombre") String nombre,@RequestParam(name = "email") String email,@RequestParam(name = "password") String password, @RequestParam(name = "telefono") String telefono) {
-        return new BLUsuario().addFletero(nombre, password, email, telefono);
+    public boolean addFletero(@RequestParam(name = "nombre") String nombre,@RequestParam(name = "email") String email,@RequestParam(name = "password") String password, @RequestParam(name = "telefono") String telefono, @RequestParam(name = "vehiculo_nombre") String vehiculoNombre, @RequestParam(name = "vehiculo_carga") String vehiculoCarga ) {
+        return new BLUsuario().addFletero(nombre, password, email, telefono, vehiculoNombre, vehiculoCarga);
     }
 
     @Override

@@ -20,20 +20,21 @@ function toggleFunction() {
         x.className = x.className.replace(" w3-show", "");
     }
 }
-function iniciarSesion(){
-    $.post("http://localhost:10070/autenticar", "email=" + document.getElementById("email").value +"&pass=" + document.getElementById("pass").value  , function(result){
+function iniciarSesion() {
+    $.post("http://localhost:10070/autenticar", "email=" + document.getElementById("email").value + "&pass=" + document.getElementById("pass").value, function (result) {
         alert(result);
     });
 }
 
-function registrarCliente(){
-    $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "email=" + document.getElementById("email").value +"&password=" + document.getElementById("pass").value +"&telefono=" + document.getElementById("telefono").value  , function(result){
-        alert(result);
-    });
-}
+function registrar() {
+    if (document.getElementById("radio").checked === true) {
+        $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (result) {
+            alert(result);
+        });
+    } else {
+        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (result) {
+            alert(result);
+        });
+    }
 
-function registrarFletero(){
-    $.post("http://localhost:10070/feleteros", "nombre=" + document.getElementById("nombre").value + "email=" + document.getElementById("email").value +"&password=" + document.getElementById("pass").value +"&telefono=" + document.getElementById("telefono").value  , function(result){
-        alert(result);
-    });
 }
