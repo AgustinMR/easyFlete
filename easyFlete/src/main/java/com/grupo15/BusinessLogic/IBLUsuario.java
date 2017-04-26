@@ -2,6 +2,7 @@ package com.grupo15.BusinessLogic;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.TipoUsuario;
 import java.util.List;
 
 public abstract interface IBLUsuario {
@@ -16,4 +17,5 @@ public abstract interface IBLUsuario {
     public abstract Cliente getCliente(String email);
     public abstract List<Fletero> getAllFleteros();
     public abstract List<Cliente> getAllClientes();
+    public TipoUsuario login(String email, String pass);
 }

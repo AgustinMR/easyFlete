@@ -4,6 +4,7 @@ import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.DataAccessLayer.DALUsuario;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.TipoUsuario;
 import java.util.List;
 
 public class BLUsuario implements IBLUsuario {
@@ -66,6 +67,11 @@ public class BLUsuario implements IBLUsuario {
     @Override
     public List<Cliente> getAllClientes() {
         return DLusu.getAllClientes();
+    }
+
+    @Override
+    public TipoUsuario login(String email, String pass) {
+        return DLusu.login(email, pass);
     }
 
 }
