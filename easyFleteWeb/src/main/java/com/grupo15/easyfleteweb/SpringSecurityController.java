@@ -14,7 +14,7 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
         //http.authorizeRequests().antMatchers("/", "/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
         http
             .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/registrarse").permitAll()
                 .anyRequest().anonymous()
             .and()
             .formLogin()
