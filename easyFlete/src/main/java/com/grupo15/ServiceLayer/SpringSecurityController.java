@@ -9,17 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SpringSecurityController extends WebSecurityConfigurerAdapter {
 
-   /* @Override
+    @Override
     public void configure(HttpSecurity http) throws Exception {
-<<<<<<< HEAD
-        http.authorizeRequests().antMatchers("/autenticar", "/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
-=======
         http
             .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().anonymous()
             .and().cors().disable();
->>>>>>> refs/remotes/origin/master
     }
     
     /*
