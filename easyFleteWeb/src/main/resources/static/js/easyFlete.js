@@ -100,7 +100,7 @@ window.onload = function(){
           type: "Point"
         });
         map.addInteraction(draw);
-
+        /*
         draw.on('drawend',
           function(evt) {
             console.log(evt.feature);
@@ -109,7 +109,7 @@ window.onload = function(){
             var featuresGeoJSON = parser.writeFeatures(features);
             alert(featuresGeoJSON);
           },
-        this);
+        this);*/
       }
 
 
