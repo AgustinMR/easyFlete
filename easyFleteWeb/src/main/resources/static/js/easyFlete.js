@@ -43,6 +43,11 @@ window.onload = function(){
 	var raster = new ol.layer.Tile({ source: new ol.source.OSM() });
 	var source = new ol.source.Vector({wrapX: false});
 	var vector = new ol.layer.Vector({ source: source  });
+	var select = document.createElement("select");
+	var option = document.createElement("option");
+	option.innerHTML = "LineString";
+	select.appendChild(option);
+	select.id = "draw-type";
 	var typeSelect = document.getElementById('draw-type');
 	var map = new ol.Map({
 		layers: [raster, vector],
@@ -92,7 +97,7 @@ window.onload = function(){
         draw = new ol.interaction.Draw({
           source: source,
 			features: features,
-          type: typeSelect.value
+          type: "Point"
         });
         map.addInteraction(draw);
 
@@ -111,12 +116,12 @@ window.onload = function(){
       /**
        * Handle change event.
        */
-      typeSelect.onchange = function() {
+      select.onchange = function() {
         map.removeInteraction(draw);
         addInteraction();
       };
 
-      //addInteraction();
+      addInteraction();
 			
 			function toGeoJson(){
 				var parser = new ol.format.GeoJSON();
