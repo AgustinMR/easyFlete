@@ -26,15 +26,14 @@ public class easyFleteAuthenticationProvider implements AuthenticationProvider {
             Content r = Request.Post("http://localhost:10070/autenticar")
                 .bodyForm(Form.form().add("email", a.getName()).add("pass", a.getCredentials().toString()).build())
                 .execute().returnContent();
-            if(new Gson().toJson(r, Content.class). == true){
-            
-            }
+            System.out.println(r.asString());
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
+            return new UsernamePasswordAuthenticationToken(a.getName(), a.getCredentials().toString(), grantedAuths);
         } catch (IOException ex) {
             Logger.getLogger(easyFleteAuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     @Override
