@@ -5,23 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/easyFlete.css">
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
     <script src="js/easyFlete.js" type="text/javascript"></script>
     <body>
         <div class="w3-top w3-topbar w3-border-green">
             <div class="w3-bar" id="nav">
-                <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()">&#9776;</a>
-                <img src="img/easyFlete.png" alt="easyFlete" class="w3-bar-item w3-button w3-hide-small w3-hover-none w3-padding w3-left" style="height: 45px; margin-top: -2px">
+                <a class="w3-bar-item w3-button w3-hover-green w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()"><strong>&#9776;</strong></a>
+                <img src="img/easyFlete.png" alt="easyFlete" class="w3-bar-item w3-button w3-hover-none w3-padding w3-left" style="height: 45px; margin-top: -2px">
                 <a href="#intro" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">INTRO</a>
                 <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">OFERTAS</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">CONTACTO</a>
+                <a href="#" class="w3-bar-item w3-button w3-mobile w3-padding w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">SOLICITAR</a>
                 <a href="javascript:void(0);" th:href="@{/registrarse}" class="w3-bar-item w3-button w3-mobile w3-padding w3-right w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">REGISTRARSE</a>
                 <a href="javascript:void(0);" th:href="@{/login}" class="w3-bar-item w3-button w3-mobile w3-padding w3-right w3-hover-green w3-padding-12 w3-text-grey w3-hide-small">INICIAR SESI&Oacute;N</a>
             </div>
-            <div id="navMobile" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-                <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
-                <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
-                <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
-                <a href="#" class="w3-bar-item w3-button">SEARCH</a>
+            <div id="navMobile" class="w3-bar-block w3-green w3-card w3-hide w3-hide-large w3-hide-medium">
+                <a href="#about" class="w3-bar-item w3-button w3-hover-black w3-hover-opacity" onclick="toggleFunction()">INTRO</a>
+                <a href="#portfolio" class="w3-bar-item w3-button w3-hover-black w3-hover-opacity" onclick="toggleFunction()">OFERTAS</a>
+                <a href="#contact" class="w3-bar-item w3-button w3-hover-black w3-hover-opacity" onclick="toggleFunction()">SOLICITAR</a>
+                <a href="#contact" class="w3-bar-item w3-button w3-hover-black w3-hover-opacity" onclick="toggleFunction()">INICIAR SESI&Oacute;N</a>
+                <a href="#contact" class="w3-bar-item w3-button w3-hover-black w3-hover-opacity" onclick="toggleFunction()">REGISTRARSE</a>
             </div>
         </div>
         <div class="bgimg-1 w3-display-container w3-animate-opacity w3-card" id="home">
@@ -68,30 +72,36 @@
                 Ofertas disponibles
             </div>
         </div>
-        <div class="bgimg-2 w3-display-container">
+        <div class="w3-display-container w3-green">
+            <div class="bgimg-5"></div>
             <div class="w3-display-middle">
-                <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
+                <span class="w3-xxlarge w3-text-white w3-wide w3-black w3-padding w3-opacity">SOLITITAR FLETE</span>
             </div>
         </div>
         <div class="w3-content w3-container w3-padding-64" id="portfolio">
-
-        </div>
-        <div class="bgimg-3 w3-display-container">
-            <div class="w3-display-middle">
-                <span class="w3-xxlarge w3-text-white w3-wide">CONTACTO</span>
+            <div class="w3-container">
+                <label for="nombre"><strong>T&iacute;tulo:</strong></label>
+                <input type="text" name="nombre" class="w3-input w3-hover-border-green w3-hover-light-grey w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%">
+                <label for="carga"><strong>Carga(Kg):</strong></label>
+                <input type="number" name="carga" class="w3-input w3-hover-border-green w3-hover-light-grey w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
+                <label for="precio"><strong>Precio M&aacute;ximo a pagar(UY):</strong></label>
+                <input type="number" name="precio" class="w3-input w3-hover-border-green w3-hover-light-grey w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
+                <label for="date"><strong>Fecha:</strong></label>
+                <input type="date" name="date" class="w3-input w3-hover-border-green w3-hover-light-grey w3-round w3-margin-bottom w3-padding" style="width: 50%">
+                <label for="descripcion"><strong>T&iacute;tulo:</strong></label>
+                <textarea type="text" name="descripcion" class="w3-input w3-hover-border-green w3-hover-light-grey w3-round w3-margin-bottom w3-padding" placeholder="Ingresar descripci&oacute;n para la oferta..." style="min-height: 100px; max-height: 200px; min-width: 100%; max-width: 100%"></textarea>
+                <p><strong>Or&iacute;gen y Destino:</strong></p>
+                <div class="w3-container w3-padding"><div class="w3-col w3-card-4 w3-round" id="map"></div></div>
+                <div class="w3-row w3-center w3-padding w3-padding-32"><button class="w3-button w3-green w3-round w3-hover-shadow w3-hover-green">SOLICITAR</button></div>
             </div>
         </div>
-        <div class="w3-content w3-container w3-padding-64" id="contact">
-            <h3 class="w3-center">WHERE I WORK</h3>
-            <p class="w3-center"><em>I'd love your feedback!</em></p>
-            <div class="w3-row w3-padding-32 w3-section">
-                <div class="w3-col m4 w3-container">
-                </div>
-                <div class="w3-col m8 w3-panel">
-                </div>
+        <footer class="w3-center w3-black w3-opacity-min w3-topbar w3-border-green" style="height: 200px">
+            <div class="w3-half w3-container w3-padding w3-padding-64">
+                <p>&copy; 2017 - easyFlete S.A</p>
             </div>
-        </div>
-        <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+            <div class="w3-half w3-container w3-padding w3-padding-64">
+                <img src="img/easyFlete.png" style="height: 50px">
+            </div>
         </footer>
     </body>
 </html>
