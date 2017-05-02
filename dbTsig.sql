@@ -20,6 +20,8 @@ CREATE TABLE SOLICITUDES (
     origen point NOT NULL,
     destino point NOT NULL,
     peso int NOT NULL,
+    titulo text NOT NULL,
+    precio real NOT NULL,
     descripcion text NULL,
     PRIMARY KEY (id),
     CHECK (peso > 0)
