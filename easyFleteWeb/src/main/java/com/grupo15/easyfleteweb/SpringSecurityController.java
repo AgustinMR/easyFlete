@@ -1,6 +1,8 @@
 package com.grupo15.easyfleteweb;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -8,11 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityController extends WebSecurityConfigurerAdapter {
+    
+    @Autowired
+    private easyFleteAuthenticationProvider authProvider;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        //http.authorizeRequests().antMatchers("/", "/*").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
-        http
+        http.authorizeRequests().antMatchers("/", "/registrarse").authenticated().anyRequest().permitAll().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().cors().and().csrf().disable();
+        /*http
             .authorizeRequests()
                 .antMatchers("/", "/registrarse").permitAll()
                 .anyRequest().anonymous()
@@ -21,13 +26,13 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
             .and()
-            .logout().permitAll();
+            .logout().permitAll();*/
 
     }
 
-    /*@Autowired
+    @Autowired
     public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
-    }*/
+        auth.authenticationProvider(authProvider);
+    }
     
 }

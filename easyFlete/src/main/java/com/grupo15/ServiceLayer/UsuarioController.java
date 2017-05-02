@@ -15,7 +15,7 @@ public class UsuarioController {
     
     @RequestMapping(value = "", method = RequestMethod.POST)
     public TipoUsuario autenticarUsuario(@RequestParam(name = "email")String email, @RequestParam(name = "pass")String pass){
-        System.out.println("Conecto");
+        System.out.println(email + "  --  " + pass);
         return new BLUsuario().login(email, pass);
     }
 }

@@ -26,19 +26,26 @@ public class easyFleteAuthenticationProvider implements AuthenticationProvider {
             Content r = Request.Post("http://localhost:10070/autenticar")
                 .bodyForm(Form.form().add("email", a.getName()).add("pass", a.getCredentials().toString()).build())
                 .execute().returnContent();
-            System.out.println(r.asString());
-            List<GrantedAuthority> grantedAuths = new ArrayList<>();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            return new UsernamePasswordAuthenticationToken(a.getName(), a.getCredentials().toString(), grantedAuths);
+            if(!"ERROR".equals(r.toString())){
+                List<GrantedAuthority> grantedAuths = new ArrayList<>();
+                if(r.toString().equals("OK_CLIENTE")){
+                    grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+                }else{
+                    grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+                }
+                return new UsernamePasswordAuthenticationToken(a.getName(), a.getCredentials().toString(), grantedAuths);
+            }
+            System.out.println("llegue hasta el null");
         } catch (IOException ex) {
             Logger.getLogger(easyFleteAuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("llegue hasta el null  333");
         return null;
     }
 
     @Override
     public boolean supports(Class<?> type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return type.equals(UsernamePasswordAuthenticationToken.class);
     }
     
 }

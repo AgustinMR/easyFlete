@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityController extends WebSecurityConfigurerAdapter {
+    
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
