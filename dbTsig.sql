@@ -26,7 +26,7 @@ CREATE TABLE USUARIOS (
   vehiculo_nombre varchar(40) NULL,
   vehiculo_carga int NULL,
   tipo varchar(10) NOT NULL,
-  PRIMARY KEY (email)
+  PRIMARY KEY (username)
 );
 
 CREATE SEQUENCE ROLES_ID_SEC;
@@ -35,9 +35,9 @@ CREATE TABLE ROLES (
   username varchar(30) NOT NULL,
   role varchar(45) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (username) REFERENCES USUARIOS (email)
+  FOREIGN KEY (username) REFERENCES USUARIOS (username)
 );
-ALTER SEQUENCE SOLICITUDES_ID_SEC OWNED BY SOLICITUDES.id;
+ALTER SEQUENCE ROLES_ID_SEC OWNED BY ROLES.id;
 
 CREATE SEQUENCE SOLICITUDES_ID_SEC;
 CREATE TABLE SOLICITUDES (
@@ -59,7 +59,7 @@ CREATE TABLE SOLICITUDES_CLIENTES (
   solicitud_id int NOT NULL,
   fecha timestamp NOT NULL,
   PRIMARY KEY (solicitud_id),
-  FOREIGN KEY (cliente_email) REFERENCES USUARIOS (email),
+  FOREIGN KEY (cliente_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
 );
 
@@ -69,7 +69,7 @@ CREATE TABLE FLETEROS_SOLICITUDES_CLIENTES (
   valoracion int DEFAULT 0,
   comentario varchar(300) NULL,
   PRIMARY KEY (solicitud_id),
-  FOREIGN KEY (fletero_email) REFERENCES USUARIOS (email),
+  FOREIGN KEY (fletero_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
 );
 
@@ -85,6 +85,6 @@ CREATE TABLE ZONAS_FLETEROS (
   fletero_email varchar(30) NOT NULL,
   zona_id int NOT NULL,
   PRIMARY KEY (zona_id),
-  FOREIGN KEY (fletero_email) REFERENCES USUARIOS(email),
+  FOREIGN KEY (fletero_email) REFERENCES USUARIOS(username),
   FOREIGN KEY (zona_id) REFERENCES ZONAS(id)
 );

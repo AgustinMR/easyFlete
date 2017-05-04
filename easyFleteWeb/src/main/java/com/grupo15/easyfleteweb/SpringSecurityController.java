@@ -54,18 +54,12 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
                 .disable();
 
     }
-    /*
-    @Bean(name = "passwordencoder")
-    public PasswordEncoder passwordencoder() {
-        return new BCryptPasswordEncoder();
-    }*/
 
     @Autowired
     public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email,password, tipo FROM USUARIOS WHERE email=?")
-                .authoritiesByUsernameQuery("SELECT email, tipo FROM USUARIOS where email=?");
-               // .passwordEncoder(passwordencoder());
+                .usersByUsernameQuery("SELECT username, password, enabled FROM USUARIOS WHERE username=?")
+                .authoritiesByUsernameQuery("SELECT username, role from ROLES where username=?");
     }
 
     
