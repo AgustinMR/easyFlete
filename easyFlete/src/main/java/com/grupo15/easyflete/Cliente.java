@@ -8,16 +8,14 @@ import javax.persistence.Table;
 public class Cliente extends Usuario {
 
     public Cliente() {
-        setTipo();
     }
 
-    public final void setTipo() {
-        super.setTipo("CLIENTE");
+    public Cliente(String email) {
+        super(email);
     }
-    
+
     public Cliente(String nombre, String email, String password, String telefono) {
         super(nombre, email, password, telefono);
-        setTipo();
     }
     
 }

@@ -19,14 +19,25 @@
 
 CREATE TABLE USUARIOS (
   nombre varchar(30) NOT NULL,
-  email varchar(30) NOT NULL,
+  username varchar(30) NOT NULL,
   password varchar(30) NULL,
+  enabled smallint NOT NULL DEFAULT 1,
   telefono varchar(20) NOT NULL,
   vehiculo_nombre varchar(40) NULL,
   vehiculo_carga int NULL,
   tipo varchar(10) NOT NULL,
   PRIMARY KEY (email)
 );
+
+CREATE SEQUENCE ROLES_ID_SEC;
+CREATE TABLE ROLES (
+  id integer NOT NULL DEFAULT nextval('ROLES_ID_SEC'),
+  username varchar(30) NOT NULL,
+  role varchar(45) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (username) REFERENCES USUARIOS (email)
+);
+ALTER SEQUENCE SOLICITUDES_ID_SEC OWNED BY SOLICITUDES.id;
 
 CREATE SEQUENCE SOLICITUDES_ID_SEC;
 CREATE TABLE SOLICITUDES (

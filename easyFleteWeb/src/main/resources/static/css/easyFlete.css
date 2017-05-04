@@ -8,7 +8,7 @@ body, html {
     color: #777;
     line-height: 1.8;
 }
-.bgimg-1, .bgimg-3, .bgimg-5 {
+.bgimg-1, .bgimg-3, .bgimg-5, .bgimg-7 {
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,10 +20,10 @@ body, html {
 .bgimg-2 {
     background-image: url(../img/ub1610v2.jpg);
     min-height: 100%;
-    background-attachment: scroll;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top;
+	background-attachment: scroll;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top;
 }
 .bgimg-3 {
     background-image: url("../img/pexels-photo.jpg");
@@ -31,14 +31,26 @@ body, html {
 }
 .bgimg-4 {
     background-image: url(../img/msc.png);
-    min-height: 100%;
-    background-size: auto;
-    background-repeat: repeat;
+	min-height: 100%;
+	background-size: auto;
+	background-repeat: repeat;
 }
 .bgimg-5 {
     background-image: url("../img/pexels-photo.jpg");
     min-height: 400px;
 }
+.bgimg-6 {
+    background-image: url("../img/ub1610v2.jpg");
+    min-height: 250px;
+	background-attachment: scroll;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.bgimg-7 {
+    background-image: url("../img/2004944.jpg");
+    min-height: 300px;
+}
+
 .w3-wide {letter-spacing: 10px;}
 .w3-hover-opacity {cursor: pointer;}
 @media only screen and (max-device-width: 1024px) {
