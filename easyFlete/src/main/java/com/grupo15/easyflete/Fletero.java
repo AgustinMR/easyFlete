@@ -5,20 +5,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class Fletero extends Usuario {
+public class Fletero extends Usuario{
 
-    
-    public Fletero(){
-        setTipo();
+    public Fletero() {
     }
 
-    public final void setTipo() {
-        super.setTipo("FLETERO");
+    public Fletero(String email) {
+        super(email);
+    }
+
+    public Fletero(String nombre, String email, String password, String telefono) {
+        super(nombre, email, password, telefono);
     }
 
     public Fletero(String nombre, String email, String password, String telefono, String vehiculoNombre, Integer vehiculoCarga) {
         super(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
-        setTipo();
     }
+
     
 }

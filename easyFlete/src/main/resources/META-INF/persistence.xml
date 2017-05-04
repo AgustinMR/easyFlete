@@ -11,6 +11,8 @@
     <class>com.grupo15.easyflete.FleteroSolicitudCliente</class>
     <class>com.grupo15.easyflete.SolicitudCliente</class>
     <class>com.grupo15.easyflete.Usuario</class>
+    <class>com.grupo15.easyflete.Roles</class>
+    <class>com.grupo15.easyflete.Rol</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/easyFleteDB"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
