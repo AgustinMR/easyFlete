@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.grupo15.easyflete;
 
 import java.io.Serializable;
@@ -15,13 +20,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author Agustin
+ */
 @Entity
 @Table(name = "solicitudes")
-@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")})
 public class Solicitud implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -32,38 +47,6 @@ public class Solicitud implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "destino")
     private String destino;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "titulo")
-    private String titulo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
-    private FleteroSolicitudCliente fleteroSolicitudCliente;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
-    private SolicitudCliente solicitudCliente;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "latitud_origen")
-    private double latitudOrigen;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "longitud_origen")
-    private double longitudOrigen;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "latitud_destino")
-    private double latitudDestino;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "longitud_destino")
-    private double longitudDestino;
     @Column(name = "peso")
     private Integer peso;
     @Column(name = "volumen")
@@ -72,9 +55,18 @@ public class Solicitud implements Serializable {
     @NotNull
     @Column(name = "precio_max")
     private double precioMax;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "titulo")
+    private String titulo;
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private FleteroSolicitudCliente fleteroSolicitudCliente;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private SolicitudCliente solicitudCliente;
 
     public Solicitud() {
     }
@@ -83,22 +75,20 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax) {
-        this.latitudOrigen = latitudOrigen;
-        this.longitudOrigen = longitudOrigen;
-        this.latitudDestino = latitudDestino;
-        this.longitudDestino = longitudDestino;
+    public Solicitud(Integer id, String origen, String destino, double precioMax, String titulo) {
+        this.id = id;
+        this.origen = origen;
+        this.destino = destino;
         this.precioMax = precioMax;
+        this.titulo = titulo;
     }
 
-    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
-        this.latitudOrigen = latitudOrigen;
-        this.longitudOrigen = longitudOrigen;
-        this.latitudDestino = latitudDestino;
-        this.longitudDestino = longitudDestino;
-        this.precioMax = precioMax;
-        this.peso = peso;
+    public Solicitud(String origen, String destino, Integer volumen, double precioMax, String titulo, String descripcion) {
+        this.origen = origen;
+        this.destino = destino;
         this.volumen = volumen;
+        this.precioMax = precioMax;
+        this.titulo = titulo;
         this.descripcion = descripcion;
     }
 
@@ -110,36 +100,20 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public double getLatitudOrigen() {
-        return latitudOrigen;
+    public String getOrigen() {
+        return origen;
     }
 
-    public void setLatitudOrigen(double latitudOrigen) {
-        this.latitudOrigen = latitudOrigen;
+    public void setOrigen(String origen) {
+        this.origen = origen;
     }
 
-    public double getLongitudOrigen() {
-        return longitudOrigen;
+    public String getDestino() {
+        return destino;
     }
 
-    public void setLongitudOrigen(double longitudOrigen) {
-        this.longitudOrigen = longitudOrigen;
-    }
-
-    public double getLatitudDestino() {
-        return latitudDestino;
-    }
-
-    public void setLatitudDestino(double latitudDestino) {
-        this.latitudDestino = latitudDestino;
-    }
-
-    public double getLongitudDestino() {
-        return longitudDestino;
-    }
-
-    public void setLongitudDestino(double longitudDestino) {
-        this.longitudDestino = longitudDestino;
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 
     public Integer getPeso() {
@@ -166,36 +140,20 @@ public class Solicitud implements Serializable {
         this.precioMax = precioMax;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public FleteroSolicitudCliente getFleteroSolicitudCliente() {
@@ -214,4 +172,29 @@ public class Solicitud implements Serializable {
         this.solicitudCliente = solicitudCliente;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Solicitud)) {
+            return false;
+        }
+        Solicitud other = (Solicitud) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.grupo15.easyflete.Solicitud[ id=" + id + " ]";
+    }
+    
 }

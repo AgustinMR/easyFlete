@@ -2,7 +2,6 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
-import com.grupo15.easyflete.TipoUsuario;
 import java.util.List;
 
 public abstract interface IUsuario {
@@ -17,5 +16,4 @@ public abstract interface IUsuario {
     public abstract Cliente getCliente(String email);
     public abstract List<Fletero> getAllFleteros();
     public abstract List<Cliente> getAllClientes();
-    public TipoUsuario login(String email, String pass);
 }

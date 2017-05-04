@@ -4,7 +4,6 @@ import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.DataAccessLayer.DALUsuario;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
-import com.grupo15.easyflete.TipoUsuario;
 import java.util.List;
 
 public class BLUsuario implements IBLUsuario {
@@ -16,8 +15,8 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, String vehiculoCarga) {
-        Fletero f = new Fletero(email, nombre, password, telefono, vehiculoNombre, vehiculoCarga);
+    public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
+        Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
         return DLusu.addUsuario(f);
     }
 
@@ -28,8 +27,8 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public boolean updateFletero(String nombre, String password, String email, String telefono) {
-        Fletero f = new Fletero(email, nombre, password, telefono);
+    public boolean updateFletero(String nombre, String password, String email, String telefono, String nombreVehiculo, int cargaVehiculo) {
+        Fletero f = new Fletero(nombre, email, password, telefono, nombreVehiculo, cargaVehiculo);
         return DLusu.updateUsuario(f);
     }
 
@@ -68,10 +67,11 @@ public class BLUsuario implements IBLUsuario {
     public List<Cliente> getAllClientes() {
         return DLusu.getAllClientes();
     }
-
+    
+    /*
     @Override
     public TipoUsuario login(String email, String pass) {
         return DLusu.login(email, pass);
-    }
+    }*/
 
 }
