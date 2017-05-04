@@ -17,14 +17,14 @@ public class FleteroController implements ISLFletero {
     
     @Override
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public boolean addFletero(@RequestParam(name = "nombre") String nombre,@RequestParam(name = "email") String email,@RequestParam(name = "password") String password, @RequestParam(name = "telefono") String telefono, @RequestParam(name = "vehiculo_nombre") String vehiculoNombre, @RequestParam(name = "vehiculo_carga") String vehiculoCarga ) {
+    public boolean addFletero(@RequestParam(name = "nombre") String nombre,@RequestParam(name = "email") String email,@RequestParam(name = "password") String password, @RequestParam(name = "telefono") String telefono, @RequestParam(name = "vehiculoNombre") String vehiculoNombre, @RequestParam(name = "vehiculoCarga") int vehiculoCarga ) {
         return new BLUsuario().addFletero(nombre, password, email, telefono, vehiculoNombre, vehiculoCarga);
     }
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public boolean updateFletero(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
-        return new BLUsuario().updateFletero(nombre, password, email, telefono);
+    public boolean updateFletero(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono, @RequestParam(name = "vehiculoNombre") String vehiculoNombre, @RequestParam(name = "vehiculoCarga") int vehiculoCarga) {
+        return new BLUsuario().updateFletero(nombre, password, email, telefono, vehiculoNombre, vehiculoCarga);
     }
 
     @Override
