@@ -19,10 +19,8 @@ CREATE TABLE CLIENTES (
 CREATE SEQUENCE SOLICITUDES_ID_SEC;
 CREATE TABLE SOLICITUDES (
     id integer NOT NULL DEFAULT nextval('SOLICITUDES_ID_SEC'),
-    latitud_origen decimal NOT NULL,
-    longitud_origen decimal NOT NULL,
-    latitud_destino decimal NOT NULL,
-    longitud_destino decimal NOT NULL,
+    origen text NOT NULL,
+    destino text NOT NULL,
     peso int NULL,
     volumen int NULL,
     precio_max float NOT NULL,
