@@ -2,13 +2,16 @@ package com.grupo15.easyflete;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,6 +21,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "solicitudes")
 @XmlRootElement
 public class Solicitud implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "origen")
+    private String origen;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "destino")
+    private String destino;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "titulo")
+    private String titulo;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private FleteroSolicitudCliente fleteroSolicitudCliente;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private SolicitudCliente solicitudCliente;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -149,6 +172,46 @@ public class Solicitud implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public FleteroSolicitudCliente getFleteroSolicitudCliente() {
+        return fleteroSolicitudCliente;
+    }
+
+    public void setFleteroSolicitudCliente(FleteroSolicitudCliente fleteroSolicitudCliente) {
+        this.fleteroSolicitudCliente = fleteroSolicitudCliente;
+    }
+
+    public SolicitudCliente getSolicitudCliente() {
+        return solicitudCliente;
+    }
+
+    public void setSolicitudCliente(SolicitudCliente solicitudCliente) {
+        this.solicitudCliente = solicitudCliente;
     }
 
 }
