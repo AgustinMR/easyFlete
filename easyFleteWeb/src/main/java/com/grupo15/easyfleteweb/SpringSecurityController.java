@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +32,8 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/inicio").access("hasRole('CLIENTE')")
+                //.antMatchers("/inicio").access("hasRole('CLIENTE')")
+                .antMatchers(HttpMethod.GET ,"/inicio").hasAuthority("CLIENTE")
                 .anyRequest().permitAll()
             .and()
             .formLogin()
@@ -43,9 +42,10 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .passwordParameter("pass")
                     .successForwardUrl("/inicio")
+                    .defaultSuccessUrl("/inicio")
             .and()
             .logout()
-                .logoutSuccessUrl("/login?logout") 
+                .logoutSuccessUrl("/") 
             .and()
             .exceptionHandling()
                 .accessDeniedPage("/403")
@@ -61,7 +61,5 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("SELECT username, password, enabled FROM USUARIOS WHERE username=?")
                 .authoritiesByUsernameQuery("SELECT username, role from ROLES where username=?");
     }
-
-    
 
 }
