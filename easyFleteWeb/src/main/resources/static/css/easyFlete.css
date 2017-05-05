@@ -58,3 +58,9 @@ body, html {
         background-attachment: scroll;
     }
 }
+.w3-easyFlete{color:#F5F5F5;background-color:#03aa3e!important}
+.w3-border-easyFlete {border-color:#03aa3e !important}
+.w3-hover-easyFlete:hover {color:#F5F5F5 !important; background-color:#03aa3e !important}
+.w3-hover-text-easyFlete:hover {color:#03aa3e !important}
+.w3-hover-border-easyFlete:hover {border-color:#03aa3e !important}
+.w3-text-easyFlete {color:#03aa3e !important}
