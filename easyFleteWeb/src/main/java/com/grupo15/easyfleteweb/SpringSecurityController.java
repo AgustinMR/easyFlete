@@ -30,6 +30,7 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        // en la configuracion de spring security se especifica unicamente los recursos que deben ser protegidos.
         http
             .authorizeRequests()
                 //.antMatchers("/inicio").access("hasRole('CLIENTE')")

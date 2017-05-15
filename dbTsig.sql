@@ -1,22 +1,3 @@
--- CREATE TABLE FLETEROS (
---   nombre varchar(30) NOT NULL,
---
---   email varchar(30) NOT NULL,
---   password varchar(30) NOT NULL,
---   telefono varchar(20) NOT NULL,
---   vehiculo_nombre varchar(40) NULL,
---   vehiculo_carga varchar(40) NULL,
---   PRIMARY KEY (email)
--- );
---
--- CREATE TABLE CLIENTES (
---   nombre varchar(30) NOT NULL,
---   email varchar(30) NOT NULL,
---   password varchar(30) NULL,
---   telefono varchar(20) NOT NULL,
---   PRIMARY KEY (email)
--- );
-
 CREATE TABLE USUARIOS (
   nombre varchar(30) NOT NULL,
   username varchar(30) NOT NULL,
@@ -42,8 +23,6 @@ ALTER SEQUENCE ROLES_ID_SEC OWNED BY ROLES.id;
 CREATE SEQUENCE SOLICITUDES_ID_SEC;
 CREATE TABLE SOLICITUDES (
     id integer NOT NULL DEFAULT nextval('SOLICITUDES_ID_SEC'),
-    origen text NOT NULL,
-    destino text NOT NULL,
     peso int NULL,
     volumen int NULL,
     precio_max float NOT NULL,

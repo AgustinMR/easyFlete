@@ -9,7 +9,7 @@ public abstract interface ISolicitud {
     
     public boolean addSolicitud(Solicitud s);
     public boolean addSolicitudCliente(SolicitudCliente sCli);
-    public boolean updateSolicitud(int id, String origen, String destino, double precioMax, Integer peso, Integer volumen, String descripcion);
+    public boolean updateSolicitud(int id, double precioMax, Integer peso, String descripcion);
     public boolean updateSolicitudCliente(int id, Date fecha);
     public boolean deleteSolicitud(int id);
     public boolean deleteSolicitudCliente(int id);

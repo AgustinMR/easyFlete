@@ -18,17 +18,16 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public boolean addSolicitud(@RequestParam(name = "origen") String origen,@RequestParam(name = "destino") String destino, @RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email) {
+    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "peso") int peso,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.addSolicitud(origen, destino, peso, volumen, descripcion, fecha, precioMax, email);
-       
+        return bl.addSolicitud(jsonOrigen, jsonDestino, peso, descripcion, fecha, precioMax, email);
     }
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.PUT)
-    public boolean updateSolicitud(@RequestParam(name = "id")int id, @RequestParam(name = "origen") String origen, @RequestParam(name = "destino") String destino ,@RequestParam(name = "peso") int peso,@RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax) {
+    public boolean updateSolicitud(@RequestParam(name = "id")int id, @RequestParam(name = "origen") String jsonOrigen, @RequestParam(name = "destino") String jsonDestino ,@RequestParam(name = "peso") int peso, @RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.updateSolicitud(id, origen, destino, peso, volumen, descripcion, fecha, precioMax);
+        return bl.updateSolicitud(id, jsonOrigen, jsonDestino, peso, descripcion, fecha, precioMax);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
-    public Solicitud getSolicitud(@PathVariable(name="id")int id) { //@PathVariable(name="id") hace correpondencia entre uri y el int id 
+    public Solicitud getSolicitud(@PathVariable(name="id")int id) {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitud(id);
     }
