@@ -25,7 +25,7 @@ public class FleteroController implements ISLFletero {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public boolean updateFletero(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono, @RequestParam(name = "vehiculoNombre") String vehiculoNombre, @RequestParam(name = "vehiculoCarga") int vehiculoCarga) {
         return new BLUsuario().updateFletero(nombre, password, email, telefono, vehiculoNombre, vehiculoCarga);
-    }
+    } 
 
     @Override
     @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)

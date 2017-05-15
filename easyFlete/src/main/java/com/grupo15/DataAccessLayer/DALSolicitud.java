@@ -28,15 +28,12 @@ public class DALSolicitud implements ISolicitud {
     }
 
     @Override
-    public boolean updateSolicitud(int id, String origen, String destino, double precioMax, Integer peso, Integer volumen, String descripcion) {
+    public boolean updateSolicitud(int id, double precioMax, Integer peso, String descripcion) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud sol = em.find(Solicitud.class, id);
         em.getTransaction().begin();
-        sol.setOrigen(origen);
-        sol.setDestino(destino);
         sol.setPrecioMax(precioMax);
         sol.setPeso(peso);
-        sol.setVolumen(volumen);
         sol.setDescripcion(descripcion);
         em.getTransaction().commit();
         return true;
