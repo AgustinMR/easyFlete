@@ -20,8 +20,8 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
-        Solicitud s = new Solicitud(latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);
+    public boolean addSolicitud(String origen, String destino, int peso, String descripcion, String fecha, double precioMax, String email) {
+        Solicitud s = new Solicitud(peso, precioMax, email, descripcion);
         boolean ingreso = DLsol.addSolicitud(s);
         if (ingreso) {
             String fech[] = fecha.split("/");
@@ -35,7 +35,7 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean updateSolicitud(int id, double latOrigen, double lonOrigen, double latDestino, double lonDestino, int peso, int volumen, String descripcion, String fecha, double precioMax) {
+    public boolean updateSolicitud(int id, String origen, String destino, int peso, String descripcion, String fecha, double precioMax) {
         SolicitudCliente solCli = DLsol.getSolicitudCli(id);
         Calendar cal = new GregorianCalendar();
         cal.setTime(solCli.getFecha());
@@ -46,7 +46,7 @@ public class BLSolicitud implements IBLSolicitud {
         if (!cal.getTime().equals(cal2.getTime())) {
             DLsol.updateSolicitudCliente(id, cal2.getTime());
         }
-        return DLsol.updateSolicitud(id,latOrigen, lonOrigen, latDestino, lonDestino, precioMax, peso, volumen, descripcion);
+        return DLsol.updateSolicitud(id, precioMax, peso, descripcion);
     }
 
     @Override

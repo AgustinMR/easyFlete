@@ -2,11 +2,9 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
-import com.grupo15.easyflete.TipoUsuario;
 import com.grupo15.handlers.EMHandler;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 public class DALUsuario implements IUsuario {
 
@@ -78,7 +76,6 @@ public class DALUsuario implements IUsuario {
     public Fletero getFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
         return em.find(Fletero.class, email);
-
     }
 
     @Override
@@ -101,23 +98,23 @@ public class DALUsuario implements IUsuario {
         List<Cliente> C = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
         return C;
     }
-
+    
+    /*
     @Override
     public TipoUsuario login(String email, String pass) {
         EntityManager em = new EMHandler().entityManager();
-        TypedQuery<Cliente> queryC = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :email", Cliente.class);
-        Cliente cli = queryC.setParameter("email", email).getSingleResult();
-        if (cli != null && pass.equals(cli.getPassword())) {
+        TypedQuery<Cliente> queryC = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :email AND c.password = :pass", Cliente.class);
+        if(!queryC.setParameter("email", email).setParameter("pass", pass).getResultList().isEmpty()){
+            em.close();
             return TipoUsuario.OK_CLIENTE;
-        } else {
-            TypedQuery<Fletero> queryF = em.createQuery("SELECT f FROM Fletero f WHERE f.email = :email", Fletero.class);
-            Fletero flet = queryF.setParameter("email", email).getSingleResult();
-            if (flet != null && pass.equals(flet.getPassword())) {
-                return TipoUsuario.OK_FLETERO;
-            } else {
-                return TipoUsuario.ERROR;
-            }
         }
-    }
+        TypedQuery<Fletero> queryF = em.createQuery("SELECT f FROM Fletero f WHERE f.email = :email AND f.password = :pass", Fletero.class);
+        if(!queryF.setParameter("email", email).setParameter("pass", pass).getResultList().isEmpty()){
+            em.close();
+            return TipoUsuario.OK_FLETERO;
+        }
+        em.close();
+        return TipoUsuario.ERROR;
+    }*/
 
 }

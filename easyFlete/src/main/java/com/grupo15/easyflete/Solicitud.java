@@ -7,16 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "solicitudes")
-@XmlRootElement
 public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,22 +21,6 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "latitud_origen")
-    private double latitudOrigen;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "longitud_origen")
-    private double longitudOrigen;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "latitud_destino")
-    private double latitudDestino;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "longitud_destino")
-    private double longitudDestino;
     @Column(name = "peso")
     private Integer peso;
     @Column(name = "volumen")
@@ -49,6 +29,11 @@ public class Solicitud implements Serializable {
     @NotNull
     @Column(name = "precio_max")
     private double precioMax;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "titulo")
+    private String titulo;
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
@@ -60,22 +45,16 @@ public class Solicitud implements Serializable {
         this.id = id;
     }
 
-    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax) {
-        this.latitudOrigen = latitudOrigen;
-        this.longitudOrigen = longitudOrigen;
-        this.latitudDestino = latitudDestino;
-        this.longitudDestino = longitudDestino;
+    public Solicitud(Integer id, double precioMax, String titulo) {
+        this.id = id;
         this.precioMax = precioMax;
+        this.titulo = titulo;
     }
 
-    public Solicitud(double latitudOrigen, double longitudOrigen, double latitudDestino, double longitudDestino, double precioMax, Integer peso, Integer volumen, String descripcion) {
-        this.latitudOrigen = latitudOrigen;
-        this.longitudOrigen = longitudOrigen;
-        this.latitudDestino = latitudDestino;
-        this.longitudDestino = longitudDestino;
-        this.precioMax = precioMax;
+    public Solicitud(Integer peso, double precioMax, String titulo, String descripcion) {
         this.peso = peso;
-        this.volumen = volumen;
+        this.precioMax = precioMax;
+        this.titulo = titulo;
         this.descripcion = descripcion;
     }
 
@@ -85,38 +64,6 @@ public class Solicitud implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public double getLatitudOrigen() {
-        return latitudOrigen;
-    }
-
-    public void setLatitudOrigen(double latitudOrigen) {
-        this.latitudOrigen = latitudOrigen;
-    }
-
-    public double getLongitudOrigen() {
-        return longitudOrigen;
-    }
-
-    public void setLongitudOrigen(double longitudOrigen) {
-        this.longitudOrigen = longitudOrigen;
-    }
-
-    public double getLatitudDestino() {
-        return latitudDestino;
-    }
-
-    public void setLatitudDestino(double latitudDestino) {
-        this.latitudDestino = latitudDestino;
-    }
-
-    public double getLongitudDestino() {
-        return longitudDestino;
-    }
-
-    public void setLongitudDestino(double longitudDestino) {
-        this.longitudDestino = longitudDestino;
     }
 
     public Integer getPeso() {
@@ -143,6 +90,14 @@ public class Solicitud implements Serializable {
         this.precioMax = precioMax;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -150,5 +105,5 @@ public class Solicitud implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    
 }

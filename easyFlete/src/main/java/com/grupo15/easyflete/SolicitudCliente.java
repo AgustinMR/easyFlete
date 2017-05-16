@@ -5,21 +5,18 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "solicitudes_clientes")
-@XmlRootElement
 public class SolicitudCliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,12 +30,12 @@ public class SolicitudCliente implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    @JoinColumn(name = "cliente_email", referencedColumnName = "email")
-    @ManyToOne(optional = false)
-    private Cliente clienteEmail;
     @JoinColumn(name = "solicitud_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Solicitud solicitud;
+    @JoinColumn(name = "cliente_email", referencedColumnName = "email")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario clienteEmail;
 
     public SolicitudCliente() {
     }
@@ -51,12 +48,20 @@ public class SolicitudCliente implements Serializable {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
     }
-    
-    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente email) {
+
+    public SolicitudCliente(Date fecha, Solicitud solicitud, Usuario clienteEmail) {
+        this.fecha = fecha;
+        this.solicitud = solicitud;
+        this.clienteEmail = clienteEmail;
+    }
+
+    public SolicitudCliente(Integer solicitudId, Date fecha, Usuario clienteEmail) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
-        this.clienteEmail = email;
+        this.clienteEmail = clienteEmail;
     }
+    
+    
 
     public Integer getSolicitudId() {
         return solicitudId;
@@ -74,20 +79,45 @@ public class SolicitudCliente implements Serializable {
         this.fecha = fecha;
     }
 
-    public Cliente getClienteEmail() {
-        return clienteEmail;
-    }
-
-    public void setClienteEmail(Cliente clienteEmail) {
-        this.clienteEmail = clienteEmail;
-    }
-
     public Solicitud getSolicitud() {
         return solicitud;
     }
 
     public void setSolicitud(Solicitud solicitud) {
         this.solicitud = solicitud;
+    }
+
+    public Usuario getClienteEmail() {
+        return clienteEmail;
+    }
+
+    public void setClienteEmail(Usuario clienteEmail) {
+        this.clienteEmail = clienteEmail;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (solicitudId != null ? solicitudId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SolicitudCliente)) {
+            return false;
+        }
+        SolicitudCliente other = (SolicitudCliente) object;
+        if ((this.solicitudId == null && other.solicitudId != null) || (this.solicitudId != null && !this.solicitudId.equals(other.solicitudId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.grupo15.easyflete.SolicitudCliente[ solicitudId=" + solicitudId + " ]";
     }
     
 }
