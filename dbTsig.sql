@@ -6,7 +6,7 @@ CREATE TABLE USUARIOS (
   telefono varchar(20) NOT NULL,
   vehiculo_nombre varchar(40) NULL,
   vehiculo_carga int NULL,
-  tipo varchar(10) NOT NULL,
+  dtype varchar(10) NOT NULL,
   PRIMARY KEY (username)
 );
 

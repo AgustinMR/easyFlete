@@ -56,7 +56,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
-    @Column(name = "tipo")
+    @Column(name = "dtype")
     private String tipo;
 
     public Usuario() {
@@ -77,6 +77,7 @@ public class Usuario implements Serializable {
     public Usuario(String nombre, String email, String password, String telefono) {
         this.nombre = nombre;
         this.email = email;
+        this.enabled = 1;
         this.password = password;
         this.telefono = telefono;
     }
