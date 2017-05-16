@@ -4,6 +4,7 @@ import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.DataAccessLayer.DALUsuario;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.Rol;
 import java.util.List;
 
 public class BLUsuario implements IBLUsuario {
@@ -17,13 +18,15 @@ public class BLUsuario implements IBLUsuario {
     @Override
     public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
         Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
-        return DLusu.addUsuario(f);
+        DLusu.addUsuario(f);
+        return DLusu.addRol(new Rol("FLETERO",DLusu.getFletero(email)));
     }
 
     @Override
     public boolean addCliente(String nombre, String password, String email, String telefono) {
-        Cliente c = new Cliente(email, nombre, telefono, password);
-        return DLusu.addUsuario(c);
+        Cliente c = new Cliente(nombre, email, password, telefono);
+        DLusu.addUsuario(c);
+        return DLusu.addRol(new Rol("CLIENTE",DLusu.getCliente(email)));
     }
 
     @Override
