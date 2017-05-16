@@ -16,10 +16,12 @@ public class Fletero extends Usuario{
 
     public Fletero(String nombre, String email, String password, String telefono) {
         super(nombre, email, password, telefono);
+        this.setTipo("Fletero");
     }
 
     public Fletero(String nombre, String email, String password, String telefono, String vehiculoNombre, Integer vehiculoCarga) {
         super(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
+        this.setTipo("Fletero");
     }
 
     

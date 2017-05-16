@@ -2,6 +2,7 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.Rol;
 import com.grupo15.handlers.EMHandler;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -97,6 +98,15 @@ public class DALUsuario implements IUsuario {
         EntityManager em = new EMHandler().entityManager();
         List<Cliente> C = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
         return C;
+    }
+    
+    @Override
+    public boolean addRol(Rol r) {
+        EntityManager em = new EMHandler().entityManager();
+        em.getTransaction().begin();
+        em.persist(r);
+        em.getTransaction().commit();
+        return true;
     }
     
     /*
