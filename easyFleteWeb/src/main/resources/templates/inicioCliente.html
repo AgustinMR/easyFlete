@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/easyFlete.css">
+    <script src="../static/js/jquery.js"></script>
     <script src="js/easyFlete.js" type="text/javascript"></script>
     <body class="w3-light-grey">
         <div class="w3-top w3-topbar w3-border-easyFlete">
@@ -37,20 +38,35 @@
         <div class="w3-container w3-padding-64">
             <div class="w3-content">
                 <label for="nombre"><strong>T&iacute;tulo:</strong></label>
-                <input type="text" name="nombre" class="w3-input w3-hover-border-easyFlete w3-border-0 w3-leftbar w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%">
+                <input id="titulo" type="text" name="nombre" class="w3-input w3-hover-border-easyFlete w3-border-0 w3-leftbar w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%">
                 <label for="carga"><strong>Carga(Kg):</strong></label>
-                <input type="number" name="carga" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
+                <input id="carga" type="number" name="carga" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
                 <label for="precio"><strong>Precio M&aacute;ximo a pagar(UY):</strong></label>
-                <input type="number" name="precio" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
+                <input id="precioMax" type="number" name="precio" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" placeholder="Ingresar t&iacute;tulo de la oferta..." style="width: 50%" min="1" value="1">
                 <label for="date"><strong>Fecha:</strong></label>
-                <input type="date" name="date" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" style="width: 50%">
+                <input id="fecha" type="date" name="date" class="w3-input w3-hover-border-easyFlete w3-leftbar w3-border-0 w3-round w3-margin-bottom w3-padding" style="width: 50%">
                 <label for="descripcion"><strong>Descripci&oacute;n:</strong></label>
-                <textarea type="text" name="descripcion" class="w3-input w3-hover-border-easyFlete w3-round w3-leftbar w3-border-0 w3-margin-bottom w3-padding" placeholder="Ingresar descripci&oacute;n para la oferta..." style="min-height: 100px; max-height: 200px; min-width: 100%; max-width: 100%"></textarea>
-                <p><strong>Or&iacute;gen y Destino:</strong></p>
+                <textarea id="descripcion" type="text" name="descripcion" class="w3-input w3-hover-border-easyFlete w3-round w3-leftbar w3-border-0 w3-margin-bottom w3-padding" placeholder="Ingresar descripci&oacute;n para la oferta..." style="min-height: 100px; max-height: 200px; min-width: 100%; max-width: 100%"></textarea>
+                <p><strong>Defina Origen y Destino:</strong></p>
+                <label for="origen"><strong>Origen:</strong></label>
+                <input type="text" id="origen" name="origen" class="w3-input w3-hover-border-easyFlete w3-border-0 w3-leftbar w3-round w3-margin-bottom w3-padding" placeholder="Ingresar lugar de origen del flete..." style="width: 50%">
+                <label for="destino"><strong>Destino:</strong></label>
+                <input id="destino" type="text" name="destino" class="w3-input w3-hover-border-easyFlete w3-border-0 w3-leftbar w3-round w3-margin-bottom w3-padding" placeholder="Ingresar lugar de destino del flete..." style="width: 50%">
                 <div class="w3-container w3-padding"><div class="w3-col w3-card-4 w3-round" id="map"></div></div>
                 <div class="w3-row w3-center w3-padding w3-padding-32"><button class="w3-button w3-easyFlete w3-round w3-hover-shadow w3-hover-easyFlete">SOLICITAR</button></div>
             </div>
         </div>
+        <script>
+            document.getElementById("origen").onkeypress = function () {
+                setTimeout('listar()', 3000);
+            };
+            function listar() {
+                $.get("http://localhost:10070/calles", "calle=" + document.getElementById("origen").value, function (response) {
+                    var calle = JSON.parse(response);
+                    alert(calle);
+                });
+            }
+        </script>
         <div class="w3-white w3-container w3-padding-64" id="fleteros">
             <div class="w3-content">
                 fleteros....
@@ -65,5 +81,7 @@
         <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
         <script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4-src.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
     </body>
 </html>
