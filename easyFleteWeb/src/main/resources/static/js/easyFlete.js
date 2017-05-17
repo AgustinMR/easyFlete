@@ -53,8 +53,10 @@ window.onload = function(){
 		layers: [raster, vector],
 		target: 'map',
 		view: new ol.View({
-		center: [-6252314.099176527, -4144802.9589933674], zoom: 12
-				//minZoom: 11,
+                    center: [-56.18323811489842,-34.72009218442574],
+                    zoom: 10,
+                    projection: 'EPSG:4326'
+                    //minZoom: 11,
                     //maxZoom: 17
                 })
             });
@@ -100,7 +102,7 @@ window.onload = function(){
           type: "Point"
         });
         map.addInteraction(draw);
-        /*
+        
         draw.on('drawend',
           function(evt) {
             console.log(evt.feature);
@@ -109,7 +111,7 @@ window.onload = function(){
             var featuresGeoJSON = parser.writeFeatures(features);
             alert(featuresGeoJSON);
           },
-        this);*/
+        this);
       }
 
 
