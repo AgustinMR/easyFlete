@@ -12,10 +12,12 @@ public class Cliente extends Usuario {
 
     public Cliente(String email) {
         super(email);
+        this.setTipo("Cliente");
     }
 
     public Cliente(String nombre, String email, String password, String telefono) {
         super(nombre, email, password, telefono);
+        this.setTipo("Cliente");
     }
     
 }
