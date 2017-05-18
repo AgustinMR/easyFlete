@@ -56,9 +56,13 @@ body, html {
 .hidden.menu {
       display: none;
     }
-
+.masterhead{
+	height: 700px
+}
+.mhead{
+	height: 150px
+}
     .masthead.segment {
-      min-height: 700px;
       padding: 1em 0em;
     }
     .masthead .logo.item img {
@@ -137,6 +141,11 @@ body, html {
         font-size: 1.5em;
       }
     }
+.w3-hide{display:none!important}.w3-show-block,.w3-show{display:block!important}.w3-show-inline-block{display:inline-block!important}
+@media (max-width:600px){.w3-modal-content{margin:0 10px;width:auto!important}.w3-modal{padding-top:30px}
+.w3-dropdown-hover.w3-mobile .w3-dropdown-content,.w3-dropdown-click.w3-mobile .w3-dropdown-content{position:relative}	
+.w3-hide-small{display:none!important}.w3-mobile{display:block;width:100%!important}.w3-bar-item.w3-mobile,.w3-dropdown-hover.w3-mobile,.w3-dropdown-click.w3-mobile{text-align:center}
+.w3-dropdown-hover.w3-mobile,.w3-dropdown-hover.w3-mobile .w3-btn,.w3-dropdown-hover.w3-mobile .w3-button,.w3-dropdown-click.w3-mobile,.w3-dropdown-click.w3-mobile .w3-btn,.w3-dropdown-click.w3-mobile .w3-button{width:100%}}
 .w3-easyFlete-orange{color:#F5F5F5;background-color:#c28141!important}
 .w3-easyFlete-grey{color:#F5F5F5!important;background-color:#6f7075!important}
 .w3-border-easyFlete-orange {border-color:#c28141 !important}

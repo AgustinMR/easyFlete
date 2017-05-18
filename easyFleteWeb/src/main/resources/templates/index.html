@@ -101,10 +101,10 @@
                         <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Solicitar Flete</span></h2>
                 </div>
             </div>
-            <div class="ui vertical stripe segment">
+            <div class="w3-padding w3-padding-48">
                 <div class="ui middle aligned stackable grid container">
                     <div class="row">
-                        <div class="eight wide column">
+                        <div class="eight wide centered column">
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Informaci&oacute;n B&aacute;sica</h4>
                             <div class="ui labeled fluid input w3-margin"><div class="ui label">T&iacute;tulo:</div>
                                 <input placeholder="Ingrese un t&iacute;tulo para el flete..." type="text">
@@ -131,63 +131,44 @@
                     </div>
                 </div>
             </div>
-            <div class="ui vertical stripe quote segment">
-                <div class="ui equal width stackable internally celled grid">
-                    <div class="center aligned row">
-                        <div class="column">
-                            <h3>Origen:</h3>
-                            <select name="origen" id="origen" class="ui fluid search dropdown">
-                                <option value="" selected disabled>Ingrese una calle con numero de puerta</option>
-                                <option value="angular">Angular</option>
-                                <option value="css">CSS</option>
-                                <option value="design">Graphic Design</option>
-                                <option value="ember">Ember</option>
-                                <option value="html">HTML</option>
-                                <option value="ia">Information Architecture</option>
-                                <option value="javascript">Javascript</option>
-                                <option value="mech">Mechanical Engineering</option>
-                                <option value="meteor">Meteor</option>
-                                <option value="node">NodeJS</option>
-                                <option value="plumbing">Plumbing</option>
-                                <option value="python">Python</option>
-                                <option value="rails">Rails</option>
-                                <option value="react">React</option>
-                                <option value="repair">Kitchen Repair</option>
-                                <option value="ruby">Ruby</option>
-                                <option value="ui">UI Design</option>
-                                <option value="ux">User Experience</option>
-                            </select>
+            <div class="w3-content">
+                <div class="ui vertical stripe quote segment">
+                    <div class="ui equal width stackable internally celled grid">
+                        <div class="center aligned row">
+                            <div class="column">
+                                <h3>Origen:</h3>
+                                <select name="origen" id="origen" class="ui fluid search dropdown">
+                                    <option value="" selected disabled>Ingrese una calle con numero de puerta</option>
+                                    <option value="angular">Angular</option>
+                                    <option value="css">CSS</option>
+                                    <option value="design">Graphic Design</option>
+                                    <option value="ember">Ember</option>
+                                    <option value="html">HTML</option>
+                                    <option value="ia">Information Architecture</option>
+                                    <option value="javascript">Javascript</option>
+                                </select>
+                            </div>
+                            <div class="column">
+                                <div class="w3-content">
+                                    <h3>Destino:</h3>
+                                    <select name="destino" id="destino" class="ui fluid search dropdown">
+                                        <option value="" selected disabled>Ingrese una calle con numero de puerta</option>
+                                        <option value="angular">Angular</option>
+                                        <option value="css">CSS</option>
+                                        <option value="design">Graphic Design</option>
+                                        <option value="ember">Ember</option>
+                                        <option value="html">HTML</option>
+                                        <option value="ia">Information Architecture</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                $('.ui.dropdown').dropdown({
+                                    allowAdditions: true,
+                                    url: '//api.semantic-ui.com/tags/{query}' // url de la cual cargar las calles
+                                });
+                            </script>
                         </div>
-                        <div class="column">
-                            <h3>Destino:</h3>
-                            <select name="destino" id="destino" class="ui fluid search dropdown">
-                                <option value="" selected disabled>Ingrese una calle con numero de puerta</option>
-                                <option value="angular">Angular</option>
-                                <option value="css">CSS</option>
-                                <option value="design">Graphic Design</option>
-                                <option value="ember">Ember</option>
-                                <option value="html">HTML</option>
-                                <option value="ia">Information Architecture</option>
-                                <option value="javascript">Javascript</option>
-                                <option value="mech">Mechanical Engineering</option>
-                                <option value="meteor">Meteor</option>
-                                <option value="node">NodeJS</option>
-                                <option value="plumbing">Plumbing</option>
-                                <option value="python">Python</option>
-                                <option value="rails">Rails</option>
-                                <option value="react">React</option>
-                                <option value="repair">Kitchen Repair</option>
-                                <option value="ruby">Ruby</option>
-                                <option value="ui">UI Design</option>
-                                <option value="ux">User Experience</option>
-                            </select>
-                        </div>
-                        <script>
-                            $('.ui.dropdown').dropdown({
-                                allowAdditions: true,
-                                url: '//api.semantic-ui.com/tags/{query}' // url de la cual cargar las calles
-                            });
-                        </script>
                     </div>
                 </div>
             </div>

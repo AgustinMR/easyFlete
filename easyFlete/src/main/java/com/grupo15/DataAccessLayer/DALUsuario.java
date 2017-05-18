@@ -16,18 +16,28 @@ public class DALUsuario implements IUsuario {
     @Override
     public boolean addUsuario(Cliente c) {
         EntityManager em = new EMHandler().entityManager();
+        if(em.find(Cliente.class, c.getEmail()) != null){
+            em.close();
+            return false;
+        }
         em.getTransaction().begin();
         em.persist(c);
         em.getTransaction().commit();
+        em.close();
         return true;
     }
 
     @Override
     public boolean addUsuario(Fletero f) {
         EntityManager em = new EMHandler().entityManager();
+        if(em.find(Cliente.class, f.getEmail()) != null){
+            em.close();
+            return false;
+        }
         em.getTransaction().begin();
         em.persist(f);
         em.getTransaction().commit();
+        em.close();
         return true;
     }
 
@@ -57,6 +67,10 @@ public class DALUsuario implements IUsuario {
     public boolean deleteCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
         Cliente c = em.find(Cliente.class, email);
+        if(c == null){
+            em.close();
+            return false;
+        }
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();
@@ -67,6 +81,10 @@ public class DALUsuario implements IUsuario {
     public boolean deleteFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
         Fletero f = em.find(Fletero.class, email);
+        if(f == null){
+            em.close();
+            return false;
+        }
         em.getTransaction().begin();
         em.remove(f);
         em.getTransaction().commit();
@@ -76,13 +94,17 @@ public class DALUsuario implements IUsuario {
     @Override
     public Fletero getFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
-        return em.find(Fletero.class, email);
+        Fletero f = em.find(Fletero.class, email);
+        em.close();
+        return f;
     }
 
     @Override
     public Cliente getCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
-        return em.find(Cliente.class, email);
+        Cliente c = em.find(Cliente.class, email);
+        em.close();
+        return c;
 
     }
 
@@ -90,6 +112,7 @@ public class DALUsuario implements IUsuario {
     public List<Fletero> getAllFleteros() {
         EntityManager em = new EMHandler().entityManager();
         List<Fletero> F = em.createQuery("SELECT f FROM Fletero f", Fletero.class).getResultList();
+        em.close();
         return F;
     }
 
@@ -97,6 +120,7 @@ public class DALUsuario implements IUsuario {
     public List<Cliente> getAllClientes() {
         EntityManager em = new EMHandler().entityManager();
         List<Cliente> C = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
+        em.close();
         return C;
     }
     
@@ -108,23 +132,5 @@ public class DALUsuario implements IUsuario {
         em.getTransaction().commit();
         return true;
     }
-    
-    /*
-    @Override
-    public TipoUsuario login(String email, String pass) {
-        EntityManager em = new EMHandler().entityManager();
-        TypedQuery<Cliente> queryC = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :email AND c.password = :pass", Cliente.class);
-        if(!queryC.setParameter("email", email).setParameter("pass", pass).getResultList().isEmpty()){
-            em.close();
-            return TipoUsuario.OK_CLIENTE;
-        }
-        TypedQuery<Fletero> queryF = em.createQuery("SELECT f FROM Fletero f WHERE f.email = :email AND f.password = :pass", Fletero.class);
-        if(!queryF.setParameter("email", email).setParameter("pass", pass).getResultList().isEmpty()){
-            em.close();
-            return TipoUsuario.OK_FLETERO;
-        }
-        em.close();
-        return TipoUsuario.ERROR;
-    }*/
 
 }
