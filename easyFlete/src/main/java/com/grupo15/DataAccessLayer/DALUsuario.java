@@ -6,6 +6,7 @@ import com.grupo15.easyflete.Rol;
 import com.grupo15.handlers.EMHandler;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class DALUsuario implements IUsuario {
 
@@ -16,29 +17,32 @@ public class DALUsuario implements IUsuario {
     @Override
     public boolean addUsuario(Cliente c) {
         EntityManager em = new EMHandler().entityManager();
-        if(em.find(Cliente.class, c.getEmail()) != null){
+        try{
+            em.getTransaction().begin();
+            em.persist(c);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        }catch(Exception e){
             em.close();
             return false;
         }
-        em.getTransaction().begin();
-        em.persist(c);
-        em.getTransaction().commit();
-        em.close();
-        return true;
     }
 
     @Override
     public boolean addUsuario(Fletero f) {
         EntityManager em = new EMHandler().entityManager();
-        if(em.find(Cliente.class, f.getEmail()) != null){
+        try{
+            em.getTransaction().begin();
+            em.persist(f);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        }catch(Exception e){
             em.close();
             return false;
         }
-        em.getTransaction().begin();
-        em.persist(f);
-        em.getTransaction().commit();
-        em.close();
-        return true;
+        
     }
 
     @Override
@@ -94,18 +98,15 @@ public class DALUsuario implements IUsuario {
     @Override
     public Fletero getFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
-        Fletero f = em.find(Fletero.class, email);
-        em.close();
-        return f;
+        TypedQuery<Fletero> query = em.createQuery("SELECT c FROM Fletero c WHERE c.email = :e", Fletero.class);
+        return query.setParameter("e", email).getSingleResult();
     }
 
     @Override
     public Cliente getCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
-        Cliente c = em.find(Cliente.class, email);
-        em.close();
-        return c;
-
+        TypedQuery<Cliente> query = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :e", Cliente.class);
+        return query.setParameter("e", email).getSingleResult();
     }
 
     @Override

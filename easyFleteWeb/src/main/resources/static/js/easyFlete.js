@@ -7,7 +7,7 @@ function iniciarSesion() {
 function registrar() {
     if (document.getElementById("radio").checked === true) {
         $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (exito) {
-            if (exito === "true") {
+            if (exito === true) {
                 $('#exito').modal('show');
             } else {
                 $('#error').modal('show');
@@ -15,19 +15,19 @@ function registrar() {
         });
     } else {
         $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
-            if (exito === "true") {
+            alert(exito);
+            if (exito === true) {
                 $('#exito').modal('show');
             } else {
                 $('#error').modal('show');
             }
         });
     }
-
 }
 function blurBackground() {
     "use strict";
-    $("#backgr").animate({opacity: 0.80, }, 4000, function () {
-        $("#backgr").animate({opacity: 1.00, }, 3000, function () {
+    $("#backgr").animate({opacity: 0.80 }, 4000, function () {0
+        $("#backgr").animate({opacity: 1.00 }, 3000, function () {
             blurBackground();
         });
     });
@@ -35,8 +35,8 @@ function blurBackground() {
 ;
 function blurBackground2() {
     "use strict";
-    $("#backgr").animate({opacity: 0.40, }, 4000, function () {
-        $("#backgr").animate({opacity: 1.00, }, 3000, function () {
+    $("#backgr").animate({opacity: 0.40 }, 4000, function () {
+        $("#backgr").animate({opacity: 1.00 }, 3000, function () {
             blurBackground2();
         });
     });
