@@ -126,8 +126,8 @@
                                 <h3>Origen:</h3>
                                 <select name="origen" id="origen" class="ui fluid search dropdown">
                                     <option value="" selected disabled>Busque una calle</option>
+                                    <option value="Easy Flete" >Easy Flete</option>
                                 </select>
-                                <select name="origenNum" id="origenNum" class="ui fluid search dropdown"></select>
                                 <button onclick="dibujarPunto('Origen')">Dibujar punto</button>
                             </div>
                             <div class="column">
@@ -136,7 +136,6 @@
                                     <select name="destino" id="destino" class="ui fluid search dropdown">
                                         <option value="" selected disabled>Busque una calle</option>
                                     </select>
-                                    <select name="destinoNum" id="destinoNum" class="ui fluid search dropdown"></select>
                                     <button onclick="dibujarPunto('Destino')">Dibujar punto</button>
                                 </div>
                             </div>
@@ -147,37 +146,29 @@
                                         if (searchValue.length >= 3 && searchValue !== busquedaOld) {
                                             busquedaOld = searchValue;
                                             setTimeout(function () {
-                                                $.get("http://localhost:10070/calles/" + searchValue, function (result) {
-                                                    if (searchValue === busquedaOld) {
-                                                        var x = document.getElementById("origen");
-                                                        x.options.length = 0;
-                                                        var option1 = document.createElement("option");
-                                                        option1.value = "";
-                                                        option1.disabled;
-                                                        x.add(option1);
-                                                        for (i = 0; i < result.length; i++) {
-                                                            var option = document.createElement("option");
-                                                            option.text = result[i];
-                                                            option.value = result[i];
-                                                            x.add(option);
-                                                        }
-                                                    }
-                                                });
-                                            }, 1250);
+                                                if (searchValue === busquedaOld) {
+                                                    $.get("http://localhost:10070/calles/calleNum/" + searchValue, function (result) {
+                                                        setTimeout(function () {
+                                                            if (searchValue === busquedaOld && result.toString() !== "") {
+                                                                var x = document.getElementById("origen");
+                                                                x.options.length = 0;
+                                                                var option1 = document.createElement("option");
+                                                                option1.value = "";
+                                                                option1.disabled;
+                                                                x.add(option1);
+                                                                for (i = 0; i < result.length; i++) {
+                                                                    var option = document.createElement("option");
+                                                                    option.text = result[i];
+                                                                    option.value = result[i];
+                                                                    x.add(option);
+                                                                }
+                                                            }
+                                                        }, 500);
+                                                    });
+                                                }
+                                            }, 750);
 
                                         }
-                                    },
-                                    onChange: function (value, text, $choice) {
-                                        $.post("http://localhost:10070/calles", "nombre=" + text, function (resultNum) {
-                                            var xNum = document.getElementById("origenNum");
-                                            xNum.options.length = 0;
-                                            for (i2 = 0; i2 < resultNum.length; i2++) {
-                                                var optionNum = document.createElement("option");
-                                                optionNum.text = resultNum[i2].toString();
-                                                optionNum.value = resultNum[i2].toString();
-                                                xNum.add(optionNum);
-                                            }
-                                        });
                                     }
                                 });
 
@@ -186,46 +177,30 @@
                                         if (searchValue.length >= 3 && searchValue !== busquedaOld) {
                                             busquedaOld = searchValue;
                                             setTimeout(function () {
-                                                $.get("http://localhost:10070/calles/" + searchValue, function (result) {
-                                                    if (searchValue === busquedaOld) {
-                                                        var x = document.getElementById("destino");
-                                                        x.options.length = 0;
-                                                        var option1 = document.createElement("option");
-                                                        option1.value = "";
-                                                        option1.disabled;
-                                                        x.add(option1);
-                                                        for (i = 0; i < result.length; i++) {
-                                                            var option = document.createElement("option");
-                                                            option.text = result[i];
-                                                            option.value = result[i];
-                                                            x.add(option);
-                                                        }
-                                                    }
-                                                });
-                                            }, 1250);
+                                                if (searchValue === busquedaOld) {
+                                                    $.get("http://localhost:10070/calles/calleNum/" + searchValue, function (result) {
+                                                        setTimeout(function () {
+                                                            if (searchValue === busquedaOld && result.toString() !== "") {
+                                                                var x = document.getElementById("destino");
+                                                                x.options.length = 0;
+                                                                var option1 = document.createElement("option");
+                                                                option1.value = "";
+                                                                option1.disabled;
+                                                                x.add(option1);
+                                                                for (i = 0; i < result.length; i++) {
+                                                                    var option = document.createElement("option");
+                                                                    option.text = result[i];
+                                                                    option.value = result[i];
+                                                                    x.add(option);
+                                                                }
+                                                            }
+                                                        }, 500);
+                                                    });
+                                                }
+                                            }, 750);
 
                                         }
-                                    },
-                                    onChange: function (value, text, $choice) {
-                                        $.post("http://localhost:10070/calles", "nombre=" + text, function (resultNum) {
-                                            var xNum = document.getElementById("destinoNum");
-                                            xNum.options.length = 0;
-                                            for (i2 = 0; i2 < resultNum.length; i2++) {
-                                                var optionNum = document.createElement("option");
-                                                optionNum.text = resultNum[i2].toString();
-                                                optionNum.value = resultNum[i2].toString();
-                                                xNum.add(optionNum);
-                                            }
-                                        });
                                     }
-                                });
-
-                                $("#origenNum").dropdown({
-
-                                });
-
-                                $("#destinoNum").dropdown({
-
                                 });
                             </script>
                         </div>
@@ -318,42 +293,60 @@
             });
 
             function dibujarPunto(tipo) {
-                var nomCalle;
-                var numPuerta;
 
-                if (tipo === "Origen") {
-                    nomCalle = document.getElementById("origen").value;
-                    numPuerta = document.getElementById("origenNum").value;
-                } else if (tipo === "Destino") {
-                    nomCalle = document.getElementById("destino").value;
-                    numPuerta = document.getElementById("destinoNum").value;
-                }
+                var docOrigen = document.getElementById("origen").value.toString();
+                var docDestino = document.getElementById("destino").value.toString();
 
-                $.post("http://localhost:10070/calles/geo", "nombre=" + nomCalle + "&numero=" + numPuerta, function (resultNum) {
-                    //alert(resultNum);
 
-                    var xy = resultNum.split(",");
+                if ((tipo === "Origen" && docOrigen !== "") || (tipo === "Destino" && docDestino !== "")) {
+                    var nomCalle;
+                    var numPuerta;
+                    var tmp;
 
-                    var epsg4326 = "+proj=longlat +datum=WGS84 +no_defs ";
-                    var epsg32721 = "+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-                    var bngcoords = proj4(epsg32721, epsg4326, [xy[0], xy[1]]);
-                    //alert(bngcoords);
-                    var point_feature = new ol.Feature({});
-                    var point_geom = new ol.geom.Point(bngcoords);
-                    point_feature.setGeometry(point_geom);
+                    if (tipo === "Origen") {
+                        tmp = docOrigen.split(",");
+                        if (tmp.length === 2) {
+                            nomCalle = tmp[0].toString().trim();
+                            numPuerta = tmp[1].toString().trim();
+                        } else {
+                            alert("Debe espesificar numero de puerta");
+                        }
+                    } else if (tipo === "Destino") {
+                        tmp = docDestino.split(",");
+                        if (tmp.length === 2) {
+                            nomCalle = tmp[0].toString().trim();
+                            numPuerta = tmp[1].toString().trim();
+                        } else {
+                            alert("Debe espesificar numero de puerta");
+                        }
+                    }
 
-                    var vector_layer = new ol.layer.Vector({
-                        source: new ol.source.Vector({
-                            features: [point_feature]
+                    $.post("http://localhost:10070/calles/geo", "nombre=" + nomCalle + "&numero=" + numPuerta, function (resultNum) {
+                        //alert(resultNum);
+
+                        var xy = resultNum.split(",");
+
+                        var epsg4326 = "+proj=longlat +datum=WGS84 +no_defs ";
+                        var epsg32721 = "+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+                        var bngcoords = proj4(epsg32721, epsg4326, [xy[0], xy[1]]);
+                        //alert(bngcoords);
+                        var point_feature = new ol.Feature({});
+                        var point_geom = new ol.geom.Point(bngcoords);
+                        point_feature.setGeometry(point_geom);
+
+                        var vector_layer = new ol.layer.Vector({
+                            source: new ol.source.Vector({
+                                features: [point_feature]
+                            })
                         })
-                    })
-                    map.addLayer(vector_layer);
-                    map.setView(new ol.View({
-                        projection: 'EPSG:4326',
-                        center: bngcoords,
-                        zoom: 17
-                    }));
-                });
+                        map.addLayer(vector_layer);
+                        map.setView(new ol.View({
+                            projection: 'EPSG:4326',
+                            center: bngcoords,
+                            zoom: 17
+                        }));
+                    });
+                }
             }
         </script>
         <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
