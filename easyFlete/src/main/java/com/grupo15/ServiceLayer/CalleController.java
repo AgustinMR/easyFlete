@@ -11,12 +11,53 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
 @RequestMapping("calles")
 public class CalleController {
+
+    private List<String> agregarSinRepeticion(List<String> list, String ele) {
+        boolean a = true;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(ele.toLowerCase())) {
+                a = false;
+            }
+        }
+        if (a) {
+            list.add(ele.toLowerCase());
+        }
+        return list;
+    }
+
+    private List<Integer> agregarNumPuerta(List<Integer> list, String ele) {
+        boolean a = true;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == Integer.parseInt(ele)) {
+                a = false;
+            }
+        }
+        if (a) {
+            list.add(Integer.parseInt(ele));
+        }
+        return list;
+    }
+
+    @RequestMapping(value = "/geo", method = RequestMethod.POST)
+    public String getPunto(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "numero") String numero) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("puertas");
+
+        Document doc = collection.find(and(eq("properties.NOM_CALLE", nombre.toUpperCase()), (eq("properties.NUM_PUERTA", Integer.parseInt(numero))))).first();
+        if (doc != null) {
+            String prop = doc.get("geometry").toString();
+            return prop.split("\\[")[1].split("\\]")[0];
+        }
+        return null;
+    }
 
     @RequestMapping(value = "/calleNum/{calleNum}", method = RequestMethod.GET)
     public List<String> getCallesNum(@PathVariable(name = "calleNum") String calleNum) {
@@ -62,19 +103,6 @@ public class CalleController {
             list.add(nomProp.toLowerCase() + ", " + numProp);
         } else if (!list.isEmpty() && numProp.equals(numero)) {
             list.add(nomProp.toLowerCase() + ", " + numProp);
-        }
-        return list;
-    }
-    
-    private List<String> agregarSinRepeticion(List<String> list, String ele) {
-        boolean a = true;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(ele.toLowerCase())) {
-                a = false;
-            }
-        }
-        if (a) {
-            list.add(ele.toLowerCase());
         }
         return list;
     }
