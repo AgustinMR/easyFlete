@@ -19,26 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("calles")
 public class CalleController {
 
-    @RequestMapping(value = "/{nombre}", method = RequestMethod.GET)
-    public List<String> getCalles(@PathVariable(name = "nombre") String nombre) {
-        MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
-        MongoCollection<Document> collection = database.getCollection("puertas");
-
-        List<String> returnList = new ArrayList<>();
-        List<Document> docList = new ArrayList<>();
-        collection.find(eq("properties.NOM_CALLE", java.util.regex.Pattern.compile(nombre.toUpperCase()))).into(docList);
-        if (!docList.isEmpty()) {
-            String prop = docList.get(0).get("properties").toString();
-            returnList.add(prop.split("=")[4].split(",")[0].toLowerCase());
-            for (int i = 1; i < docList.size(); i++) {
-                String prop2 = docList.get(i).get("properties").toString();
-                returnList = agregarSinRepeticion(returnList, prop2.split("=")[4].split(",")[0]);
-            }
-        }
-        return returnList;
-    }
-
     private List<String> agregarSinRepeticion(List<String> list, String ele) {
         boolean a = true;
         for (int i = 0; i < list.size(); i++) {
@@ -50,25 +30,6 @@ public class CalleController {
             list.add(ele.toLowerCase());
         }
         return list;
-    }
-
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public List<Integer> getNumeroPuerta(@RequestParam(name = "nombre") String nombre) {
-        MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
-        MongoCollection<Document> collection = database.getCollection("puertas");
-        List<Integer> returnList = new ArrayList<>();
-        List<Document> docList = new ArrayList<>();
-        collection.find(eq("properties.NOM_CALLE", nombre.toUpperCase())).into(docList);
-        if (!docList.isEmpty()) {
-            String prop = docList.get(0).get("properties").toString();
-            returnList.add(Integer.parseInt(prop.split("=")[5].split(",")[0]));
-            for (int i = 1; i < docList.size(); i++) {
-                String prop2 = docList.get(i).get("properties").toString();
-                returnList = agregarNumPuerta(returnList, prop2.split("=")[5].split(",")[0]);
-            }
-        }
-        return returnList;
     }
 
     private List<Integer> agregarNumPuerta(List<Integer> list, String ele) {
