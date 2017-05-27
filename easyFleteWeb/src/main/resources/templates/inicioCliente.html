@@ -11,40 +11,26 @@
     <body>   
         <script>
             $(document).ready(function () {
-                $('.masthead').visibility({
-                    once: false,
-                    onBottomPassed: function () {
-                        $('.fixed.menu').transition('fade in');
-                    },
-                    onBottomPassedReverse: function () {
-                        $('.fixed.menu').transition('fade out');
-                    }
-                });
-                $('.ui.sidebar').sidebar('attach events', '.toc.item');
+            $('.masthead').visibility({
+            once: false,
+            onBottomPassed: function () {
+            $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function () {
+            $('.fixed.menu').transition('fade out');
+            }
+            });
+            $('.ui.sidebar').sidebar('attach events', '.toc.item');
             });
         </script>
-        <!-- Following Menu -->
-        <div class="ui large top fixed menu transition hidden">
-            <div class="ui container">
-                <img src="img/easyFlete.png" style="height: 27px; margin-top: 10px" class="w3-margin-right w3-hide-small">
-                <a class="active item">Solicitar</a>
-                <a class="item">Mis Fletes</a>
-                <a class="item">Reporte</a>
-                <div class="right menu">
-                    <div class="item">
-                        <a class="ui button w3-easyFlete-grey" href="logout"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
-                    </div>
-                </div>
+        <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
+            <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top">
+            <a href="/inicio" class="item">Solicitar</a>
+            <a class="active item">Mis Fletes</a>
+            <a class="item">Reportes</a>
+            <div class="right item">
+                <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
             </div>
-        </div>
-        <!-- Sidebar Menu -->
-        <div class="ui vertical inverted sidebar menu left">
-            <a class="active item">Home</a>
-            <a class="item">Work</a>
-            <a class="item">Company</a>
-            <a class="item">Careers</a>
-            <a class="item">Login</a>
-            <a class="item">Signup</a>
         </div>
         <div class="pusher">
             <div class="ui inverted vertical mhead masthead center aligned segment w3-easyFlete-grey" id="backgr" style="background-image: url(img/wood.png); background-repeat: repeat">
@@ -52,9 +38,9 @@
                     <div class="ui large secondary inverted pointing menu w3-border-0">
                         <a class="toc item"><i class="sidebar icon"></i></a>
                         <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-top w3-margin-right w3-hide-small">
-                        <a class="active item">Solicitar</a>
-                        <a class="item">Mis Fletes</a>
-                        <a class="item">Reportes</a>
+                        <a class="active item" href="/inicio">Solicitar</a>
+                        <a class="item" href="/fletes">Mis Fletes</a>
+                        <a class="item" href="/reportes">Reportes</a>
                         <div class="right item">
                             <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
                         </div>
@@ -131,8 +117,8 @@
                             </div>
                             <script>
                                 $('.ui.dropdown').dropdown({
-                                    allowAdditions: true,
-                                    url: '//api.semantic-ui.com/tags/{query}' // url de la cual cargar las calles
+                                allowAdditions: true,
+                                url: '//api.semantic-ui.com/tags/{query}' // url de la cual cargar las calles
                                 });
                             </script>
                         </div>
@@ -173,8 +159,8 @@
         </div>
         <script>
             $(document).ready(function () {
-                "use strict";
-                blurBackground();
+            "use strict";
+            blurBackground();
             });
         </script>
         <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
