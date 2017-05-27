@@ -75,6 +75,13 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
         this.tipo = tipo;
     }
+    
+    public Usuario(String nombre, String email,String telefono) {
+        this.nombre = nombre;
+        this.email = email;
+        this.enabled = 0;
+        this.telefono = telefono;
+    }
 
     public Usuario(String nombre, String email, String password, String telefono) {
         this.nombre = nombre;

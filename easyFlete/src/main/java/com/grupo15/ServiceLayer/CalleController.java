@@ -1,5 +1,7 @@
 package com.grupo15.ServiceLayer;
 
+import com.grupo15.BusinessLogic.BLMapa;
+import com.grupo15.BusinessLogic.IBLMapa;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -19,91 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("calles")
 public class CalleController {
 
-    private List<String> agregarSinRepeticion(List<String> list, String ele) {
-        boolean a = true;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(ele.toLowerCase())) {
-                a = false;
-            }
-        }
-        if (a) {
-            list.add(ele.toLowerCase());
-        }
-        return list;
-    }
-
-    private List<Integer> agregarNumPuerta(List<Integer> list, String ele) {
-        boolean a = true;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) == Integer.parseInt(ele)) {
-                a = false;
-            }
-        }
-        if (a) {
-            list.add(Integer.parseInt(ele));
-        }
-        return list;
-    }
-
     @RequestMapping(value = "/geo", method = RequestMethod.POST)
     public String getPunto(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "numero") String numero) {
-        MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
-        MongoCollection<Document> collection = database.getCollection("puertas");
-
-        Document doc = collection.find(and(eq("properties.NOM_CALLE", nombre.toUpperCase()), (eq("properties.NUM_PUERTA", Integer.parseInt(numero))))).first();
-        if (doc != null) {
-            String prop = doc.get("geometry").toString();
-            return prop.split("\\[")[1].split("\\]")[0];
-        }
-        return null;
+        IBLMapa DLmapa = new BLMapa();
+        return DLmapa.getPunto(nombre, numero);
     }
 
     @RequestMapping(value = "/calleNum/{calleNum}", method = RequestMethod.GET)
     public List<String> getCallesNum(@PathVariable(name = "calleNum") String calleNum) {
-        MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
-        MongoCollection<Document> collection = database.getCollection("puertas");
+        IBLMapa DLmapa = new BLMapa();
+        return DLmapa.getCallesNum(calleNum);
+    }    
 
-        String[] part = calleNum.split("(?<=\\D)(?=\\d)");
-        String nombre = part[0];
-        String numero;
-        if (part.length == 2) {
-            numero = part[1];
-        } else {
-            numero = null;
-        }
-        List<String> returnList = new ArrayList<>();
-        List<Document> docList = new ArrayList<>();
-        collection.find(eq("properties.NOM_CALLE", java.util.regex.Pattern.compile(nombre.trim().toUpperCase()))).into(docList);
-
-        if (!docList.isEmpty()) {
-            if (numero == null) {
-                String prop = docList.get(0).get("properties").toString();
-                returnList.add(prop.split("=")[4].split(",")[0].toLowerCase());
-                for (int i = 1; i < docList.size(); i++) {
-                    String prop2 = docList.get(i).get("properties").toString();
-                    returnList = agregarSinRepeticion(returnList, prop2.split("=")[4].split(",")[0]);
-                }
-            } else {
-                for (int i = 0; i < docList.size(); i++) {
-                    String prop2 = docList.get(i).get("properties").toString();
-                    returnList = agregarSinRepeticionConNumero(returnList, prop2, numero);
-                }
-            }
-        }
-        return returnList;
-
-    }
-
-    private List<String> agregarSinRepeticionConNumero(List<String> list, String prop2, String numero) {
-        String nomProp = prop2.split("=")[4].split(",")[0];
-        String numProp = prop2.split("=")[5].split(",")[0];
-        if (list.isEmpty() && numProp.equals(numero)) {
-            list.add(nomProp.toLowerCase() + ", " + numProp);
-        } else if (!list.isEmpty() && numProp.equals(numero)) {
-            list.add(nomProp.toLowerCase() + ", " + numProp);
-        }
-        return list;
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public boolean guardarSolicitud(@RequestParam(name = "latlonOri") String latlonOri, @RequestParam(name = "latlonDes") String latlonDes, @RequestParam(name = "idSol") String idSol) {
+      
+        return true;
     }
 }

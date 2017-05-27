@@ -5,6 +5,7 @@ import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
+import com.grupo15.easyflete.Usuario;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -20,9 +21,17 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(String origen, String destino, int peso, String descripcion, String fecha, double precioMax, String email) {
-        Solicitud s = new Solicitud(peso, precioMax, email, descripcion);
+    public boolean addSolicitud(String origen, String destino, String titulo, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
+        Solicitud s;
+        if(peso == 0){
+            s = new Solicitud(precioMax, titulo, descripcion, volumen);
+        }else if(volumen == 0){
+            s = new Solicitud(peso, precioMax, titulo, descripcion);
+        }else{
+            s = new Solicitud(precioMax, titulo, descripcion, volumen, peso);
+        }
         boolean ingreso = DLsol.addSolicitud(s);
+        
         if (ingreso) {
             String fech[] = fecha.split("/");
             Calendar calendar = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));

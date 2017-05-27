@@ -33,7 +33,7 @@ public class SolicitudCliente implements Serializable {
     @JoinColumn(name = "solicitud_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Solicitud solicitud;
-    @JoinColumn(name = "cliente_email", referencedColumnName = "email")
+    @JoinColumn(name = "cliente_email", referencedColumnName = "username")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario clienteEmail;
 

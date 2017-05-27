@@ -19,14 +19,23 @@ public class BLUsuario implements IBLUsuario {
     public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
         Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
         DLusu.addUsuario(f);
-        return DLusu.addRol(new Rol("FLETERO",DLusu.getFletero(email)));
+        return DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)));
     }
 
     @Override
     public boolean addCliente(String nombre, String password, String email, String telefono) {
-        Cliente c = new Cliente(nombre, email, password, telefono);
-        DLusu.addUsuario(c);
-        return DLusu.addRol(new Rol("CLIENTE",DLusu.getCliente(email)));
+        if (DLusu.getCliente(email) == null) {
+            Cliente c;
+            if (password.equals("")) {
+                c = new Cliente(nombre, email, telefono);
+            } else {
+                c = new Cliente(nombre, email, password, telefono);
+            }
+            DLusu.addUsuario(c);
+            return DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)));
+        } else {
+            return true;
+        }
     }
 
     @Override
@@ -70,11 +79,10 @@ public class BLUsuario implements IBLUsuario {
     public List<Cliente> getAllClientes() {
         return DLusu.getAllClientes();
     }
-    
+
     /*
     @Override
     public TipoUsuario login(String email, String pass) {
         return DLusu.login(email, pass);
     }*/
-
 }

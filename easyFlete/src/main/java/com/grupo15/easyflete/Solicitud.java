@@ -57,6 +57,21 @@ public class Solicitud implements Serializable {
         this.titulo = titulo;
         this.descripcion = descripcion;
     }
+    
+    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen) {
+        this.volumen = volumen;
+        this.precioMax = precioMax;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
+    
+    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, Integer peso) {
+        this.volumen = volumen;
+        this.peso = peso;
+        this.precioMax = precioMax;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
 
     public Integer getId() {
         return id;
