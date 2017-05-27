@@ -14,6 +14,7 @@ public class BLMapa implements IBLMapa {
         DLMapa = new DALMapa();
     }
 
+    @Override
     public String getPunto(String nombre, String numero) {
         Document doc = DLMapa.getPunto(nombre, numero);
         if (doc != null) {
@@ -22,7 +23,13 @@ public class BLMapa implements IBLMapa {
         }
         return "";
     }
+    
+    @Override
+    public boolean guardarSolicitud(Integer solId, String latlonOri, String latlonDes) {
+        return DLMapa.guardarSolicitud(solId, latlonOri, latlonDes);
+    }
 
+    @Override
     public List<String> getCallesNum(String calleNum) {
         String[] part = calleNum.split("(?<=\\D)(?=\\d)");
         String nombre = part[0];

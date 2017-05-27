@@ -38,7 +38,8 @@ public class BLSolicitud implements IBLSolicitud {
             Cliente cli = BLusu.getCliente(email);
 
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli);
-            return DLsol.addSolicitudCliente(solCli);
+            DLsol.addSolicitudCliente(solCli);
+            return new BLMapa().guardarSolicitud(s.getId(), origen, destino);
         }
         return false;
     }
