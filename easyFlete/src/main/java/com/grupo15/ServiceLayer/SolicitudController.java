@@ -18,9 +18,9 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email) {
+    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso, @RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.addSolicitud(jsonOrigen, jsonDestino, peso, descripcion, fecha, precioMax, email);
+        return bl.addSolicitud(jsonOrigen, jsonDestino, titulo, peso, volumen, descripcion, fecha, precioMax, email);
     }
 
     @Override

@@ -1,5 +1,81 @@
 package com.grupo15.BusinessLogic;
 
+import com.grupo15.DataAccessLayer.DALMapa;
+import com.grupo15.DataAccessLayer.IMapa;
+import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
+
 public class BLMapa implements IBLMapa {
-    
+
+    private static IMapa DLMapa = null;
+
+    public BLMapa() {
+        DLMapa = new DALMapa();
+    }
+
+    public String getPunto(String nombre, String numero) {
+        Document doc = DLMapa.getPunto(nombre, numero);
+        if (doc != null) {
+            String prop = doc.get("geometry").toString();
+            return prop.split("\\[")[1].split("\\]")[0];
+        }
+        return "";
+    }
+
+    public List<String> getCallesNum(String calleNum) {
+        String[] part = calleNum.split("(?<=\\D)(?=\\d)");
+        String nombre = part[0];
+        String numero;
+        if (part.length == 2) {
+            numero = part[1];
+        } else {
+            numero = null;
+        }
+        List<String> returnList = new ArrayList<>();
+        List<Document> docList = new ArrayList<>();
+        docList = DLMapa.getCallesNum(nombre);
+
+        if (!docList.isEmpty()) {
+            if (numero == null) {
+                String prop = docList.get(0).get("properties").toString();
+                returnList.add(prop.split("=")[4].split(",")[0].toLowerCase());
+                for (int i = 1; i < docList.size(); i++) {
+                    String prop2 = docList.get(i).get("properties").toString();
+                    returnList = agregarSinRepeticion(returnList, prop2.split("=")[4].split(",")[0]);
+                }
+            } else {
+                for (int i = 0; i < docList.size(); i++) {
+                    String prop2 = docList.get(i).get("properties").toString();
+                    returnList = agregarSinRepeticionConNumero(returnList, prop2, numero);
+                }
+            }
+        }
+        return returnList;
+    }
+
+    private List<String> agregarSinRepeticion(List<String> list, String ele) {
+        boolean a = true;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(ele.toLowerCase())) {
+                a = false;
+            }
+        }
+        if (a) {
+            list.add(ele.toLowerCase());
+        }
+        return list;
+    }
+
+    private List<String> agregarSinRepeticionConNumero(List<String> list, String prop2, String numero) {
+        String nomProp = prop2.split("=")[4].split(",")[0];
+        String numProp = prop2.split("=")[5].split(",")[0];
+        if (list.isEmpty() && numProp.equals(numero)) {
+            list.add(nomProp.toLowerCase() + ", " + numProp);
+        } else if (!list.isEmpty() && numProp.equals(numero)) {
+            list.add(nomProp.toLowerCase() + ", " + numProp);
+        }
+        return list;
+    }
+
 }
