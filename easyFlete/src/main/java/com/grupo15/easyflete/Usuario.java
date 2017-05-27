@@ -22,6 +22,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail")
+    private List<FleteroSolicitudCliente> fleteroSolicitudClienteList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Rol> rolList;
@@ -172,6 +175,14 @@ public class Usuario implements Serializable {
 
     public void setRolList(List<Rol> rolList) {
         this.rolList = rolList;
+    }
+
+    public List<FleteroSolicitudCliente> getFleteroSolicitudClienteList() {
+        return fleteroSolicitudClienteList;
+    }
+
+    public void setFleteroSolicitudClienteList(List<FleteroSolicitudCliente> fleteroSolicitudClienteList) {
+        this.fleteroSolicitudClienteList = fleteroSolicitudClienteList;
     }
     
 }

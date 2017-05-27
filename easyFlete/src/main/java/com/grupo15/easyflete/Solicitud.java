@@ -2,11 +2,13 @@ package com.grupo15.easyflete;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,6 +16,9 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "solicitudes")
 public class Solicitud implements Serializable {
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud")
+    private FleteroSolicitudCliente fleteroSolicitudCliente;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -119,6 +124,14 @@ public class Solicitud implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public FleteroSolicitudCliente getFleteroSolicitudCliente() {
+        return fleteroSolicitudCliente;
+    }
+
+    public void setFleteroSolicitudCliente(FleteroSolicitudCliente fleteroSolicitudCliente) {
+        this.fleteroSolicitudCliente = fleteroSolicitudCliente;
     }
     
 }

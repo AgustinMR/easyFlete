@@ -17,6 +17,12 @@ import javax.validation.constraints.Size;
 @Table(name = "fleteros_solicitudes_clientes")
 public class FleteroSolicitudCliente implements Serializable {
 
+    @Size(max = 30)
+    @Column(name = "estado")
+    private String estado;
+    @Column(name = "precio")
+    private Double precio;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -82,29 +88,20 @@ public class FleteroSolicitudCliente implements Serializable {
         this.fleteroEmail = fleteroEmail;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (solicitudId != null ? solicitudId.hashCode() : 0);
-        return hash;
+    public String getEstado() {
+        return estado;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FleteroSolicitudCliente)) {
-            return false;
-        }
-        FleteroSolicitudCliente other = (FleteroSolicitudCliente) object;
-        if ((this.solicitudId == null && other.solicitudId != null) || (this.solicitudId != null && !this.solicitudId.equals(other.solicitudId))) {
-            return false;
-        }
-        return true;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    @Override
-    public String toString() {
-        return "com.grupo15.easyflete.FleteroSolicitudCliente[ solicitudId=" + solicitudId + " ]";
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
     
 }
