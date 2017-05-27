@@ -1,5 +1,6 @@
 package com.grupo15.easyflete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 public class Usuario implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Rol> rolList;
 
     private static final long serialVersionUID = 1L;
