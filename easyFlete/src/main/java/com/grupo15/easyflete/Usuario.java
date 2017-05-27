@@ -1,5 +1,6 @@
 package com.grupo15.easyflete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 public class Usuario implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Rol> rolList;
 
     private static final long serialVersionUID = 1L;
@@ -72,6 +74,13 @@ public class Usuario implements Serializable {
         this.enabled = enabled;
         this.telefono = telefono;
         this.tipo = tipo;
+    }
+    
+    public Usuario(String nombre, String email,String telefono) {
+        this.nombre = nombre;
+        this.email = email;
+        this.enabled = 0;
+        this.telefono = telefono;
     }
 
     public Usuario(String nombre, String email, String password, String telefono) {

@@ -59,8 +59,8 @@
                         </a>
                         <img src="img/easyFlete-white.png" class="item" style="height: 55px">
                         <div class="right item">
-                            <a class="ui inverted button" href="/login">Log in</a>
-                            <a class="ui inverted button" href="/registrarse">Sign Up</a>
+                            <a class="ui inverted button" href="/login">Iniciar Sesi&oacute;n</a>
+                            <a class="ui inverted button" href="/registrarse">Registrarse</a>
                         </div>
                     </div>
                 </div>
@@ -83,20 +83,25 @@
                         <div class="eight wide centered column">
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Informaci&oacute;n B&aacute;sica</h4>
                             <div class="ui labeled fluid input w3-margin"><div class="ui label">T&iacute;tulo:</div>
-                                <input placeholder="Ingrese un t&iacute;tulo para el flete..." type="text">
+                                <input id="titulo" placeholder="Ingrese un t&iacute;tulo para el flete..." type="text">
                             </div>
                             <div class="ui right labeled fluid input w3-margin">
                                 <div class="ui label">Carga:</div>
-                                <input placeholder="Ingrese la carga a transportar..." type="text">
+                                <input id="peso" placeholder="Ingrese la carga a transportar..." type="text">
                                 <div class="ui basic label">Kg</div>
                             </div>
                             <div class="ui right labeled fluid input w3-margin">
+                                <div class="ui label">Volumen:</div>
+                                <input id="volumen" placeholder="Ingrese el volumen a transportar..." type="text">
+                                <div class="ui basic label">m³</div>
+                            </div>
+                            <div class="ui right labeled fluid input w3-margin">
                                 <div class="ui label">Precio:</div>
-                                <input placeholder="Ingrese el precio m&aacute;ximo a pagar..." type="text">
+                                <input id="precioMax" placeholder="Ingrese el precio m&aacute;ximo a pagar..." type="text">
                                 <div class="ui basic label">UY</div>
                             </div>
                             <div class="ui labeled fluid input w3-margin"><div class="ui label">Fecha:</div>
-                                <input placeholder="Ingrese la fecha del flete..." type="date">
+                                <input id="fecha" placeholder="Ingrese la fecha del flete..." type="date">
                             </div>
                             <div class="ui reply form w3-margin">
                                 <div class="field">
@@ -210,6 +215,8 @@
             <div class="ui vertical stripe segment">
                 <div class="w3-content"><div class="w3-card-4" id="map"></div></div>
             </div>
+            <button onclick="ingresar()">Ingresar</button>
+
             <div class="ui inverted vertical footer segment">
                 <div class="ui container">
                     <div class="ui stackable inverted divided equal height stackable grid">
@@ -284,6 +291,13 @@
             });
             map.addInteraction(modify);
 
+            var vector_layerO;
+            var vector_layerD;
+
+            var latlonOri = "";
+            var latlonDes = "";
+
+
         </script>
 
         <script>
@@ -334,19 +348,73 @@
                         var point_geom = new ol.geom.Point(bngcoords);
                         point_feature.setGeometry(point_geom);
 
-                        var vector_layer = new ol.layer.Vector({
-                            source: new ol.source.Vector({
-                                features: [point_feature]
-                            })
-                        })
-                        map.addLayer(vector_layer);
+                        if (tipo === "Origen") {
+                            if (latlonOri !== "") {
+                                map.removeLayer(vector_layerO);
+                            }
+                            latlonOri = proj4(epsg4326, epsg32721, [bngcoords[0], bngcoords[1]]);
+                            vector_layerO = new ol.layer.Vector({
+                                source: new ol.source.Vector({
+                                    features: [point_feature]
+                                })
+                            });
+                            map.addLayer(vector_layerO);
+                        } else if (tipo === "Destino") {
+                            if (latlonDes !== "") {
+                                map.removeLayer(vector_layerD);
+                            }
+                            latlonDes = proj4(epsg4326, epsg32721, [bngcoords[0], bngcoords[1]]);
+                            vector_layerD = new ol.layer.Vector({
+                                source: new ol.source.Vector({
+                                    features: [point_feature]
+                                })
+                            });
+                            map.addLayer(vector_layerD);
+                        }
+
+                        //alert(latlonOri +" | " + latlonDes);
+
                         map.setView(new ol.View({
                             projection: 'EPSG:4326',
                             center: bngcoords,
-                            zoom: 17
+                            zoom: 14
                         }));
                     });
                 }
+            }
+            function ingresar() {
+                var titulo = document.getElementById("titulo").value;
+                var volumen = document.getElementById("volumen").value;
+                var peso = document.getElementById("peso").value;
+                var descripcion = document.getElementById("descripcion").value;
+                var fecha = document.getElementById("fecha").value;
+                var precioMax = document.getElementById("precioMax").value;
+                var email = document.getElementById("email").value;
+                var nombre = document.getElementById("nombre").value;
+                var telefono = document.getElementById("telefono").value;
+
+                //alert(titulo);
+
+                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "" && nombre !== "" && telefono !== "") {
+                    $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {
+                        if (peso === "")
+                            peso = "0";
+                        if (volumen === "")
+                            volumen = "0";
+                        var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email;
+                        //alert(postInfo);
+                        $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
+                            if(result === true){
+                                alert("Solicitud ingresada con exito");
+                            }else{
+                                alert("Error al ingresar la solicitud");
+                            }                        
+                        });
+                    });
+                } else {
+                    alert("Faltan datos");
+                }
+
             }
         </script>
         <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">

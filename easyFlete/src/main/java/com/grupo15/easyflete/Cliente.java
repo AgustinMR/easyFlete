@@ -20,4 +20,9 @@ public class Cliente extends Usuario {
         this.setTipo("Cliente");
     }
     
+    public Cliente(String nombre, String email, String telefono) {
+        super(nombre, email, telefono);
+        this.setTipo("Cliente");
+    }
+    
 }
