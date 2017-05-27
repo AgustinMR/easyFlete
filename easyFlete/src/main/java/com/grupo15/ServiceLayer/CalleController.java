@@ -23,19 +23,13 @@ public class CalleController {
 
     @RequestMapping(value = "/geo", method = RequestMethod.POST)
     public String getPunto(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "numero") String numero) {
-        IBLMapa DLmapa = new BLMapa();
-        return DLmapa.getPunto(nombre, numero);
+        IBLMapa mapa = new BLMapa();
+        return mapa.getPunto(nombre, numero);
     }
 
     @RequestMapping(value = "/calleNum/{calleNum}", method = RequestMethod.GET)
     public List<String> getCallesNum(@PathVariable(name = "calleNum") String calleNum) {
-        IBLMapa DLmapa = new BLMapa();
-        return DLmapa.getCallesNum(calleNum);
+        IBLMapa mapa = new BLMapa();
+        return mapa.getCallesNum(calleNum);
     }    
-
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public boolean guardarSolicitud(@RequestParam(name = "latlonOri") String latlonOri, @RequestParam(name = "latlonDes") String latlonDes, @RequestParam(name = "idSol") String idSol) {
-      
-        return true;
-    }
 }
