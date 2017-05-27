@@ -47,6 +47,8 @@ CREATE TABLE FLETEROS_SOLICITUDES_CLIENTES (
   fletero_email varchar(30) NOT NULL,
   valoracion int DEFAULT 0,
   comentario varchar(300) NULL,
+  estado varchar(30) NULL,
+  precio float NULL,
   PRIMARY KEY (solicitud_id),
   FOREIGN KEY (fletero_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
