@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "dtype")
     private String dtype;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
+ /*   @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<FleteroSolicitudCliente> fleteroSolicitudesCliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
@@ -62,7 +62,7 @@ public class Usuario implements Serializable {
     private List<ZonaFletero> zonasFletero;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteEmail", fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<SolicitudCliente> solicitudesCliente;
+    private List<SolicitudCliente> solicitudesCliente;*/
 
     public Usuario() {
     }
@@ -165,7 +165,7 @@ public class Usuario implements Serializable {
         this.dtype = dtype;
     }
 
-    public List<FleteroSolicitudCliente> getFleteroSolicitudesCliente() {
+    /*public List<FleteroSolicitudCliente> getFleteroSolicitudesCliente() {
         return fleteroSolicitudesCliente;
     }
 
@@ -195,6 +195,6 @@ public class Usuario implements Serializable {
 
     public void setSolicitudesCliente(List<SolicitudCliente> solicitudesCliente) {
         this.solicitudesCliente = solicitudesCliente;
-    }
+    }*/
     
 }

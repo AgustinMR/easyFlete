@@ -34,14 +34,14 @@ public class ClienteController implements ISLCliente {
     }
 
     @Override
-    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
-    public Cliente getCliente(@PathVariable(name = "email") String email) {
+    @RequestMapping(value = "/obtener", method = RequestMethod.GET)
+    public Cliente getCliente(@RequestParam(name = "email") String email) {
         return new BLUsuario().getCliente(email);
     }
     
     @Override
-    @RequestMapping(value = "/solicitudes/{email}", method = RequestMethod.GET)
-    public List<String> getSolicitudesByCliente(@PathVariable(name = "email") String email) {
+    @RequestMapping(value = "/solicitudes", method = RequestMethod.GET)
+    public List<Object[]> getSolicitudesByCliente(@RequestParam(name = "email") String email) {
         return new BLUsuario().getSolicitudesByCliente(email);
     }
 

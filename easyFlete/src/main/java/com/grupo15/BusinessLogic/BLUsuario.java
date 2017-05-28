@@ -81,7 +81,7 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public List<String> getSolicitudesByCliente(String email) {
+    public List<Object[]> getSolicitudesByCliente(String email) {
         return DLusu.getSolicitudesByCliente(email);
     }
 }
