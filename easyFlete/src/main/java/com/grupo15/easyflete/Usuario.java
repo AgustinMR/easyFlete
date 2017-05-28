@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,18 +16,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios")
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail")
-    private List<FleteroSolicitudCliente> fleteroSolicitudClienteList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Rol> rolList;
-
-    private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -40,7 +28,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "username")
-    private String email;
+    private String username;
     @Size(max = 30)
     @Column(name = "password")
     private String password;
@@ -62,48 +50,56 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "dtype")
-    private String tipo;
+    private String dtype;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<FleteroSolicitudCliente> fleteroSolicitudesCliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Rol> roles;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<ZonaFletero> zonasFletero;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteEmail", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<SolicitudCliente> solicitudesCliente;
 
     public Usuario() {
     }
 
-    public Usuario(String email) {
-        this.email = email;
+    public Usuario(String username) {
+        this.username = username;
     }
 
-    public Usuario(String email, String nombre, short enabled, String telefono, String tipo) {
-        this.email = email;
+    public Usuario(String username, String nombre, short enabled, String telefono, String dtype) {
+        this.username = username;
         this.nombre = nombre;
         this.enabled = enabled;
         this.telefono = telefono;
-        this.tipo = tipo;
+        this.dtype = dtype;
     }
     
-    public Usuario(String nombre, String email,String telefono) {
+    public Usuario(String username, String nombre, String telefono){
+        this.username = username;
         this.nombre = nombre;
-        this.email = email;
-        this.enabled = 0;
         this.telefono = telefono;
     }
-
-    public Usuario(String nombre, String email, String password, String telefono) {
+    
+    public Usuario(String nombre, String username, String password, String telefono, String vehiculoNombre, Integer vehiculoCarga) {
+        this.username = username;
         this.nombre = nombre;
-        this.email = email;
-        this.enabled = 1;
-        this.password = password;
         this.telefono = telefono;
-    }
-
-    public Usuario(String nombre, String email, String password, String telefono, String vehiculoNombre, Integer vehiculoCarga) {
-        this.nombre = nombre;
-        this.email = email;
         this.password = password;
-        this.telefono = telefono;
         this.vehiculoNombre = vehiculoNombre;
         this.vehiculoCarga = vehiculoCarga;
     }
     
-    
+    public Usuario(String username, String nombre, String telefono, String password){
+        this.username = username;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.password = password;
+    }
 
     public String getNombre() {
         return nombre;
@@ -113,12 +109,12 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -161,28 +157,44 @@ public class Usuario implements Serializable {
         this.vehiculoCarga = vehiculoCarga;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getDtype() {
+        return dtype;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
     }
 
-    public List<Rol> getRolList() {
-        return rolList;
+    public List<FleteroSolicitudCliente> getFleteroSolicitudesCliente() {
+        return fleteroSolicitudesCliente;
     }
 
-    public void setRolList(List<Rol> rolList) {
-        this.rolList = rolList;
+    public void setFleteroSolicitudesCliente(List<FleteroSolicitudCliente> fleteroSolicitudesCliente) {
+        this.fleteroSolicitudesCliente = fleteroSolicitudesCliente;
     }
 
-    public List<FleteroSolicitudCliente> getFleteroSolicitudClienteList() {
-        return fleteroSolicitudClienteList;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
-    public void setFleteroSolicitudClienteList(List<FleteroSolicitudCliente> fleteroSolicitudClienteList) {
-        this.fleteroSolicitudClienteList = fleteroSolicitudClienteList;
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
+
+    public List<ZonaFletero> getZonasFletero() {
+        return zonasFletero;
+    }
+
+    public void setZonasFletero(List<ZonaFletero> zonasFletero) {
+        this.zonasFletero = zonasFletero;
+    }
+
+    public List<SolicitudCliente> getSolicitudesCliente() {
+        return solicitudesCliente;
+    }
+
+    public void setSolicitudesCliente(List<SolicitudCliente> solicitudesCliente) {
+        this.solicitudesCliente = solicitudesCliente;
     }
     
 }

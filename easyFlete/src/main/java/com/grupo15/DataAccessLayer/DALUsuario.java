@@ -1,5 +1,6 @@
 package com.grupo15.DataAccessLayer;
 
+import com.google.gson.Gson;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Rol;
@@ -17,13 +18,13 @@ public class DALUsuario implements IUsuario {
     @Override
     public boolean addUsuario(Cliente c) {
         EntityManager em = new EMHandler().entityManager();
-        try{
+        try {
             em.getTransaction().begin();
             em.persist(c);
             em.getTransaction().commit();
             em.close();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             em.close();
             return false;
         }
@@ -32,23 +33,23 @@ public class DALUsuario implements IUsuario {
     @Override
     public boolean addUsuario(Fletero f) {
         EntityManager em = new EMHandler().entityManager();
-        try{
+        try {
             em.getTransaction().begin();
             em.persist(f);
             em.getTransaction().commit();
             em.close();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             em.close();
             return false;
         }
-        
+
     }
 
     @Override
     public boolean updateUsuario(Cliente c) {
         EntityManager em = new EMHandler().entityManager();
-        Cliente cli = em.find(Cliente.class, c.getEmail());
+        Cliente cli = em.find(Cliente.class, c.getUsername());
         em.getTransaction().begin();
         cli.setNombre(c.getNombre());
         cli.setPassword(c.getPassword());
@@ -60,7 +61,7 @@ public class DALUsuario implements IUsuario {
     @Override
     public boolean updateUsuario(Fletero f) {
         EntityManager em = new EMHandler().entityManager();
-        Fletero fle = em.find(Fletero.class, f.getEmail());
+        Fletero fle = em.find(Fletero.class, f.getUsername());
         fle.setNombre(f.getNombre());
         fle.setPassword(f.getPassword());
         fle.setTelefono(f.getTelefono());
@@ -71,7 +72,7 @@ public class DALUsuario implements IUsuario {
     public boolean deleteCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
         Cliente c = em.find(Cliente.class, email);
-        if(c == null){
+        if (c == null) {
             em.close();
             return false;
         }
@@ -85,7 +86,7 @@ public class DALUsuario implements IUsuario {
     public boolean deleteFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
         Fletero f = em.find(Fletero.class, email);
-        if(f == null){
+        if (f == null) {
             em.close();
             return false;
         }
@@ -97,12 +98,14 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public Fletero getFletero(String email) {
-        return new EMHandler().entityManager().find(Fletero.class, email);
+        return new EMHandler().entityManager().createQuery("SELECT f FROM Fletero f WHERE f.username = :D", Fletero.class).setParameter("D", email).getSingleResult();
     }
 
     @Override
     public Cliente getCliente(String email) {
-        return new EMHandler().entityManager().find(Cliente.class, email);
+        Cliente x = new EMHandler().entityManager().createQuery("SELECT f FROM Cliente f WHERE f.username = :D", Cliente.class).setParameter("D", email).getSingleResult();
+        if(x != null) return x;
+        else return null;
     }
 
     @Override
@@ -120,7 +123,7 @@ public class DALUsuario implements IUsuario {
         em.close();
         return C;
     }
-    
+
     @Override
     public boolean addRol(Rol r) {
         EntityManager em = new EMHandler().entityManager();
@@ -133,12 +136,11 @@ public class DALUsuario implements IUsuario {
     @Override
     public List<String> getSolicitudesByCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
-        return em.createQuery("SELECT s.solicitud.id, "
-            + "s.solicitud.titulo, "
-            + "s.solicitud.descripcion, "
-            + "s.solicitud.fleteroSolicitudCliente.precio, "
-            + "s.solicitud.fleteroSolicitudCliente.estado, "
-            + "s.solicitud.fleteroSolicitudCliente.valoracion FROM SolicitudCliente s WHERE s.clienteEmail.email = :V", String.class).setParameter("V", email).getResultList();
+        List<String> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", String.class).setParameter("D", email).getResultList();
+        for ( int x = 0; x < ret.size(); x++ ) {
+            System.out.println(ret.get(x));
+        }
+        return ret;
     }
 
 }
