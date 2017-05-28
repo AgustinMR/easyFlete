@@ -2,6 +2,8 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
+import com.grupo15.easyflete.Zona;
+import com.grupo15.easyflete.ZonaFletero;
 import java.util.Date;
 import java.util.List;
 
@@ -16,5 +18,7 @@ public abstract interface ISolicitud {
     public Solicitud getSolicitud(int id);
     public SolicitudCliente getSolicitudCli(int id);
     public List<Solicitud> getAllSolicitudes();
+    public boolean addZona(Zona z);
+    public boolean addZonaFletero(ZonaFletero zf);
     
 }

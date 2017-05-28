@@ -7,4 +7,5 @@ public abstract interface IMapa {
     public Document getPunto(String nombre, String numero);
     public List<Document> getCallesNum (String nombre);
     public boolean guardarSolicitud(Integer solId, String latlonOri, String latlonDes);
+    public boolean guardarZonas(Integer zonaId, String geoZona);
 }

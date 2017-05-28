@@ -8,8 +8,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/semantic.min.js"></script>
     <script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4-src.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
     <script src="js/easyFlete.js" type="text/javascript"></script>
     <body>
@@ -224,7 +222,7 @@
                         <div id="step4" class="w3-padding w3-margin" style="display: none"> 
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Confirmar Solicitud</h4>
                             <div class="w3-padding w3-padding-48 w3-center">
-                                <button class="huge ui secondary inverted button w3-easyFlete-orange w3-center">Crear Flete</button>
+                                <button class="huge ui secondary inverted button w3-easyFlete-orange w3-center" onclick="ingresar()">Crear Flete</button>
                             </div>
                         </div>
                     </div>
@@ -265,36 +263,6 @@
                     zoom: 12
                 })
             });
-
-            var features = new ol.Collection();
-            var featureOverlay = new ol.layer.Vector({
-                source: new ol.source.Vector({features: features}),
-                style: new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: 'rgba(255, 255, 255, 0.2)'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: 'violet',
-                        width: 2
-                    }),
-                    image: new ol.style.Circle({
-                        radius: 7,
-                        fill: new ol.style.Fill({
-                            color: 'green'
-                        })
-                    })
-                })
-            });
-            featureOverlay.setMap(map);
-
-            var modify = new ol.interaction.Modify({
-                features: features,
-                deleteCondition: function (event) {
-                    return ol.events.condition.shiftKeyOnly(event) &&
-                            ol.events.condition.singleClick(event);
-                }
-            });
-            map.addInteraction(modify);
 
             var vector_layerO;
             var vector_layerD;
@@ -340,22 +308,17 @@
 
                     $.post("http://localhost:10070/calles/geo", "nombre=" + nomCalle + "&numero=" + numPuerta, function (resultNum) {
                         //alert(resultNum);
-
                         var xy = resultNum.split(",");
 
-                        var epsg4326 = "+proj=longlat +datum=WGS84 +no_defs ";
-                        var epsg32721 = "+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-                        var bngcoords = proj4(epsg32721, epsg4326, [xy[0], xy[1]]);
-                        //alert(bngcoords);
                         var point_feature = new ol.Feature({});
-                        var point_geom = new ol.geom.Point(bngcoords);
+                        var point_geom = new ol.geom.Point([xy[0], xy[1]]);
                         point_feature.setGeometry(point_geom);
 
                         if (tipo === "Origen") {
                             if (latlonOri !== "") {
                                 map.removeLayer(vector_layerO);
                             }
-                            latlonOri = proj4(epsg4326, epsg32721, [bngcoords[0], bngcoords[1]]);
+                            latlonOri = resultNum;
                             vector_layerO = new ol.layer.Vector({
                                 source: new ol.source.Vector({
                                     features: [point_feature]
@@ -366,7 +329,7 @@
                             if (latlonDes !== "") {
                                 map.removeLayer(vector_layerD);
                             }
-                            latlonDes = proj4(epsg4326, epsg32721, [bngcoords[0], bngcoords[1]]);
+                            latlonDes = resultNum;
                             vector_layerD = new ol.layer.Vector({
                                 source: new ol.source.Vector({
                                     features: [point_feature]
@@ -375,16 +338,61 @@
                             map.addLayer(vector_layerD);
                         }
 
-                        //alert(latlonOri +" | " + latlonDes);
+                        //alert(Number(xy[0]) + ","+  Number(xy[1]) +"          ->"+latlonOri +" | " + latlonDes);
 
                         map.setView(new ol.View({
                             projection: 'EPSG:4326',
-                            center: bngcoords,
+                            center: [Number(xy[0]), Number(xy[1])],
                             zoom: 14
                         }));
                     });
                 }
             }
+            
+            function mostrarStep1() {
+                document.getElementById("step1").style.display = "block";
+                document.getElementById("step2").style.display = "none";
+                document.getElementById("step3").style.display = "none";
+                document.getElementById("step4").style.display = "none";
+                document.getElementById("s1").classList.add('active');
+                document.getElementById("s2").classList.remove('active');
+                document.getElementById("s3").classList.remove('active');
+                document.getElementById("s4").classList.remove('active');
+            }
+
+            function mostrarStep2() {
+                document.getElementById("step1").style.display = "none";
+                document.getElementById("step2").style.display = "block";
+                document.getElementById("step3").style.display = "none";
+                document.getElementById("step4").style.display = "none";
+                document.getElementById("s2").classList.add('active');
+                document.getElementById("s1").classList.remove('active');
+                document.getElementById("s3").classList.remove('active');
+                document.getElementById("s4").classList.remove('active');
+            }
+
+            function mostrarStep3() {
+                document.getElementById("step1").style.display = "none";
+                document.getElementById("step2").style.display = "none";
+                document.getElementById("step3").style.display = "block";
+                document.getElementById("step4").style.display = "none";
+                document.getElementById("s3").classList.add('active');
+                document.getElementById("s2").classList.remove('active');
+                document.getElementById("s1").classList.remove('active');
+                document.getElementById("s4").classList.remove('active');
+            }
+
+            function mostrarStep4() {
+                document.getElementById("step1").style.display = "none";
+                document.getElementById("step2").style.display = "none";
+                document.getElementById("step3").style.display = "none";
+                document.getElementById("step4").style.display = "block";
+                document.getElementById("s4").classList.add('active');
+                document.getElementById("s2").classList.remove('active');
+                document.getElementById("s3").classList.remove('active');
+                document.getElementById("s1").classList.remove('active');
+            }
+            
             function ingresar() {
                 var titulo = document.getElementById("titulo").value;
                 var volumen = document.getElementById("volumen").value;
@@ -392,9 +400,9 @@
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
                 var precioMax = document.getElementById("precioMax").value;
-                var email = "email";
+                var email = 'email';
 
-                //alert(titulo);
+                //alert(email);
 
                 if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
                     $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {
