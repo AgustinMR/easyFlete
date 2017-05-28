@@ -3,6 +3,7 @@ package com.grupo15.DataAccessLayer;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
+import com.grupo15.easyflete.ZonaFletero;
 import com.grupo15.handlers.EMHandler;
 import java.util.Date;
 import java.util.List;
@@ -95,6 +96,15 @@ public class DALSolicitud implements ISolicitud {
         EntityManager em = new EMHandler().entityManager();
         em.getTransaction().begin();
         em.persist(z);
+        em.getTransaction().commit();
+        return true;
+    }
+    
+    @Override
+    public boolean addZonaFletero(ZonaFletero zf) {
+        EntityManager em = new EMHandler().entityManager();
+        em.getTransaction().begin();
+        em.persist(zf);
         em.getTransaction().commit();
         return true;
     }
