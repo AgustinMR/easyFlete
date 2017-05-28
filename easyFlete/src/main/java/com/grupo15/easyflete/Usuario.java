@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "dtype")
     private String dtype;
-    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
+ /*   @OneToMany(cascade = CascadeType.ALL, mappedBy = "fleteroEmail", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<FleteroSolicitudCliente> fleteroSolicitudesCliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username", fetch = FetchType.EAGER)
