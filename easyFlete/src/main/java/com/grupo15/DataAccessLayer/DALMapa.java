@@ -34,19 +34,13 @@ public class DALMapa implements IMapa {
     @Override
     public boolean guardarSolicitud(Integer solId, String latlonOri, String latlonDes) {
         MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
-        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
-        
-        String[] ori = latlonOri.split(",");
-        String[] des = latlonDes.split(",");
-        
-        Document document = new Document("SolicitudId", solId)
-               .append("Origen", new Document("Latitud", ori[0])
-                                       .append("Longitud", ori[1]))
-               .append("Destino", new Document("Latitud", des[0])
-                                       .append("Longitud", des[1]));
-
-        collection.insertOne(document);
+       MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+       MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+      
+       String json = "{ 'solicitudId' : "+ solId +" , 'origen' : { 'type': 'Point', 'coordinates': [ "+ latlonOri +" ] } , 'destino' : { 'type': 'Point', 'coordinates': [ "+ latlonDes +" ] }}";
+     
+       Document doc = Document.parse(json);
+       collection.insertOne(doc);
         return true;
     }
 }

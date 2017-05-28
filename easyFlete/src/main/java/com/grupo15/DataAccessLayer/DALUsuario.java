@@ -98,14 +98,14 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public Fletero getFletero(String email) {
-        return new EMHandler().entityManager().createQuery("SELECT f FROM Fletero f WHERE f.username = :D", Fletero.class).setParameter("D", email).getSingleResult();
+        EntityManager em = new EMHandler().entityManager();
+        return em.find(Fletero.class, email);
     }
 
     @Override
     public Cliente getCliente(String email) {
-        Cliente x = new EMHandler().entityManager().createQuery("SELECT f FROM Cliente f WHERE f.username = :D", Cliente.class).setParameter("D", email).getSingleResult();
-        if(x != null) return x;
-        else return null;
+        EntityManager em = new EMHandler().entityManager();
+        return em.find(Cliente.class, email.trim());
     }
 
     @Override
