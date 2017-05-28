@@ -5,7 +5,6 @@ import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
-import com.grupo15.easyflete.Usuario;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;

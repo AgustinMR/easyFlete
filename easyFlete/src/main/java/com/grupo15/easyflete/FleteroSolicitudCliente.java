@@ -17,13 +17,6 @@ import javax.validation.constraints.Size;
 @Table(name = "fleteros_solicitudes_clientes")
 public class FleteroSolicitudCliente implements Serializable {
 
-    @Size(max = 30)
-    @Column(name = "estado")
-    private String estado;
-    @Column(name = "precio")
-    private Double precio;
-
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -34,10 +27,15 @@ public class FleteroSolicitudCliente implements Serializable {
     @Size(max = 300)
     @Column(name = "comentario")
     private String comentario;
+    @Size(max = 30)
+    @Column(name = "estado")
+    private String estado;
+    @Column(name = "precio")
+    private Double precio;
     @JoinColumn(name = "solicitud_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Solicitud solicitud;
-    @JoinColumn(name = "fletero_email", referencedColumnName = "email")
+    @JoinColumn(name = "fletero_email", referencedColumnName = "username")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario fleteroEmail;
 
@@ -72,22 +70,6 @@ public class FleteroSolicitudCliente implements Serializable {
         this.comentario = comentario;
     }
 
-    public Solicitud getSolicitud() {
-        return solicitud;
-    }
-
-    public void setSolicitud(Solicitud solicitud) {
-        this.solicitud = solicitud;
-    }
-
-    public Usuario getFleteroEmail() {
-        return fleteroEmail;
-    }
-
-    public void setFleteroEmail(Usuario fleteroEmail) {
-        this.fleteroEmail = fleteroEmail;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -102,6 +84,22 @@ public class FleteroSolicitudCliente implements Serializable {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Solicitud solicitud) {
+        this.solicitud = solicitud;
+    }
+
+    public Usuario getFleteroEmail() {
+        return fleteroEmail;
+    }
+
+    public void setFleteroEmail(Usuario fleteroEmail) {
+        this.fleteroEmail = fleteroEmail;
     }
     
 }
