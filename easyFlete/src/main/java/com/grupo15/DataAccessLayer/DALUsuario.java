@@ -5,6 +5,7 @@ import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Rol;
 import com.grupo15.handlers.EMHandler;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -98,15 +99,11 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public Fletero getFletero(String email) {
-        return new EMHandler().entityManager().createQuery("SELECT f FROM Fletero f WHERE f.username = :D", Fletero.class).setParameter("D", email).getSingleResult();
+        return new EMHandler().entityManager().find(Fletero.class, email);
     }
 
     @Override
     public Cliente getCliente(String email) {
-        /*Cliente x = new EMHandler().entityManager().createQuery("SELECT f FROM Cliente f WHERE f.username = :D", Cliente.class).setParameter("D", email).getSingleResult();
-        if(x != null) return x;
-        else return null;*/
-        System.out.println(email);
         return new EMHandler().entityManager().find(Cliente.class, email);
     }
 
@@ -136,11 +133,11 @@ public class DALUsuario implements IUsuario {
     }
 
     @Override
-    public List<String> getSolicitudesByCliente(String email) {
+    public List<Object[]> getSolicitudesByCliente(String email) {
         EntityManager em = new EMHandler().entityManager();
-        List<String> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", String.class).setParameter("D", email).getResultList();
+        List<Object[]> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", Object[].class).setParameter("D", email).getResultList();
         for ( int x = 0; x < ret.size(); x++ ) {
-            System.out.println(ret.get(x));
+            System.out.println(Arrays.toString(ret.get(x)));
         }
         return ret;
     }
