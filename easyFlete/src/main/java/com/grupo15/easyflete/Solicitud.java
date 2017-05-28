@@ -5,6 +5,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,10 +18,6 @@ import javax.validation.constraints.Size;
 @Table(name = "solicitudes")
 public class Solicitud implements Serializable {
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud")
-    private FleteroSolicitudCliente fleteroSolicitudCliente;
-
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -42,6 +39,10 @@ public class Solicitud implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private FleteroSolicitudCliente fleteroSolicitudCliente;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
+    private SolicitudCliente solicitudCliente;
 
     public Solicitud() {
     }
@@ -55,7 +56,7 @@ public class Solicitud implements Serializable {
         this.precioMax = precioMax;
         this.titulo = titulo;
     }
-
+    
     public Solicitud(Integer peso, double precioMax, String titulo, String descripcion) {
         this.peso = peso;
         this.precioMax = precioMax;
@@ -133,5 +134,13 @@ public class Solicitud implements Serializable {
     public void setFleteroSolicitudCliente(FleteroSolicitudCliente fleteroSolicitudCliente) {
         this.fleteroSolicitudCliente = fleteroSolicitudCliente;
     }
-    
+
+    public SolicitudCliente getSolicitudCliente() {
+        return solicitudCliente;
+    }
+
+    public void setSolicitudCliente(SolicitudCliente solicitudCliente) {
+        this.solicitudCliente = solicitudCliente;
+    }
+
 }
