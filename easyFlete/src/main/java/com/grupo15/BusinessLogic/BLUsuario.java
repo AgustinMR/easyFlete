@@ -80,9 +80,8 @@ public class BLUsuario implements IBLUsuario {
         return DLusu.getAllClientes();
     }
 
-    /*
     @Override
-    public TipoUsuario login(String email, String pass) {
-        return DLusu.login(email, pass);
-    }*/
+    public List<String> getSolicitudesByCliente(String email) {
+        return DLusu.getSolicitudesByCliente(email);
+    }
 }

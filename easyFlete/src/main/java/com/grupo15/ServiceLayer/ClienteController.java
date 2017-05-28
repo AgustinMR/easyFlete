@@ -38,6 +38,12 @@ public class ClienteController implements ISLCliente {
     public Cliente getCliente(@PathVariable(name = "email") String email) {
         return new BLUsuario().getCliente(email);
     }
+    
+    @Override
+    @RequestMapping(value = "/{email}/solicitudes", method = RequestMethod.GET)
+    public List<String> getSolicitudesByCliente(@PathVariable(name = "email") String email) {
+        return new BLUsuario().getSolicitudesByCliente(email);
+    }
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
