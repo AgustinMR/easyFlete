@@ -97,16 +97,12 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public Fletero getFletero(String email) {
-        EntityManager em = new EMHandler().entityManager();
-        TypedQuery<Fletero> query = em.createQuery("SELECT c FROM Fletero c WHERE c.email = :e", Fletero.class);
-        return query.setParameter("e", email).getSingleResult();
+        return new EMHandler().entityManager().find(Fletero.class, email);
     }
 
     @Override
     public Cliente getCliente(String email) {
-        EntityManager em = new EMHandler().entityManager();
-        TypedQuery<Cliente> query = em.createQuery("SELECT c FROM Cliente c WHERE c.email = :e", Cliente.class);
-        return query.setParameter("e", email).getSingleResult();
+        return new EMHandler().entityManager().find(Cliente.class, email);
     }
 
     @Override
@@ -120,7 +116,7 @@ public class DALUsuario implements IUsuario {
     @Override
     public List<Cliente> getAllClientes() {
         EntityManager em = new EMHandler().entityManager();
-        List<Cliente> C = em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
+        List<Cliente> C = em.createQuery("SELECT c FROM Usuario c", Cliente.class).getResultList();
         em.close();
         return C;
     }
@@ -132,6 +128,17 @@ public class DALUsuario implements IUsuario {
         em.persist(r);
         em.getTransaction().commit();
         return true;
+    }
+
+    @Override
+    public List<String> getSolicitudesByCliente(String email) {
+        EntityManager em = new EMHandler().entityManager();
+        return em.createQuery("SELECT s.solicitud.id, "
+            + "s.solicitud.titulo, "
+            + "s.solicitud.descripcion, "
+            + "s.solicitud.fleteroSolicitudCliente.precio, "
+            + "s.solicitud.fleteroSolicitudCliente.estado, "
+            + "s.solicitud.fleteroSolicitudCliente.valoracion FROM SolicitudCliente s WHERE s.clienteEmail.email = :V", String.class).setParameter("V", email).getResultList();
     }
 
 }

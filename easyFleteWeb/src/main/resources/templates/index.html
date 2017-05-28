@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
     <script src="js/easyFlete.js" type="text/javascript"></script>
-    <body>   
+    <body>
         <script>
             $(document).ready(function () {
                 $('.masthead').visibility({
@@ -25,64 +25,97 @@
                     }
                 });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
+                $('.ui.embed').embed();
             });
         </script>
-        <!-- Following Menu -->
-        <div class="ui large top fixed menu transition hidden">
-            <div class="ui container">
-                <img src="img/easyFlete.png" style="height: 30px; margin-top: 10px">
-                <div class="right menu">
-                    <div class="item">
-                        <a class="ui button" href="/login">Iniciar Sesi&oacute;n</a>
-                    </div>
-                    <div class="item">
-                        <a class="ui button w3-easyFlete-grey" href="/registrarse">Registrarse</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Sidebar Menu -->
-        <div class="ui vertical inverted sidebar menu left">
-            <a class="active item">Home</a>
-            <a class="item">Work</a>
-            <a class="item">Company</a>
-            <a class="item">Careers</a>
-            <a class="item">Login</a>
-            <a class="item">Signup</a>
-        </div>
+        <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey"> <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top"> <a href="/inicio" class="active item">Solicitar</a> <a class="item" href="/login">Iniciar Sesi&oacute;n</a> <a class="item" href="/registrarse">Registrarse</a> </div>
         <div class="pusher">
-            <div class="ui inverted vertical masterhead masthead center aligned segment w3-easyFlete-orange" id="backgr" style="background-image: url(img/wood.png); background-repeat: repeat">
+            <div class="ui inverted vertical masterhead masthead center aligned segment w3-easyFlete-grey w3-bottombar" id="backgr" style="background-image: url(img/ub1610v2.jpg); background-repeat: no-repeat; background-position: right">
                 <div class="ui container">
-                    <div class="ui large secondary inverted pointing menu w3-border-0">
-                        <a class="toc item">
-                            <i class="sidebar icon"></i>
-                        </a>
-                        <img src="img/easyFlete-white.png" class="item" style="height: 55px">
-                        <div class="right item">
-                            <a class="ui inverted button" href="/login">Iniciar Sesi&oacute;n</a>
-                            <a class="ui inverted button" href="/registrarse">Registrarse</a>
-                        </div>
+                    <div class="ui large secondary inverted pointing menu w3-border-0"> <a class="toc item"> <i class="sidebar black icon"></i> </a> <img src="img/easyFlete.png" class="item" style="height: 55px">
+                        <div class="right item w3-hide-small"> <a class="ui secondary button w3-easyFlete-orange" href="/login">Iniciar Sesi&oacute;n</a> <a class="ui button w3-easyFlete-grey" href="/registrarse">Registrarse</a> </div>
                     </div>
                 </div>
                 <div class="ui text container">
-                    <h1 class="ui inverted header">
-                    </h1>
-                    <h2>Luegar de encuentro para clientes y fleteros.</h2>
-                    <div class="ui huge button w3-margin-top">Solicitar Flete <i class="right arrow icon"></i></div>
+                    <h1 class="ui inverted header"> </h1>
+                    <h2 class="w3-text-easyFlete-grey">Luegar de encuentro para clientes y fleteros.</h2>
+                    <div class="ui huge grey button w3-margin-top">Ver Demo <i class="right arrow icon"></i></div>
                 </div>
             </div>
-            <div class="ui raised segment w3-border-0 w3-display-container w3-topbar" style="height: 250px; background-color: #FBFBFB">
-                <div class="ui center aligned statistics w3-display-middle">
-                    <h2 class="ui center aligned icon header">
-                        <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Solicitar Flete</span></h2>
+            <div style="background-color: #FBFBFB">
+                <div id="intro" class="w3-content w3-padding-64">
+                    <h2 class="w3-center w3-margin-bottom ui horizontal divider header w3-padding w3-padding-24 w3-text-easyFlete-orange">Introducci&oacute;n</h2>
+                    <h4 class="w3-center ui header w3-padding-24">easyFlete es una plataforma web que te permite publicar y aceptar solicitudes para realizar fletes.</h4>
+                    <h4 class="w3-center ui header">Tus solicitudes son vistas por cientos de fleteros, que luego podr&aacute;n aceptar el trabajo.<br>
+                        Coordina con el fletero de forma sencilla y r&aacute;pida, para poder llevar a cabo el flete cuando as&iacute; lo desees.</h4>
                 </div>
             </div>
-            <div class="w3-padding w3-padding-48">
-                <div class="ui middle aligned stackable grid container">
-                    <div class="row">
-                        <div class="eight wide centered column">
+            <div class="w3-padding-24 w3-card w3-white">
+                <div class="w3-content w3-padding-48 w3-margin-bottom">
+                    <h2 class="w3-center w3-margin-bottom ui horizontal divider header w3-padding w3-padding-24 w3-text-easyFlete-orange">F&aacute;cil de utilizar</h2>
+                    <h4 class="w3-center ui header">Ya sea estando registrado o no, easyFlete hace sencillo y r&aacute;pido la publicaci&oacute;n de tus solicitudes en la plataforma.</h4>
+                    <div class="w3-content w3-padding-32 w3-margin-top w3-center">
+                        <div class="ui large steps">
+                            <div class="step"> <i class="info icon w3-margin-right w3-text-easyFlete-orange"></i>
+                                <div class="content">
+                                    <div class="title">Informaci&oacute;n B&aacute;sica</div>
+                                    <div class="description">necesaria para crear el flete</div>
+                                </div>
+                            </div>
+                            <div class="step"> <i class="user icon w3-text-easyFlete-orange"></i>
+                                <div class="content">
+                                    <div class="title">Informaci&oacute;n de Contacto</div>
+                                    <div class="description">para poder coordinar</div>
+                                </div>
+                            </div>
+                            <div class="step"> <i class="marker w3-text-easyFlete-orange icon"></i>
+                                <div class="content">
+                                    <div class="title">Ruta del Flete</div>
+                                    <div class="description">establece origen y destino del flete</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-padding w3-padding-64 bgimg-2 w3-card">
+                <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Solicitar Flete</span> </h2>
+            </div>
+            <div class="w3-padding w3-panel w3-padding-24" style="min-height: 600px">
+                <div class="w3-content">
+                    <div class="w3-col s12 m4 l4">
+                        <div class="ui vertical steps">
+                            <div class="active link step" onClick="mostrarStep1()" id="s1"> <i class="info icon"></i>
+                                <div class="content">
+                                    <div class="title">Informaci&oacute;n B&aacute;sica</div>
+                                    <div class="description">Datos necesarios para crear tu flete</div>
+                                </div>
+                            </div>
+                            <div class="link step" id="s2" onClick="mostrarStep2()"> <i class="user card icon"></i>
+                                <div class="content">
+                                    <div class="title">Informaci&oacute;n de Contacto</div>
+                                    <div class="description">Datos necesarios para contactarte</div>
+                                </div>
+                            </div>
+                            <div class="link step" id="s3" onClick="mostrarStep3()"> <i class="marker card icon"></i>
+                                <div class="content">
+                                    <div class="title">Ruta del Flete</div>
+                                    <div class="description">Origen y Destino del Flete</div>
+                                </div>
+                            </div>
+                            <div class="link step" id="s4" onClick="mostrarStep4()"> <i class="checkmark icon"></i>
+                                <div class="content">
+                                    <div class="title">Confirmar Solicitud</div>
+                                    <div class="description">Revisa y confirma tu solicitud</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-col s12 m8 l8">
+                        <div id="step1" class="w3-padding w3-margin">
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Informaci&oacute;n B&aacute;sica</h4>
-                            <div class="ui labeled fluid input w3-margin"><div class="ui label">T&iacute;tulo:</div>
+                            <div class="ui labeled fluid input w3-margin">
+                                <div class="ui label">T&iacute;tulo:</div>
                                 <input id="titulo" placeholder="Ingrese un t&iacute;tulo para el flete..." type="text">
                             </div>
                             <div class="ui right labeled fluid input w3-margin">
@@ -100,7 +133,8 @@
                                 <input id="precioMax" placeholder="Ingrese el precio m&aacute;ximo a pagar..." type="text">
                                 <div class="ui basic label">UY</div>
                             </div>
-                            <div class="ui labeled fluid input w3-margin"><div class="ui label">Fecha:</div>
+                            <div class="ui labeled fluid input w3-margin">
+                                <div class="ui label">Fecha:</div>
                                 <input id="fecha" placeholder="Ingrese la fecha del flete..." type="date">
                             </div>
                             <div class="ui reply form w3-margin">
@@ -108,41 +142,45 @@
                                     <textarea id="descripcion" cols="30" rows="7" style="min-height: 100px" placeholder="Escriba aqu&iacute; una descripci&oacute;n para el flete..."></textarea>
                                 </div>
                             </div>
+                        </div>
+                        <div id="step2" style="display: none" class="w3-padding w3-margin">
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Informaci&oacute;n de Contacto</h4>
-                            <div class="ui labeled fluid input w3-padding"><div class="ui label">Nombre:</div>
+                            <div class="ui labeled fluid input w3-padding">
+                                <div class="ui label">Nombre:</div>
                                 <input id="nombre" type="text" name="nombre" placeholder="Ingrese su nombre" required>
                             </div>
-                            <div class="ui labeled fluid input w3-padding"><div class="ui label">Tel&eacute;fono:</div>
+                            <div class="ui labeled fluid input w3-padding">
+                                <div class="ui label">Tel&eacute;fono:</div>
                                 <input placeholder="Ingrese su tel&eacute;fono..." id="telefono" type="tel" name="tel" required>
                             </div>
-                            <div class="ui labeled fluid input w3-padding"><div class="ui label">Email:</div>
+                            <div class="ui labeled fluid input w3-padding">
+                                <div class="ui label">Email:</div>
                                 <input id="email" type="email" name="email" placeholder="Ingrese su direcci&oacute;n de correo..." required>
                             </div>
                         </div>
-                    </div>
-                    <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Ruta del Flete</h4>
-                </div>
-            </div>
-            <div class="w3-content">
-                <div class="ui vertical stripe quote segment">
-                    <div class="ui equal width stackable internally celled grid">
-                        <div class="center aligned row">
-                            <div class="column">
-                                <h3>Origen:</h3>
+                        <div id="step3" style="display: none" class="w3-padding w3-margin">
+                            <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Ruta del Flete</h4>
+                            <div class="ui segment">
+                                <h4 class="ui left floated header">Origen <br>
+                                    <p style="font-size: 13px" class="w3-text-easyFlete-grey">escribe el nombre de la calle, seguido del numero de puerta</p>
+                                </h4>
+                                <div class="ui icon button circular w3-right" data-tooltip="Marcar Origen" onclick="dibujarPunto('Origen')"><i class="write icon black"></i></div>
+                                <div class="ui clearing divider"></div>
                                 <select name="origen" id="origen" class="ui fluid search dropdown">
                                     <option value="" selected disabled>Busque una calle</option>
                                     <option value="Easy Flete" >Easy Flete</option>
                                 </select>
-                                <button onclick="dibujarPunto('Origen')">Dibujar punto</button>
                             </div>
-                            <div class="column">
-                                <div class="w3-content">
-                                    <h3>Destino:</h3>
-                                    <select name="destino" id="destino" class="ui fluid search dropdown">
-                                        <option value="" selected disabled>Busque una calle</option>
-                                    </select>
-                                    <button onclick="dibujarPunto('Destino')">Dibujar punto</button>
-                                </div>
+                            <div class="ui segment">
+                                <h4 class="ui left floated header">Destino <br>
+                                    <p style="font-size: 13px" class="w3-text-easyFlete-grey">escribe el nombre de la calle, seguido del numero de puerta</p>
+                                </h4>
+                                <div class="ui icon button circular w3-right" data-tooltip="Marcar Destino" onclick="dibujarPunto('Destino')"><i class="write icon black"></i></div>
+                                <div class="ui clearing divider"></div>
+                                <select name="destino" id="destino" class="ui fluid search dropdown">
+                                    <option value="" selected disabled>Busque una calle</option>
+                                    <option value="Easy Flete" >Easy Flete</option>
+                                </select>
                             </div>
                             <script>
                                 var busquedaOld;
@@ -207,40 +245,43 @@
                                         }
                                     }
                                 });
-                            </script>
+                            </script> 
+                        </div>
+                        <div id="step4" class="w3-padding w3-margin" style="display: none"> 
+                            <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Confirmar Solicitud</h4>
+                            <div class="w3-padding w3-padding-48 w3-center">
+                                <button class="huge ui secondary inverted button w3-easyFlete-orange w3-center" onclick="ingresar()">Crear Flete</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ui vertical stripe segment">
-                <div class="w3-content"><div class="w3-card-4" id="map"></div></div>
+            <div class="w3-content w3-padding" style="margin-bottom: 50px">
+                <div class="w3-card-4 w3-round" id="map" style="height: 400px; width: 100%"></div>
             </div>
-            <button onclick="ingresar()">Ingresar</button>
-
+            <div class="w3-padding-48 w3-card" style="background-color: #FBFBFB">
+                <div class="w3-content w3-padding-48 w3-margin-bottom">
+                    <h2 class="w3-center w3-margin-bottom ui horizontal divider header w3-padding w3-padding-24 w3-text-easyFlete-orange">Demo</h2>
+                    <h4 class="w3-center ui header">Mir&aacute; la demo para conocer a&uacute;n mas sobre easyFlete</h4>
+                    <div class="w3-content w3-padding-32 w3-margin-top w3-center">
+                        <div class="ui embed w3-card" data-source="youtube" data-id="Nw1643T0RD0" data-placeholder="img/fondo.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="ui inverted vertical footer segment">
                 <div class="ui container">
                     <div class="ui stackable inverted divided equal height stackable grid">
-                        <div class="three wide column">
-                            <h4 class="ui inverted header">About</h4>
-                            <div class="ui inverted link list">
-                                <a href="#" class="item">Sitemap</a>
-                                <a href="#" class="item">Contact Us</a>
-                                <a href="#" class="item">Religious Ceremonies</a>
-                                <a href="#" class="item">Gazebo Plans</a>
-                            </div>
+                        <div class="four wide right aligned column">
+                            <h5>T.S.I.G - 2017</h5>
+                            <h5>Grupo 15</h5>
                         </div>
-                        <div class="three wide column">
-                            <h4 class="ui inverted header">Services</h4>
-                            <div class="ui inverted link list">
-                                <a href="#" class="item">Banana Pre-Order</a>
-                                <a href="#" class="item">DNA FAQ</a>
-                                <a href="#" class="item">How To Access</a>
-                                <a href="#" class="item">Favorite X-Men</a>
-                            </div>
+                        <div class="four wide center aligned column">
+                            <h4 class="ui inverted header">Integrantes:</h4>
+                            <div class="ui inverted link list"> <a href="#" class="item">Bruno Carballido</a> <a href="#" class="item">Enzo Drago</a> <a href="#" class="item">Agust&iacute;n Maidana</a> <a href="#" class="item">Pedro Moretto</a> </div>
                         </div>
-                        <div class="seven wide column">
-                            <h4 class="ui inverted header">Footer Header</h4>
-                            <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                        <div class="six wide column"> <img src="img/easyFlete.gif" style="height: 25px">
+                            <p>Luegar de encuentro para clientes y fleteros</p>
                         </div>
                     </div>
                 </div>
@@ -298,14 +339,12 @@
             var latlonDes = "";
 
 
-        </script>
-
-        <script>
             $(document).ready(function () {
                 "use strict";
                 blurBackground();
             });
-
+        </script> 
+        <script>
             function dibujarPunto(tipo) {
 
                 var docOrigen = document.getElementById("origen").value.toString();
@@ -389,13 +428,11 @@
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
                 var precioMax = document.getElementById("precioMax").value;
-                var email = document.getElementById("email").value;
-                var nombre = document.getElementById("nombre").value;
-                var telefono = document.getElementById("telefono").value;
+                var email = "email";
 
                 //alert(titulo);
 
-                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "" && nombre !== "" && telefono !== "") {
+                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
                     $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {
                         if (peso === "")
                             peso = "0";
@@ -404,11 +441,11 @@
                         var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email;
                         //alert(postInfo);
                         $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
-                            if(result === true){
+                            if (result === true) {
                                 alert("Solicitud ingresada con exito");
-                            }else{
+                            } else {
                                 alert("Error al ingresar la solicitud");
-                            }                        
+                            }
                         });
                     });
                 } else {
@@ -417,6 +454,5 @@
 
             }
         </script>
-        <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
     </body>
 </html>

@@ -18,4 +18,5 @@ public abstract interface IUsuario {
     public abstract List<Fletero> getAllFleteros();
     public abstract List<Cliente> getAllClientes();
     public boolean addRol(Rol r);
+    public List<String> getSolicitudesByCliente(String email);
 }
