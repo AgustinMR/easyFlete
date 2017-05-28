@@ -103,9 +103,11 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public Cliente getCliente(String email) {
-        Cliente x = new EMHandler().entityManager().createQuery("SELECT f FROM Cliente f WHERE f.username = :D", Cliente.class).setParameter("D", email).getSingleResult();
+        /*Cliente x = new EMHandler().entityManager().createQuery("SELECT f FROM Cliente f WHERE f.username = :D", Cliente.class).setParameter("D", email).getSingleResult();
         if(x != null) return x;
-        else return null;
+        else return null;*/
+        System.out.println(email);
+        return new EMHandler().entityManager().find(Cliente.class, email);
     }
 
     @Override
