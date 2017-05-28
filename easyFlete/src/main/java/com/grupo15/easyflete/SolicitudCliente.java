@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,7 +21,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "solicitudes_clientes")
 public class SolicitudCliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -48,7 +49,7 @@ public class SolicitudCliente implements Serializable {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
     }
-
+    
     public SolicitudCliente(Date fecha, Solicitud solicitud, Usuario clienteEmail) {
         this.fecha = fecha;
         this.solicitud = solicitud;
@@ -60,8 +61,6 @@ public class SolicitudCliente implements Serializable {
         this.fecha = fecha;
         this.clienteEmail = clienteEmail;
     }
-    
-    
 
     public Integer getSolicitudId() {
         return solicitudId;
@@ -93,31 +92,6 @@ public class SolicitudCliente implements Serializable {
 
     public void setClienteEmail(Usuario clienteEmail) {
         this.clienteEmail = clienteEmail;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (solicitudId != null ? solicitudId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SolicitudCliente)) {
-            return false;
-        }
-        SolicitudCliente other = (SolicitudCliente) object;
-        if ((this.solicitudId == null && other.solicitudId != null) || (this.solicitudId != null && !this.solicitudId.equals(other.solicitudId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.grupo15.easyflete.SolicitudCliente[ solicitudId=" + solicitudId + " ]";
     }
     
 }
