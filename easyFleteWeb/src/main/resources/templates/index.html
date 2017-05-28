@@ -437,11 +437,15 @@
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
                 var precioMax = document.getElementById("precioMax").value;
-                var email = "email";
+                var email = document.getElementById("email").value;
+                var nombre = document.getElementById("nombre").value;
+                var telefono = document.getElementById("telefono").value;
 
                 //alert(titulo);
+                //var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email;
+                //alert(postInfo);
 
-                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
+                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "" && nombre !== "" && telefono !== "") {
                     $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {
                         if (peso === "")
                             peso = "0";

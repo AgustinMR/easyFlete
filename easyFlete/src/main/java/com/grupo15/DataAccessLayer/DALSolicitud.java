@@ -2,6 +2,7 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
+import com.grupo15.easyflete.Zona;
 import com.grupo15.handlers.EMHandler;
 import java.util.Date;
 import java.util.List;
@@ -87,6 +88,15 @@ public class DALSolicitud implements ISolicitud {
         List<Solicitud> S = em.createQuery("SELECT s FROM Solicitud s", Solicitud.class).getResultList();
         em.close();
         return S;
+    }
+    
+    @Override
+    public boolean addZona(Zona z) {
+        EntityManager em = new EMHandler().entityManager();
+        em.getTransaction().begin();
+        em.persist(z);
+        em.getTransaction().commit();
+        return true;
     }
 
 }

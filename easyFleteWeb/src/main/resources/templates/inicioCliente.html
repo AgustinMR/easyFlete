@@ -222,7 +222,7 @@
                         <div id="step4" class="w3-padding w3-margin" style="display: none"> 
                             <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Confirmar Solicitud</h4>
                             <div class="w3-padding w3-padding-48 w3-center">
-                                <button class="huge ui secondary inverted button w3-easyFlete-orange w3-center">Crear Flete</button>
+                                <button class="huge ui secondary inverted button w3-easyFlete-orange w3-center" onclick="ingresar()">Crear Flete</button>
                             </div>
                         </div>
                     </div>
@@ -400,9 +400,9 @@
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
                 var precioMax = document.getElementById("precioMax").value;
-                var email = "email";
+                var email = 'email';
 
-                //alert(titulo);
+                //alert(email);
 
                 if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
                     $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {

@@ -1,7 +1,10 @@
 package com.grupo15.BusinessLogic;
 
 import com.grupo15.DataAccessLayer.DALMapa;
+import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.DataAccessLayer.IMapa;
+import com.grupo15.DataAccessLayer.ISolicitud;
+import com.grupo15.easyflete.Zona;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
@@ -83,6 +86,14 @@ public class BLMapa implements IBLMapa {
             list.add(nomProp.toLowerCase() + ", " + numProp);
         }
         return list;
+    }
+    
+    @Override
+    public boolean addZona(String email, double precio, String geom) {
+        ISolicitud sol = new DALSolicitud();
+        Zona z = new Zona(precio);
+        sol.addZona(z);
+        return DLMapa.guardarZonas(z.getId(), geom);
     }
 
 }
