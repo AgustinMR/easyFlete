@@ -9,4 +9,5 @@ public interface ISLCliente {
     public boolean deleteCliente(String email);
     public Cliente getCliente(String email);
     public List<Cliente> getAllClientes();
+    public List<String> getSolicitudesByCliente(String email);
 }

@@ -8,19 +8,15 @@ body, html {
     color: #777;
     line-height: 1.8;
 }
-.bgimg-1, .bgimg-3, .bgimg-7 {
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 .bgimg-1 {
-    background-image: url(../img/2004944.jpg);
-    min-height: 700px;
+    background-image: url(../img/worn-dots.png);
+    min-height: 250px;
+	background-repeat: repeat;
 }
 .bgimg-2 {
     background-image: url(../img/ub1610v2.jpg);
     min-height: 100%;
-	background-attachment: scroll;
+	background-attachment: fixed;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top;
@@ -57,7 +53,7 @@ body, html {
       display: none;
     }
 .masterhead{
-	height: 700px
+	height: 800px
 }
 .mhead{
 	height: 150px
@@ -202,3 +198,6 @@ body, html {
 .w3-col.l5{width:41.66666%}.w3-col.l6{width:49.99999%}.w3-col.l7{width:58.33333%}.w3-col.l8{width:66.66666%}
 .w3-col.l9{width:74.99999%}.w3-col.l10{width:83.33333%}.w3-col.l11{width:91.66666%}.w3-col.l12{width:99.99999%}}
 .w3-left{float:left!important}.w3-right{float:right!important}
+@media (max-width:992px) and (min-width:601px){.w3-hide-medium{display:none!important}}
+.w3-light-grey,.w3-hover-light-grey:hover,.w3-light-gray,.w3-hover-light-gray:hover{color:#000!important;background-color:#f1f1f1!important}
+.w3-dark-grey,.w3-hover-dark-grey:hover,.w3-dark-gray,.w3-hover-dark-gray:hover{color:#fff!important;background-color:#616161!important}
