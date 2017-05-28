@@ -40,6 +40,10 @@ public class Zona implements Serializable {
         this.id = id;
         this.precio = precio;
     }
+    
+    public Zona(double precio) {
+        this.precio = precio;
+    }
 
     public Integer getId() {
         return id;

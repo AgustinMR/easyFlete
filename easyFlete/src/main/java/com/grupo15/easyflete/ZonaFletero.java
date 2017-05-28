@@ -34,6 +34,11 @@ public class ZonaFletero implements Serializable {
     public ZonaFletero(Integer zonaId) {
         this.zonaId = zonaId;
     }
+    
+    public ZonaFletero(Integer zonaId, Usuario fletero) {
+        this.zonaId = zonaId;
+        this.fleteroEmail = fletero;
+    }
 
     public Integer getZonaId() {
         return zonaId;

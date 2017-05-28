@@ -36,17 +36,38 @@ public class DALMapa implements IMapa {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
-        
-        String[] ori = latlonOri.split(",");
-        String[] des = latlonDes.split(",");
-        
-        Document document = new Document("SolicitudId", solId)
-               .append("Origen", new Document("Latitud", ori[0])
-                                       .append("Longitud", ori[1]))
-               .append("Destino", new Document("Latitud", des[0])
-                                       .append("Longitud", des[1]));
 
-        collection.insertOne(document);
+        String json = "{ 'solicitudId' : " + solId + " , 'origen' : { 'type': 'Point', 'coordinates': [ " + latlonOri + " ] } , 'destino' : { 'type': 'Point', 'coordinates': [ " + latlonDes + " ] }}";
+
+        Document doc = Document.parse(json);
+        collection.insertOne(doc);
+        return true;
+    }
+
+    @Override
+    public boolean guardarZonas(Integer zonaId, String geoZona) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("zonasGeo");
+
+        String[] tmp = geoZona.split(",");
+        String resultado = "";
+        for (int i = 0; i < tmp.length; i++) {
+            if (i % 2 == 0) {
+                resultado += "[" + tmp[i] + ",";
+            } else {
+                int u = i;
+                if (u + 1 < tmp.length) {
+                    resultado += tmp[i] + "],";
+                } else {
+                    resultado += tmp[i] + "]";
+                }
+            }
+        }
+        String json = "{ 'zonaId' : " + zonaId + " , 'geometry' : { 'type': 'Polygon', 'coordinates': [" + resultado + "] }}";
+
+        Document doc = Document.parse(json);
+        collection.insertOne(doc);
         return true;
     }
 }

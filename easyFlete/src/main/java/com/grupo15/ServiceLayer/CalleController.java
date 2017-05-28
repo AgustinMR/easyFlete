@@ -2,13 +2,7 @@ package com.grupo15.ServiceLayer;
 
 import com.grupo15.BusinessLogic.BLMapa;
 import com.grupo15.BusinessLogic.IBLMapa;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.*;
-import java.util.ArrayList;
 import java.util.List;
-import org.bson.Document;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +25,12 @@ public class CalleController {
     public List<String> getCallesNum(@PathVariable(name = "calleNum") String calleNum) {
         IBLMapa mapa = new BLMapa();
         return mapa.getCallesNum(calleNum);
-    }    
+    }
+    
+    @RequestMapping(value = "/zona", method = RequestMethod.POST)
+    public boolean addZona(@RequestParam(name = "email") String email,@RequestParam(name = "precio") double precio, @RequestParam(name = "geom") String geom) {
+        IBLMapa mapa = new BLMapa();
+        //System.out.println(email + " " + precio + " " + geom);
+        return mapa.addZona(email, precio, geom);
+    }
 }
