@@ -16,9 +16,12 @@ public class InicioController {
         if(a.isAuthenticated() && ((UserDetails)a.getPrincipal()).isEnabled()) {
             UserDetails u = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             m.addAttribute("usuario", u.getUsername());
+            System.out.println(u.getAuthorities().toString());
             if(u.getAuthorities().toString().equals("[CLIENTE]")) return "inicioCliente";
             else return "inicioFletero";
-        } else return "403";
+        } else {
+            return "Error";
+        }
     }
     
 }
