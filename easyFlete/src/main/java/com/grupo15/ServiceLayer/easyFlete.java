@@ -16,7 +16,7 @@ public class easyFlete {
         SpringApplication.run(easyFlete.class, args);
 
         //IMapa dal = new DALMapa();
-        //boolean t = dal.guardarZonas(13,"-56.56323860374944,-34.801620982410256,-56.19245002953069,-34.785141490222756,-56.336645586171315,-34.98426868748838,-56.60169075218694,-34.870285533191506,-56.56323860374944,-34.801620982410256");
+        //int t = dal.getDistance();
         //System.out.println(t);
         
         //new BLUsuario().addCliente("nombre", "pass", "email@algo.com", "145");
