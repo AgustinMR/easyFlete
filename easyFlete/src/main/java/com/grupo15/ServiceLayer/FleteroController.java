@@ -45,4 +45,10 @@ public class FleteroController implements ISLFletero {
         return new BLUsuario().getAllFleteros();
     }
     
+    @Override
+    @RequestMapping(value = "/solicitudes", method = RequestMethod.GET)
+    public List<Object[]> getSolicitudesByFletero(@RequestParam(name = "email") String email) {
+        return new BLUsuario().getSolicitudesByFletero(email);
+    }
+    
 }

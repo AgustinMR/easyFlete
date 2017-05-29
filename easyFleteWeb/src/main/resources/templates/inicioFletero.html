@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<title>easyFlete</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/semantic.min.css">
-<link rel="stylesheet" href="css/easyFlete.css">
-<script src="js/jquery.js"></script>
-<script src="js/semantic.min.js"></script>
-<script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4-src.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
-<link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
-<script src="js/easyFlete.js" type="text/javascript"></script>
-<body>
-<script>
+    <title>easyFlete</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/semantic.min.css">
+    <link rel="stylesheet" href="css/easyFlete.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/semantic.min.js"></script>
+    <script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4-src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
+    <script src="js/easyFlete.js" type="text/javascript"></script>
+    <body>
+        <script>
             $(document).ready(function () {
                 $('.masthead').visibility({
                     once: false,
@@ -28,198 +28,86 @@
                 $('.ui.embed').embed();
             });
         </script>
-<div class="ui vertical inverted sidebar menu left w3-easyFlete-grey"> <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top"> <a href="/inicio" class="item">Solicitar</a> <a class="active item">Mis Fletes</a> <a class="item">Reportes</a>
-  <div class="right item"> <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> </div>
-</div>
-<div class="pusher">
-  <div class="ui inverted vertical masterhead mhead center aligned segment w3-easyFlete-grey w3-bottombar" id="backgr" style="background-image: url(img/ub1610v2.jpg); background-repeat: no-repeat; background-position: bottom">
-    <div class="ui container">
-      <div class="ui large secondary pointing menu w3-border-0"> <a class="toc item"><i class="sidebar icon"></i></a> <img src="img/easyFlete.png" style="height: 30px" class="w3-margin-top w3-margin-right"> <a class="active item w3-text-easyFlete-orange" href="/inicio">Inicio</a> <a class="item" href="/fletes">Ofertas</a> <a class="item" href="/reportes">Zonas</a>
-        <div class="right item"> <a class="ui secondaryy button grey w3-hide-small" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> </div>
-      </div>
-    </div>
-  </div>
-  <div class="w3-padding w3-padding-64 w3-card" style="background-color: #FBFBFB">
-    <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Fletes pr&oacute;ximos</span> </h2>
-  </div>
-  <div class="w3-padding w3-padding-48">
-    <div class="ui two column doubling stackable grid container">
-      <div class="column">
-        <div class="ui raised segment" id="fletesContext">
-          <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
-            <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
-             	<div class="ui icon input" style="width: 100%">
-  					<input placeholder="Buscar por t&iacute;tulo" type="text">
-  					<i class="search circular inverted link icon"></i>
-				</div>
+        <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey"> <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top"> <a href="/inicio" class="item">Solicitar</a> <a class="active item">Mis Fletes</a> <a class="item">Reportes</a>
+            <div class="right item"> <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> </div>
+        </div>
+        <div class="pusher">
+            <div class="ui inverted vertical masterhead mhead center aligned segment w3-easyFlete-grey w3-bottombar" id="backgr" style="background-image: url(img/ub1610v2.jpg); background-repeat: no-repeat; background-position: bottom">
+                <div class="ui container">
+                    <div class="ui large secondary pointing menu w3-border-0"> <a class="toc item"><i class="sidebar icon"></i></a> <img src="img/easyFlete.png" style="height: 30px" class="w3-margin-top w3-margin-right"> <a class="active item w3-text-easyFlete-orange" href="/inicio">Inicio</a> <a class="item" href="/fletes">Ofertas</a> <a class="item" href="/reportes">Zonas</a>
+                        <div class="right item"> <a class="ui secondaryy button grey w3-hide-small" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="ui active tab">
-            <div class="ui divided items w3-padding-16" style="min-height: 400px">
-             <!-- ESTE ES UN FLETE -->
-              <div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-           		<!-- FIN -->
-           		
-           		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-           		
-           		
-           		
+            <div class="w3-padding w3-padding-64 w3-card" style="background-color: #FBFBFB">
+                <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Fletes pr&oacute;ximos</span> </h2>
             </div>
-          </div>
+            <div class="w3-padding w3-padding-48">
+                <div class="ui two column doubling stackable grid container">
+                    <div class="column">
+                        <div class="ui raised segment" id="fletesContext">
+                            <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
+                                <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
+                                    <div class="ui icon input" style="width: 100%">
+                                        <input placeholder="Buscar por t&iacute;tulo" type="text">
+                                        <i class="search circular inverted link icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui active tab">
+                                <div class="ui divided items w3-padding-16" style="min-height: 400px">
+                                    <!-- ESTE ES UN FLETE -->
+                                    <div class="item">
+                                        <div class="content" style="background-color: #FBFBFB">
+                                            <div class="row w3-light-gray">
+                                                <div class="w3-padding" style="height: 32px">
+                                                    <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
+                                                    <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
+                                                </div>
+                                            </div>
+                                            <div class="meta w3-row">
+                                                <span class="w3-margin-left"><strong>Cliente</strong></span>
+                                                <span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
+                                                <span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
+                                            </div>
+                                            <div class="description">
+                                                <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- FIN -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column" id="mapa" style="margin-top: 15px">
+                        <div class="ui rail" style="width: 100%">
+                            <div class="ui sticky">
+                                <div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted vertical footer segment">
+                <div class="ui container">
+                    <div class="ui stackable inverted divided equal height stackable grid">
+                        <div class="four wide right aligned column">
+                            <h5>T.S.I.G - 2017</h5>
+                            <h5>Grupo 15</h5>
+                        </div>
+                        <div class="four wide center aligned column">
+                            <h4 class="ui inverted header">Integrantes:</h4>
+                            <div class="ui inverted link list"> <a href="#" class="item">Bruno Carballido</a> <a href="#" class="item">Enzo Drago</a> <a href="#" class="item">Agust&iacute;n Maidana</a> <a href="#" class="item">Pedro Moretto</a> </div>
+                        </div>
+                        <div class="six wide column"> <img src="img/easyFlete.gif" style="height: 25px">
+                            <p>Luegar de encuentro para clientes y fleteros</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="column" id="mapa" style="margin-top: 15px">
-      	<div class="ui rail" style="width: 100%">
-		  <div class="ui sticky">
-			<div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
-		  </div>
-		</div>
-      </div>
-    </div>
-  </div>
-  <div class="ui inverted vertical footer segment">
-    <div class="ui container">
-      <div class="ui stackable inverted divided equal height stackable grid">
-        <div class="four wide right aligned column">
-          <h5>T.S.I.G - 2017</h5>
-          <h5>Grupo 15</h5>
-        </div>
-        <div class="four wide center aligned column">
-          <h4 class="ui inverted header">Integrantes:</h4>
-          <div class="ui inverted link list"> <a href="#" class="item">Bruno Carballido</a> <a href="#" class="item">Enzo Drago</a> <a href="#" class="item">Agust&iacute;n Maidana</a> <a href="#" class="item">Pedro Moretto</a> </div>
-        </div>
-        <div class="six wide column"> <img src="img/easyFlete.gif" style="height: 25px">
-          <p>Luegar de encuentro para clientes y fleteros</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
+        <script>
             $(document).ready(function () {
                 "use strict";
                 $('.ui.sticky').sticky({
@@ -230,7 +118,7 @@
                 $('.ui.rating').rating();
                 blurBackground();
             });</script>
-            <script>
+        <script>
             var raster = new ol.layer.Tile({source: new ol.source.OSM()});
             var source = new ol.source.Vector({wrapX: false});
             var vector = new ol.layer.Vector({source: source});
@@ -285,15 +173,15 @@
             $(document).ready(function () {
                 "use strict";
                 blurBackground();
-				$('#map').sticky({
-    				context: '#fletesContext',
-					offset: 0,
-					bottomOffset: 0
-					
-  				});
+                $('#map').sticky({
+                    context: '#fletesContext',
+                    offset: 0,
+                    bottomOffset: 0
+
+                });
             });
         </script> 
-<script>
+        <script>
             function dibujarPunto(tipo) {
 
                 var docOrigen = document.getElementById("origen").value.toString();
@@ -403,5 +291,5 @@
 
             }
         </script>
-</body>
+    </body>
 </html>

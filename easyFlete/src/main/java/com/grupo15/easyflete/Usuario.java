@@ -78,7 +78,7 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
         this.username = email;
         this.telefono = telefono;
-        this.enabled = 1;
+        this.enabled = 0;
     }
     
     public Usuario(String nombre, String username, String password, String telefono, String vehiculoNombre, Integer vehiculoCarga) {

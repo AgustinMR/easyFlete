@@ -18,7 +18,9 @@ public class BLUsuario implements IBLUsuario {
     @Override
     public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
         Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
-        if(DLusu.addUsuario(f)) return DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)));
+        if (DLusu.addUsuario(f)) {
+            return DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)));
+        }
         return false;
     }
 
@@ -26,12 +28,17 @@ public class BLUsuario implements IBLUsuario {
     public boolean addCliente(String nombre, String password, String email, String telefono) {
         if (DLusu.getCliente(email) == null) {
             Cliente c;
-            if (password == null) c = new Cliente(email, nombre, telefono);
-            else c = new Cliente(email, nombre, telefono, password);
-            if(DLusu.addUsuario(c)) return DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)));
+            if (password == "") {
+                c = new Cliente(email, nombre, telefono);
+            } else {
+                c = new Cliente(email, nombre, telefono, password);
+            }
+            if (DLusu.addUsuario(c)) {
+                return DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)));
+            }
             return false;
         } else {
-             System.out.println("entre al false en realidad");
+            System.out.println("entre al false en realidad");
             return true;
         }
     }
@@ -81,5 +88,10 @@ public class BLUsuario implements IBLUsuario {
     @Override
     public List<Object[]> getSolicitudesByCliente(String email) {
         return DLusu.getSolicitudesByCliente(email);
+    }
+
+    @Override
+    public List<Object[]> getSolicitudesByFletero(String email) {
+        return DLusu.getSolicitudesByFletero(email);
     }
 }
