@@ -2,7 +2,9 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.FleteroSolicitudCliente;
 import com.grupo15.easyflete.Rol;
+import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.handlers.EMHandler;
 import java.util.Arrays;
 import java.util.List;
@@ -133,6 +135,18 @@ public class DALUsuario implements IUsuario {
     @Override
     public List<Object[]> getSolicitudesByCliente(String email) {
         return new EMHandler().entityManager().createQuery("SELECT s.id, s.titulo, s.descripcion, s.estado, s.precio, s.valoracion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", Object[].class).setParameter("D", email).getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getSolicitudesByFletero(String email) {
+        System.out.println("HOLA");
+        EntityManager em = new EMHandler().entityManager();
+        List<Object[]> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha, s.solicitudCliente.clienteEmail.nombre, s.distancia, s.precio FROM Solicitud s WHERE s.fleteroSolicitudCliente.fleteroEmail.username = :D ORDER BY s.solicitudCliente.fecha", Object[].class).setParameter("D", email).getResultList();
+        System.out.println(ret.size());
+        for ( int x = 0; x < ret.size(); x++ ) {
+            System.out.println(Arrays.toString(ret.get(x)));
+        }
+        return ret;
     }
 
 }
