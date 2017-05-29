@@ -28,7 +28,7 @@ public class Cliente extends Usuario {
         this.setDtype("Cliente");
     }
 
-    public Cliente(String nombre, String email, String telefono) {
+    public Cliente(String email, String nombre, String telefono) {
         super(nombre, email, telefono);
         this.setDtype("Cliente");
     }
