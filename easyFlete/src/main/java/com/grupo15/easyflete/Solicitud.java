@@ -18,6 +18,9 @@ import javax.validation.constraints.Size;
 @Table(name = "solicitudes")
 public class Solicitud implements Serializable {
 
+    @Column(name = "distancia")
+    private Double distancia;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -64,26 +67,29 @@ public class Solicitud implements Serializable {
         this.titulo = titulo;
     }
     
-        public Solicitud(Integer peso, double precioMax, String titulo, String descripcion) {
+    public Solicitud(Integer peso, double precioMax, String titulo, String descripcion, double distancia) {
         this.peso = peso;
         this.precioMax = precioMax;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.distancia = distancia;
     }
-    
-    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen) {
+
+    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, double distancia) {
         this.volumen = volumen;
         this.precioMax = precioMax;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.distancia = distancia;
     }
-    
-    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, Integer peso) {
+
+    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, Integer peso, double distancia) {
         this.volumen = volumen;
         this.peso = peso;
         this.precioMax = precioMax;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.distancia = distancia;
     }
 
     public Integer getId() {
@@ -173,5 +179,13 @@ public class Solicitud implements Serializable {
     public void setSolicitudCliente(SolicitudCliente solicitudCliente) {
         this.solicitudCliente = solicitudCliente;
     }
-    
+
+    public Double getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(Double distancia) {
+        this.distancia = distancia;
+    }
+
 }
