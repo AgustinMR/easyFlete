@@ -28,6 +28,7 @@ CREATE TABLE SOLICITUDES (
     precio_max float NOT NULL,
     estado varchar(30) NULL,
     titulo text NOT NULL,
+    distancia float DEFAULT 0,
     valoracion int DEFAULT 0,
     precio float DEFAULT 0,
     descripcion text NULL,
