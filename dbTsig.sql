@@ -36,7 +36,7 @@ ALTER SEQUENCE SOLICITUDES_ID_SEC OWNED BY SOLICITUDES.id;
 CREATE TABLE SOLICITUDES_CLIENTES (
   cliente_email varchar(30) NOT NULL,
   solicitud_id int NOT NULL,
-  fecha timestamp NOT NULL,
+  fecha date NOT NULL,
   PRIMARY KEY (solicitud_id),
   FOREIGN KEY (cliente_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
@@ -46,7 +46,6 @@ CREATE TABLE FLETEROS_SOLICITUDES_CLIENTES (
   solicitud_id int NOT NULL,
   fletero_email varchar(30) NOT NULL,
   valoracion int DEFAULT 0,
-  comentario varchar(300) NULL,
   estado varchar(30) NULL,
   precio float NULL,
   PRIMARY KEY (solicitud_id),
