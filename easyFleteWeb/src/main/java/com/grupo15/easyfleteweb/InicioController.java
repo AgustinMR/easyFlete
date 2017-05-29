@@ -19,7 +19,6 @@ public class InicioController {
             if(u.getAuthorities().toString().equals("[CLIENTE]")) return "inicioCliente";
             else return "inicioFletero";
         } else return "403";
-        
     }
     
 }

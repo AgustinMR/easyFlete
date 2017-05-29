@@ -10,5 +10,4 @@ public abstract interface ISLSolicitud {
     public boolean deleteSolicitud(int id);
     public Solicitud getSolicitud(int id);
     public List<Solicitud> getAllSolicitudes();
-    
 }
