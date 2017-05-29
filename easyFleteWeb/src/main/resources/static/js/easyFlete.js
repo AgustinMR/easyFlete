@@ -37,6 +37,9 @@ function registrar() {
         });
     }
 }
+function getSolicitudesByCliente(email){
+    $.get("http://localhost:10070/solicitudes");
+}
 function blurBackground() {
     "use strict";
     $("#backgr").animate({opacity: 0.80}, 4000, function () {
