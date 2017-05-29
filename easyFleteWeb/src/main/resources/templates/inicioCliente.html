@@ -26,6 +26,7 @@
                 $('.ui.embed').embed();
             });
         </script>
+        <p style="display:none" id="emailCliente" th:text="${usuario}"></p>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top">
             <a href="/inicio" class="item">Solicitar</a>
@@ -397,7 +398,7 @@
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
                 var precioMax = document.getElementById("precioMax").value;
-                var email = 'email';
+                var email = document.getElementById("emailCliente").innerHTML;
 
                 if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
                     if (peso === "")

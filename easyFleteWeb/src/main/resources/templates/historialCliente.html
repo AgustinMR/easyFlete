@@ -28,6 +28,7 @@
                 $('.ui.embed').embed();
             });
         </script>
+        <p style="display:none" id="emailCliente" th:text="${usuario}"></p>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top">
             <a href="/inicio" class="item">Solicitar</a>
@@ -142,6 +143,7 @@
                         })
                         ;
                 blurBackground();
+                getSolicitudesByCliente(document.getElementById("emailCliente").innerHTML);
             });</script>
     </body>
 </html>
