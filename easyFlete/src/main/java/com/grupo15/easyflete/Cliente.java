@@ -19,7 +19,7 @@ public class Cliente extends Usuario {
     }
     
     public Cliente(String username, String nombre, String telefono, String password){
-        super(username, nombre, telefono, password);
+        super(nombre, username, telefono, password);
         this.setDtype("Cliente");
     }
     

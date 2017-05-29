@@ -94,7 +94,7 @@ public class Usuario implements Serializable {
         this.vehiculoCarga = vehiculoCarga;
     }
     
-    public Usuario(String username, String nombre, String telefono, String password){
+    public Usuario(String nombre, String username, String telefono, String password){
         this.username = username;
         this.nombre = nombre;
         this.telefono = telefono;
