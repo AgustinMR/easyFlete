@@ -1,10 +1,16 @@
 package com.grupo15.DataAccessLayer;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
@@ -69,5 +75,24 @@ public class DALMapa implements IMapa {
         Document doc = Document.parse(json);
         collection.insertOne(doc);
         return true;
+    }
+
+    public int getDistance() {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+        collection.createIndex(Indexes.geo2dsphere("destino"));
+        
+        Block<Document> printBlock = new Block<Document>() {
+            @Override
+            public void apply(final Document document) {
+                System.out.println(document.toJson());
+            }
+        };
+        
+        Point refPoint = new Point(new Position(-56.2269777330595, -34.8585389298685));
+        collection.find(Filters.near("destino", refPoint, 10000.0, 0.0)).forEach(printBlock);
+        
+        return 0;
     }
 }
