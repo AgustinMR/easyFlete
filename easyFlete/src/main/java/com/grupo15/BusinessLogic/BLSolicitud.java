@@ -27,7 +27,7 @@ public class BLSolicitud implements IBLSolicitud {
         }else if(volumen == 0){
             s = new Solicitud(peso, precioMax, titulo, descripcion, distancia);
         }else{
-            s = new Solicitud(precioMax, titulo, descripcion, volumen, peso);
+            s = new Solicitud(precioMax, titulo, descripcion, volumen, peso, distancia);
         }
         boolean ingreso = DLsol.addSolicitud(s);
         
