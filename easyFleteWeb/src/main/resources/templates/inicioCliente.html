@@ -337,9 +337,6 @@
                             });
                             map.addLayer(vector_layerD);
                         }
-
-                        //alert(Number(xy[0]) + ","+  Number(xy[1]) +"          ->"+latlonOri +" | " + latlonDes);
-
                         map.setView(new ol.View({
                             projection: 'EPSG:4326',
                             center: [Number(xy[0]), Number(xy[1])],
@@ -402,28 +399,19 @@
                 var precioMax = document.getElementById("precioMax").value;
                 var email = 'email';
 
-                //alert(email);
-
                 if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
                     if (peso === "")
                         peso = "0";
                     if (volumen === "")
                         volumen = "0";
 
+                    var wgs84Sphere = new ol.Sphere(6378137);
                     var xy = latlonOri.split(",");
                     var xy2 = latlonDes.split(",");
-                    var coordinates = [[Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]];
-                    var length = 0;
-                    var sourceProj = map.getView().getProjection();
-                    for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-                        var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
-                        var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
-                        length += wgs84Sphere.haversineDistance(c1, c2);
-                    }
+                    var length = wgs84Sphere.haversineDistance([Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]);
                     var dist = (Math.round(length / 1000 * 100) / 100);
 
                     var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
-                    //alert(postInfo);
                     $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
                         if (result === true) {
                             alert("Solicitud ingresada con exito");
