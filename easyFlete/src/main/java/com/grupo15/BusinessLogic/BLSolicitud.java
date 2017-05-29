@@ -20,12 +20,12 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(String origen, String destino, String titulo, int peso, int volumen, String descripcion, String fecha, double precioMax, String email) {
+    public boolean addSolicitud(String origen, String destino, String titulo, int peso, int volumen, String descripcion, String fecha, double precioMax, String email, double distancia) {
         Solicitud s;
         if(peso == 0){
-            s = new Solicitud(precioMax, titulo, descripcion, volumen);
+            s = new Solicitud(precioMax, titulo, descripcion, volumen, distancia);
         }else if(volumen == 0){
-            s = new Solicitud(peso, precioMax, titulo, descripcion);
+            s = new Solicitud(peso, precioMax, titulo, descripcion, distancia);
         }else{
             s = new Solicitud(precioMax, titulo, descripcion, volumen, peso);
         }
