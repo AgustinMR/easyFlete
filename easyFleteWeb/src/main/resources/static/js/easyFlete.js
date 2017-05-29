@@ -22,7 +22,6 @@ function registrar() {
         });
     } else {
         $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
-            alert(exito);
             if (exito === true) {
                 $('#exito').modal({
                     onHidden: function () {
@@ -31,6 +30,7 @@ function registrar() {
                         });
                     }
                 }).modal('show');
+
             } else {
                 $('#error').modal('show');
             }
@@ -38,8 +38,14 @@ function registrar() {
     }
 }
 function getSolicitudesByCliente(email) {
-    $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function () {
-        
+    $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function (response) {
+        $.each(response, function (index, x) {
+            var solicitud = JSON.parse(JSON.stringify(x));
+            var item = document.createElement("div");
+            item.className = "item";
+            var content = document.createElement("div");
+            content.style.backgroundColor = "";
+        });
     });
 }
 function blurBackground() {
