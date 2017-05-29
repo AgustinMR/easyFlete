@@ -9,4 +9,5 @@ public interface ISLFletero {
     public boolean deleteFletero(String email);
     public Fletero getFletero(String email);
     public List<Fletero> getAllFleteros();
+    public List<Object[]> getSolicitudesByFletero(String email);
 }
