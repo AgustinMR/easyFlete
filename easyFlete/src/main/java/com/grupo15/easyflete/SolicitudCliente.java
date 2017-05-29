@@ -27,14 +27,14 @@ public class SolicitudCliente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     @JoinColumn(name = "solicitud_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Solicitud solicitud;
     @JoinColumn(name = "cliente_email", referencedColumnName = "username")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Usuario clienteEmail;
+    private Cliente clienteEmail;
 
     public SolicitudCliente() {
     }
@@ -48,13 +48,13 @@ public class SolicitudCliente implements Serializable {
         this.fecha = fecha;
     }
     
-    public SolicitudCliente(Date fecha, Solicitud solicitud, Usuario clienteEmail) {
+    public SolicitudCliente(Date fecha, Solicitud solicitud, Cliente clienteEmail) {
         this.fecha = fecha;
         this.solicitud = solicitud;
         this.clienteEmail = clienteEmail;
     }
 
-    public SolicitudCliente(Integer solicitudId, Date fecha, Usuario clienteEmail) {
+    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente clienteEmail) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
         this.clienteEmail = clienteEmail;
@@ -84,11 +84,11 @@ public class SolicitudCliente implements Serializable {
         this.solicitud = solicitud;
     }
 
-    public Usuario getClienteEmail() {
+    public Cliente getClienteEmail() {
         return clienteEmail;
     }
 
-    public void setClienteEmail(Usuario clienteEmail) {
+    public void setClienteEmail(Cliente clienteEmail) {
         this.clienteEmail = clienteEmail;
     }
     

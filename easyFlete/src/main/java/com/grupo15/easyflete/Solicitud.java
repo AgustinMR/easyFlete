@@ -31,11 +31,18 @@ public class Solicitud implements Serializable {
     @NotNull
     @Column(name = "precio_max")
     private double precioMax;
+    @Size(max = 30)
+    @Column(name = "estado")
+    private String estado;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "titulo")
     private String titulo;
+    @Column(name = "valoracion")
+    private Integer valoracion;
+    @Column(name = "precio")
+    private Double precio;
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
@@ -57,7 +64,7 @@ public class Solicitud implements Serializable {
         this.titulo = titulo;
     }
     
-    public Solicitud(Integer peso, double precioMax, String titulo, String descripcion) {
+        public Solicitud(Integer peso, double precioMax, String titulo, String descripcion) {
         this.peso = peso;
         this.precioMax = precioMax;
         this.titulo = titulo;
@@ -111,12 +118,36 @@ public class Solicitud implements Serializable {
         this.precioMax = precioMax;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public Integer getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(Integer valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public String getDescripcion() {
@@ -142,5 +173,5 @@ public class Solicitud implements Serializable {
     public void setSolicitudCliente(SolicitudCliente solicitudCliente) {
         this.solicitudCliente = solicitudCliente;
     }
-
+    
 }

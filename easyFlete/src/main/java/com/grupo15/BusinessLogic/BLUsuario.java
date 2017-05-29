@@ -27,9 +27,9 @@ public class BLUsuario implements IBLUsuario {
         if (DLusu.getCliente(email) == null) {
             Cliente c;
             if (password.equals("")) {
-                c = new Cliente(nombre, email, telefono);
+                c = new Cliente(email, nombre, telefono);
             } else {
-                c = new Cliente(nombre, email, password, telefono);
+                c = new Cliente(email, nombre, password, telefono);
             }
             DLusu.addUsuario(c);
             return DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)));
