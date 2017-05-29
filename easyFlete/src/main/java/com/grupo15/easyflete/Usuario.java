@@ -79,9 +79,9 @@ public class Usuario implements Serializable {
         this.dtype = dtype;
     }
     
-    public Usuario(String username, String nombre, String telefono){
-        this.username = username;
+    public Usuario(String nombre, String email, String telefono){
         this.nombre = nombre;
+        this.username = email;
         this.telefono = telefono;
     }
     
