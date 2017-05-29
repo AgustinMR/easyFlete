@@ -43,7 +43,7 @@ function getSolicitudesByCliente(email) {
             var solicitud = JSON.parse(JSON.stringify(x));
             var item = document.createElement("div");
             item.className = "item";
-            
+
             var content = document.createElement("div");
             content.style.backgroundColor = "#FBFBFB";
             content.className = "content";
@@ -58,14 +58,65 @@ function getSolicitudesByCliente(email) {
             h3.className = "ui header text w3-text-easyFlete-orange w3-left";
             h3.innerHTML = solicitud.titulo;
             var select = document.createElement("select");
-            select.className = "";
+            select.className = "ui dropdown w3-right";
+            select.style.height = "25px";
+            var option1 = document.createElement("option");
+            option1.value = "Nuevo";
+            option1.innerHTML = "Nuevo";
+            var option2 = document.createElement("option");
+            option2.value = "Cancelado";
+            option2.innerHTML = "Cancelado";
+            var option3 = document.createElement("option");
+            option3.value = "Confirmado";
+            option3.innerHTML = "Confirmado";
+            var option4 = document.createElement("option");
+            option4.value = "Terminado";
+            option4.innerHTML = "Terminado";
+            select.appendChild(option1);
+            select.appendChild(option2);
+            select.appendChild(option3);
+            select.appendChild(option4);
+            select.value = solicitud.estado;
+            div.appendChild(h3);
+            div.appendChild(select);
+            row1.appendChild(div);
+            content.appendChild(row1);
+            
+            var row2 = document.createElement("div");
+            row2.className = "meta w3-row";
+            var span1 = document.createElement("span");
+            span1.className = "w3-margin-left";
+            var strong1 = document.createElement("strong");
+            strong1.innerHTML = solicitud.precio;
+            span1.appendChild(strong1);
+            var span2 = document.createElement("span");
+            span2.className = "w3-margin-left";
+            var strong2 = document.createElement("strong");
+            strong2.innerHTML = solicitud.fecha;
+            span2.appendChild(strong2);
+            var div2 = document.createElement("div");
+            div2.className = "ui star rating w3-margin-left";
+            div2.dataRating = solicitud.valoracion;
+            div2.dataMaxRating = 5;
+            row2.appendChild(span1);
+            row2.appendChild(span2);
+            row2.appendChild(div2);
+            content.appendChild(row2);
+            var div3 = document.createElement("div");
+            div3.className = "description";
+            var p = document.createElement("p");
+            p.className = "w3-margin";
+            p.innerHTML = solicitud.descripcion;
+            div3.appendChild(p);
+            content.appendChild(div3);
+            item.appendChild(content);
+            document.getElementById("items").apendChild(item);
         });
     });
 }
 function blurBackground() {
     "use strict";
     $("#backgr").animate({opacity: 0.80}, 4000, function () {
-        0
         $("#backgr").animate({opacity: 1.00}, 3000, function () {
             blurBackground();
         });
