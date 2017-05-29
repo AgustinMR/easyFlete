@@ -132,12 +132,7 @@ public class DALUsuario implements IUsuario {
 
     @Override
     public List<Object[]> getSolicitudesByCliente(String email) {
-        EntityManager em = new EMHandler().entityManager();
-        List<Object[]> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", Object[].class).setParameter("D", email).getResultList();
-        for ( int x = 0; x < ret.size(); x++ ) {
-            System.out.println(Arrays.toString(ret.get(x)));
-        }
-        return ret;
+        return new EMHandler().entityManager().createQuery("SELECT s.id, s.titulo, s.descripcion, s.estado, s.precio, s.valoracion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D", Object[].class).setParameter("D", email).getResultList();
     }
 
 }
