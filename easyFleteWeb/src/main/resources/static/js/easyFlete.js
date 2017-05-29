@@ -43,8 +43,22 @@ function getSolicitudesByCliente(email) {
             var solicitud = JSON.parse(JSON.stringify(x));
             var item = document.createElement("div");
             item.className = "item";
+            
             var content = document.createElement("div");
-            content.style.backgroundColor = "";
+            content.style.backgroundColor = "#FBFBFB";
+            content.className = "content";
+            
+            var row1 = document.createElement("div");
+            row1.className = "row w3-light-grey";
+            
+            var div = document.createElement("div");
+            div.className = "w3-padding";
+            div.style.height = "32px";
+            var h3 = document.createElement("h3");
+            h3.className = "ui header text w3-text-easyFlete-orange w3-left";
+            h3.innerHTML = solicitud.titulo;
+            var select = document.createElement("select");
+            select.className = "";
         });
     });
 }
