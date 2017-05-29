@@ -37,8 +37,10 @@ function registrar() {
         });
     }
 }
-function getSolicitudesByCliente(email){
-    $.get("http://localhost:10070/solicitudes");
+function getSolicitudesByCliente(email) {
+    $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function () {
+        
+    });
 }
 function blurBackground() {
     "use strict";
