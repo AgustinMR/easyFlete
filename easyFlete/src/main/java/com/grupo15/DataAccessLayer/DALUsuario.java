@@ -1,6 +1,5 @@
 package com.grupo15.DataAccessLayer;
 
-import com.google.gson.Gson;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Rol;
@@ -8,7 +7,6 @@ import com.grupo15.handlers.EMHandler;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 public class DALUsuario implements IUsuario {
 
