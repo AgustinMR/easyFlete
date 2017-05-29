@@ -31,14 +31,14 @@ public class SolicitudController implements ISLSolicitud {
     }
 
     @Override
-    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "{id:int}",method = RequestMethod.DELETE)
     public boolean deleteSolicitud(@PathVariable(name="id")int id ) {
         BLSolicitud bl = new BLSolicitud();
         return bl.deleteSolicitud(id);
     }
 
     @Override
-    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "{id:int}",method = RequestMethod.GET)
     public Solicitud getSolicitud(@PathVariable(name="id")int id) {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitud(id);
