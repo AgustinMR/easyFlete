@@ -30,7 +30,7 @@ public class BLMapa implements IBLMapa {
         }
         return "";
     }
-    
+
     @Override
     public boolean guardarSolicitud(Integer solId, String latlonOri, String latlonDes) {
         return DLMapa.guardarSolicitud(solId, latlonOri, latlonDes);
@@ -91,19 +91,31 @@ public class BLMapa implements IBLMapa {
         }
         return list;
     }
-    
+
     @Override
-    public boolean addZona(String email, double precio, String geom) {
+    public boolean addZona(String email, double precio, String nombre, String geom) {
         ISolicitud sol = new DALSolicitud();
         IUsuario usu = new DALUsuario();
-        Zona z = new Zona(precio);
+        Zona z = new Zona(precio, nombre);
         Fletero f = usu.getFletero(email);
-        if (sol.addZona(z)){
-            ZonaFletero zf = new ZonaFletero(z.getId(),f);
+        if (sol.addZona(z)) {
+            ZonaFletero zf = new ZonaFletero(z.getId(), f);
             sol.addZonaFletero(zf);
             return DLMapa.guardarZonas(z.getId(), geom);
         }
         return false;
+    }
+
+    @Override
+    public List<Zona> getZonasByFletero(String email) {
+        ISolicitud sol = new DALSolicitud();
+        return sol.getZonasByFletero(email);
+    }
+    
+    @Override
+    public String getZonasById(int id) {
+        IMapa map = new DALMapa();
+        return map.getZonasById(id);
     }
 
 }

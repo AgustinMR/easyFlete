@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class InicioController {
-    
+
     @RequestMapping(value = "inicio", method = RequestMethod.GET)
-    public String getInicioCliente(Model m, Authentication a){
-        if(a.isAuthenticated() && ((UserDetails)a.getPrincipal()).isEnabled()) {
+    public String getInicioCliente(Model m, Authentication a) {
+        if (a.isAuthenticated() && ((UserDetails) a.getPrincipal()).isEnabled()) {
             UserDetails u = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if(u.getAuthorities().toString().equals("[CLIENTE]")) return "inicioCliente";
-            else return "inicioFletero";
+            m.addAttribute("usuario", u.getUsername());
+            if (u.getAuthorities().toString().equals("[CLIENTE]")) {
+                return "inicioCliente";
+            } else {
+                return "inicioFletero";
+            }
         } else {
             return "Error";
         }
     }
-    
+
 }

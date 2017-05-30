@@ -77,6 +77,7 @@ public class DALMapa implements IMapa {
         return true;
     }
 
+    @Override
     public int getDistance() {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
@@ -94,5 +95,16 @@ public class DALMapa implements IMapa {
         collection.find(Filters.near("destino", refPoint, 10000.0, 0.0)).forEach(printBlock);
         
         return 0;
+    }
+    
+    @Override
+    public String getZonasById(int id){
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("zonasGeo");
+        
+        Document doc = collection.find(eq("zonaId", id)).first();
+        
+        return doc.toJson();
     }
 }

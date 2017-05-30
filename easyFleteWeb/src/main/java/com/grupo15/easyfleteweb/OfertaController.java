@@ -15,6 +15,7 @@ public class OfertaController {
     public String getOfertasView(Model m, Authentication a) {
         if (a.isAuthenticated() && ((UserDetails) a.getPrincipal()).isEnabled()) {
             UserDetails u = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            m.addAttribute("usuario", u.getUsername());
             if (u.getAuthorities().toString().equals("[FLETERO]")) {
                 return "ofertas";
             } else {
