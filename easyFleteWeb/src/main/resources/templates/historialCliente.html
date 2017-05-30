@@ -28,6 +28,7 @@
                 $('.ui.embed').embed();
             });
         </script>
+        <p style="display:none" id="emailCliente" th:text="${usuario}"></p>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top">
             <a href="/inicio" class="item">Solicitar</a>
@@ -47,7 +48,7 @@
                         <a class="active item w3-text-easyFlete-orange" href="/fletes">Mis Fletes</a>
                         <a class="item" href="/reportes">Reportes</a>
                         <div class="right item">
-                            <a class="ui secondaryy button grey w3-hide-small" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
+                            <a class="ui button grey w3-hide-small" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
                         </div>
                     </div>
                 </div>
@@ -62,11 +63,11 @@
                             <div class="ui fluid secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
                                 <div class="ui labeled input w3-hide-small w3-hide-medium">
                                     <div class="ui label">Desde:</div>
-                                    <input placeholder="mysite.com" type="date">
+                                    <input type="date">
                                 </div>
                                 <div class="ui labeled input w3-margin-left w3-hide-small w3-hide-medium">
                                     <div class="ui label">Hasta:</div>
-                                    <input placeholder="mysite.com" type="date">
+                                    <input type="date">
                                 </div>
                                 <div class="right menu w3-hide-small w3-hide-medium">
                                     <div class="ui action input">
@@ -77,34 +78,7 @@
                             </div>
                         </div>
                         <div class="ui active tab">
-                            <div class="ui divided items w3-padding w3-padding-16" style="height: 400px">
-                                <div class="item">
-                                    <div class="content" style="background-color: #FBFBFB">
-                                        <div class="row w3-light-gray">
-                                            <div class="w3-padding" style="height: 32px">
-                                                <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                                                <select name="estado" class="ui dropdown w3-right" style="height: 25px">
-                                                    <option value="">Estado</option>
-                                                    <option value="Estado...">Nuevo</option>
-                                                    <option value="Estado...">Iniciado</option>
-                                                    <option value="Estado...">Confirmado</option>
-                                                    <option value="Estado...">Cancelado</option>
-                                                    <option value="Estado...">Termiando</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        <div class="meta w3-row">
-                                            <span class="w3-margin-left"><strong>$$$</strong></span>
-                                            <span class="w3-margin-left">9/11/2016</span>
-                                            <div class="ui star rating w3-margin-left" data-rating="3" data-max-rating="5"></div>
-                                        </div>
-                                        <div class="description">
-                                            <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">d</p>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="ui divided items w3-padding w3-padding-16" id="items" style="min-height: 400px">
                             </div>
                         </div>
                     </div>
@@ -136,8 +110,91 @@
                     bottomOffset: 0,
                 });
                 $('.ui.dropdown').dropdown();
-                $('.ui.rating').rating();
+                $('.ui.rating')
+                        .rating({
+                            initialRating: 0,
+                            maxRating: 5
+                        })
+                        ;
                 blurBackground();
-            });</script>
+                getSolicitudesByCliente(document.getElementById("emailCliente").innerHTML);
+            });
+
+            function getSolicitudesByCliente(email) {
+                $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function (response) {
+                    $.each(response, function (index, x) {
+                        var s = JSON.stringify(x);
+                        var solicitud = JSON.parse(s);
+                        var item = document.createElement("div");
+                        item.className = "item";
+                        var content = document.createElement("div");
+                        content.style.backgroundColor = "#FBFBFB";
+                        content.className = "content";
+                        var row1 = document.createElement("div");
+                        row1.className = "row w3-light-grey";
+                        var div = document.createElement("div");
+                        div.className = "w3-padding";
+                        div.style.height = "32px";
+                        var h3 = document.createElement("h3");
+                        h3.className = "ui header text w3-text-easyFlete-orange w3-left";
+                        h3.innerHTML = solicitud[1];
+                        var select = document.createElement("select");
+                        select.className = "ui dropdown w3-right";
+                        var option1 = document.createElement("option");
+                        option1.value = "Nuevo";
+                        option1.innerHTML = "Nuevo";
+                        var option2 = document.createElement("option");
+                        option2.value = "Cancelado";
+                        option2.innerHTML = "Cancelado";
+                        var option3 = document.createElement("option");
+                        option3.value = "Confirmado";
+                        option3.innerHTML = "Confirmado";
+                        var option4 = document.createElement("option");
+                        option4.value = "Terminado";
+                        option4.innerHTML = "Terminado";
+                        select.appendChild(option1);
+                        select.appendChild(option2);
+                        select.appendChild(option3);
+                        select.appendChild(option4);
+                        select.value = solicitud[3];
+                        div.appendChild(h3);
+                        div.appendChild(select);
+                        row1.appendChild(div);
+                        content.appendChild(row1);
+                        var row2 = document.createElement("div");
+                        row2.className = "meta w3-row";
+                        var span1 = document.createElement("span");
+                        span1.className = "w3-margin-left";
+                        var strong1 = document.createElement("strong");
+                        strong1.innerHTML = solicitud[4];
+                        span1.appendChild(strong1);
+                        var span2 = document.createElement("span");
+                        span2.className = "w3-margin-left";
+                        var strong2 = document.createElement("strong");
+                        strong2.innerHTML = solicitud[6];
+                        span2.appendChild(strong2);
+                        var div2 = document.createElement("div");
+                        div2.className = "ui star rating w3-margin-left";
+                        div2.id = "rating" + solicitud[0];
+                        $('.ui.rating').rating({initialRating: solicitud[5], maxRating: 5 });
+                        row2.appendChild(span1);
+                        row2.appendChild(span2);
+                        row2.appendChild(div2);
+                        content.appendChild(row2);
+                        var div3 = document.createElement("div");
+                        div3.className = "description";
+                        var p = document.createElement("p");
+                        p.className = "w3-margin";
+                        p.innerHTML = solicitud[2];
+                        div3.appendChild(p);
+                        content.appendChild(div3);
+                        item.appendChild(content);
+                        document.getElementById("items").appendChild(item);
+                        $('.ui.dropdown').dropdown();
+                    });
+                });
+            }
+
+        </script>
     </body>
 </html>

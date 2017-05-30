@@ -28,7 +28,7 @@ public class BLUsuario implements IBLUsuario {
     public boolean addCliente(String nombre, String password, String email, String telefono) {
         if (DLusu.getCliente(email) == null) {
             Cliente c;
-            if (password == "") {
+            if ("".equals(password)) {
                 c = new Cliente(email, nombre, telefono);
             } else {
                 c = new Cliente(email, nombre, telefono, password);

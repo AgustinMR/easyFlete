@@ -33,11 +33,7 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
         // en la configuracion de spring security se especifica unicamente los recursos que deben ser protegidos.
         http
             .authorizeRequests()
-                .antMatchers(HttpMethod.GET ,"/inicio").hasAuthority("CLIENTE")
-                .anyRequest().permitAll()
-            .and()
-            .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/inicio").hasAuthority("FLETERO")
+                .antMatchers(HttpMethod.GET ,"/inicio").hasAnyAuthority("CLIENTE", "FLETERO")
                 .anyRequest().permitAll()
             .and()
             .formLogin()

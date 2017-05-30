@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class InicioController {
+public class ZonaController {
     
-    @RequestMapping(value = "inicio", method = RequestMethod.GET)
+    @RequestMapping(value = "zonas", method = RequestMethod.GET)
     public String getInicioCliente(Model m, Authentication a){
         if(a.isAuthenticated() && ((UserDetails)a.getPrincipal()).isEnabled()) {
             UserDetails u = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if(u.getAuthorities().toString().equals("[CLIENTE]")) return "inicioCliente";
-            else return "inicioFletero";
+            if(u.getAuthorities().toString().equals("[FLETERO]")) return "zonas";
+            else return "Error";
         } else {
             return "Error";
         }

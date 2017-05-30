@@ -37,35 +37,10 @@ function registrar() {
         });
     }
 }
-function getSolicitudesByCliente(email) {
-    $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function (response) {
-        $.each(response, function (index, x) {
-            var solicitud = JSON.parse(JSON.stringify(x));
-            var item = document.createElement("div");
-            item.className = "item";
-            
-            var content = document.createElement("div");
-            content.style.backgroundColor = "#FBFBFB";
-            content.className = "content";
-            
-            var row1 = document.createElement("div");
-            row1.className = "row w3-light-grey";
-            
-            var div = document.createElement("div");
-            div.className = "w3-padding";
-            div.style.height = "32px";
-            var h3 = document.createElement("h3");
-            h3.className = "ui header text w3-text-easyFlete-orange w3-left";
-            h3.innerHTML = solicitud.titulo;
-            var select = document.createElement("select");
-            select.className = "";
-        });
-    });
-}
+
 function blurBackground() {
     "use strict";
     $("#backgr").animate({opacity: 0.80}, 4000, function () {
-        0
         $("#backgr").animate({opacity: 1.00}, 3000, function () {
             blurBackground();
         });
