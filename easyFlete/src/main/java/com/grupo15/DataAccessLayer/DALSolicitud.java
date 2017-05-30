@@ -108,5 +108,12 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
+    
+    @Override
+    public List<Zona> getZonasByFletero(String email) {
+        EntityManager em = new EMHandler().entityManager();
+        List<Zona> ret = em.createQuery("SELECT z FROM Zona z WHERE z.zonaFletero.fleteroEmail.username = :D", Zona.class).setParameter("D", email).getResultList();
+        return ret;
+    }
 
 }

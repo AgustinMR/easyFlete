@@ -20,5 +20,5 @@ public abstract interface ISolicitud {
     public List<Solicitud> getAllSolicitudes();
     public boolean addZona(Zona z);
     public boolean addZonaFletero(ZonaFletero zf);
-    
+    public List<Zona> getZonasByFletero(String email);    
 }

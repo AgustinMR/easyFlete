@@ -1,5 +1,6 @@
 package com.grupo15.easyflete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -26,6 +27,11 @@ public class Zona implements Serializable {
     @NotNull
     @Column(name = "precio")
     private double precio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "nombre")
+    private String nombre;
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "zona", fetch = FetchType.EAGER)
     private ZonaFletero zonaFletero;
 
@@ -41,8 +47,9 @@ public class Zona implements Serializable {
         this.precio = precio;
     }
     
-    public Zona(double precio) {
+    public Zona(double precio,String nombre) {
         this.precio = precio;
+        this.nombre = nombre;
     }
 
     public Integer getId() {
@@ -67,6 +74,14 @@ public class Zona implements Serializable {
 
     public void setZonaFletero(ZonaFletero zonaFletero) {
         this.zonaFletero = zonaFletero;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
 }

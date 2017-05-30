@@ -2,6 +2,7 @@ package com.grupo15.ServiceLayer;
 
 import com.grupo15.BusinessLogic.BLMapa;
 import com.grupo15.BusinessLogic.IBLMapa;
+import com.grupo15.easyflete.Zona;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +29,21 @@ public class CalleController {
     }
     
     @RequestMapping(value = "/zona", method = RequestMethod.POST)
-    public boolean addZona(@RequestParam(name = "email") String email,@RequestParam(name = "precio") double precio, @RequestParam(name = "geom") String geom) {
+    public boolean addZona(@RequestParam(name = "email") String email,@RequestParam(name = "precio") double precio, @RequestParam(name = "nombre") String nombre, @RequestParam(name = "geom") String geom) {
         IBLMapa mapa = new BLMapa();
         //System.out.println(email + " " + precio + " " + geom);
-        return mapa.addZona(email, precio, geom);
+        return mapa.addZona(email, precio, nombre, geom);
+    }
+    
+    @RequestMapping(value = "/zonas", method = RequestMethod.GET)
+    public List<Zona> getZonasByFletero(@RequestParam(name = "email") String email) {
+        IBLMapa mapa = new BLMapa();
+        return mapa.getZonasByFletero(email);
+    }
+    
+    @RequestMapping(value = "/zonasGEO", method = RequestMethod.GET)
+    public String getZonasById(@RequestParam(name = "id") int id) {
+        IBLMapa mapa = new BLMapa();
+        return mapa.getZonasById(id);
     }
 }
