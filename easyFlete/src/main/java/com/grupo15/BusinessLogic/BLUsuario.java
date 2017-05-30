@@ -94,4 +94,9 @@ public class BLUsuario implements IBLUsuario {
     public List<Object[]> getSolicitudesByFletero(String email) {
         return DLusu.getSolicitudesByFletero(email);
     }
+
+    @Override
+    public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo) {
+        return DLusu.getSolicitudesByCliente(email, fechaDesde, fechaHasta, titulo);
+    }
 }

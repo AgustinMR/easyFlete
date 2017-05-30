@@ -41,6 +41,7 @@ CREATE TABLE SOLICITUDES_CLIENTES (
   cliente_email varchar(30) NOT NULL,
   solicitud_id int NOT NULL,
   fecha date NOT NULL,
+  hora varchar(10) NULL,
   PRIMARY KEY (solicitud_id),
   FOREIGN KEY (cliente_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
