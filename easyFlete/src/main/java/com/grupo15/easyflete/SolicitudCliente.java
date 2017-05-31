@@ -14,10 +14,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "solicitudes_clientes")
 public class SolicitudCliente implements Serializable {
+
+    @Size(max = 10)
+    @Column(name = "hora")
+    private String hora;
 
     @Id
     @Basic(optional = false)
@@ -90,6 +95,14 @@ public class SolicitudCliente implements Serializable {
 
     public void setClienteEmail(Cliente clienteEmail) {
         this.clienteEmail = clienteEmail;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
     
 }
