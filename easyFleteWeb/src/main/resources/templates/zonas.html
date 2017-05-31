@@ -26,12 +26,13 @@
                 });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
-				$('.ui.dropdown').dropdown();
+                $('.ui.dropdown').dropdown();
             });
         </script>
+        <p style="display:none" id="emailFletero" th:text="${usuario}"></p>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 27px" class="w3-margin-left w3-margin-top">
-			<br><div class="ui label w3-margin"><i class="user icon"></i><span th:text="${usuario}"></span></div>
+            <br><div class="ui label w3-margin"><i class="user icon"></i><span th:text="${usuario}"></span></div>
             <a href="/inicio" class="item">Inicio</a>
             <a class="item">Ofertas</a>
             <a class="active item">Zonas</a>
@@ -46,7 +47,7 @@
                         <a class="toc item"><i class="sidebar icon"></i></a>
                         <img src="img/easyFlete.png" style="height: 30px" class="w3-margin-top w3-margin-right">
                         <a class="item" href="/inicio">Inicio</a>
-                        <a class="item" href="/fletes">Ofertas</a>
+                        <a class="item" href="/ofertas">Ofertas</a>
                         <a class="active item w3-text-easyFlete-orange" href="/zonas">Zonas</a>
                         <div class="right item">
                             <a class="ui secondaryy button grey w3-hide-small" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a>
@@ -59,40 +60,38 @@
             </div>
             <div class="w3-padding w3-padding-48">
                 <div class="w3-content">
-                   <div class="ui segments">
-                   		<div class="ui inverted raised segment" style="background-color: #9A9A9A">
-							<div class="ui fluid secondary menu w3-round">
-								<select class="ui fluid dropdown w3-margin-left">
-								  <option value="">Seleccione una zona de trabajo</option>
-								  <option value="1">Male</option>
-								  <option value="0">Female</option>
-								</select>
-								<div class="ui icon buttons w3-margin-left">
-								  <button class="ui button"><i class="trash red icon"></i></button>
-								  <button class="ui button"><i class="save green icon"></i></button>
-								  <button class="ui button"><i class="add blue icon"></i></button>
-								</div>
-							</div>
-						</div>
-						<div class="ui raised inverted w3-easyFlete-orange segment">
-							<div class="ui fluid secondary menu w3-round">
-								<div class="right menu">
-									<div class="ui right labeled input w3-margin-right">
-  										<div class="ui label">$</div>
-  										<input placeholder="Precio para la zona" type="text">
-  										<div class="ui basic label">/ Km</div>
-									</div>
-									<div class="ui input secondary green"><input placeholder="Nombre de la zona" type="text"></div>
-									<button class="ui inverted button w3-margin-left">Crear zona</button>
-								</div>
-							</div>
-						</div>
-						<div class="ui raised segment w3-padding-32" style="background-color: #FBFBFB">
-							<div class="ui active tab">
-								<div class="w3-round w3-card" id="map" style="height: 500px; width: 100%"></div>
-							</div>
-						</div>
-					</div>
+                    <div class="ui segments">
+                        <div class="ui inverted raised segment" style="background-color: #9A9A9A">
+                            <div class="ui fluid secondary menu w3-round">
+                                <select id="nomZona" class="ui fluid dropdown w3-margin-left" onchange="getZona()">
+                                    <option value="" disabled>Seleccione una zona de trabajo</option>
+                                </select>
+                                <div class="ui icon buttons w3-margin-left">
+                                    <button class="ui button"><i class="trash red icon"></i></button>
+                                    <button class="ui button"><i class="save green icon"></i></button>
+                                    <button class="ui button" onclick="agregar()"><i class="add blue icon"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui raised inverted w3-easyFlete-orange segment">
+                            <div class="ui fluid secondary menu w3-round">
+                                <div class="right menu">
+                                    <div class="ui right labeled input w3-margin-right">
+                                        <div class="ui label">$</div>
+                                        <input id="precio" placeholder="Precio para la zona" type="text">
+                                        <div class="ui basic label">/ Km</div>
+                                    </div>
+                                    <div class="ui input secondary green"><input id="nombre" placeholder="Nombre de la zona" type="text"></div>
+                                    <button class="ui inverted button w3-margin-left" onclick="ingresarZona()">Crear zona</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui raised segment w3-padding-32" style="background-color: #FBFBFB">
+                            <div class="ui active tab">
+                                <div class="w3-round w3-card" id="map" style="height: 500px; width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="ui inverted vertical footer segment">
@@ -123,12 +122,13 @@
                 $('.ui.dropdown').dropdown();
                 $('.ui.rating').rating();
                 blurBackground();
-            });</script>
-             <script>
+            });
+        </script>
+        <script>
             var raster = new ol.layer.Tile({source: new ol.source.OSM()});
             var source = new ol.source.Vector({wrapX: false});
             var vector = new ol.layer.Vector({source: source});
-            var typeSelect = "Point";
+
             var map = new ol.Map({
                 layers: [raster, vector],
                 target: 'map',
@@ -138,166 +138,152 @@
                     zoom: 12
                 })
             });
+            var features = new ol.Collection();
+            var geom = "";
+            var geomA = "";
+            var vector_layer;
+            var estAgregar = 0;
 
-            var vector_layerO;
-            var vector_layerD;
+            var draw;
+            draw = new ol.interaction.Draw({
+                source: source,
+                features: features,
+                type: "Polygon"
+            });
+            var modifyInteraction = new ol.interaction.Modify({features: features});
+            var modifyInteraction2;
+            var selectInteraction;
 
-            var latlonOri = "";
-            var latlonDes = "";
+            var fea;
+            draw.on('drawend', function (evt) {
+                fea = evt.feature;
+                geom = evt.feature.getGeometry().getCoordinates();
+                map.addInteraction(modifyInteraction);
+            }, this);
 
+            modifyInteraction.on('modifyend', function (evt) {
+                geom = fea.getGeometry().getCoordinates();
+                //alert(geom);
+            });
 
             $(document).ready(function () {
                 "use strict";
                 blurBackground();
+                cargarC();
             });
+
+            var email = document.getElementById("emailFletero").innerHTML;
+            var tmp = "";
+            function cargarC() {
+                $.get("http://localhost:10070/calles/zonas?email=" + email, function (result) {
+                    if (result !== "") {
+                        tmp = result;
+                        var x = document.getElementById("nomZona");
+                        x.options.length = 0;
+                        var option1 = document.createElement("option");
+                        option1.value = "";
+                        option1.text = "Seleccione una zona de trabajo";
+                        //option1.disabled = true;
+                        x.add(option1);
+                        for (i = 0; i < result.length; i++) {
+                            var option = document.createElement("option");
+                            option.text = result[i].nombre;
+                            option.value = result[i].id;
+                            x.add(option);
+                        }
+                    }
+                });
+            }
         </script> 
         <script>
-            function dibujarPunto(tipo) {
+            function agregar() {
+                if (estAgregar === 0) {
+                    estAgregar = 1;
+                    document.getElementById("nomZona").value = "";
+                    document.getElementById("precio").value = "";
+                    document.getElementById("nombre").value = "";
+                    if (geomA !== "") {
+                        map.removeInteraction(selectInteraction);
+                        map.removeInteraction(modifyInteraction2);
+                        map.removeLayer(vector_layer);
+                    }
+                    map.addInteraction(draw);
+                    map.addInteraction(modifyInteraction);
+                } else {
+                    geom = "";
+                    document.getElementById("precio").value = "";
+                    document.getElementById("nombre").value = "";
+                    estAgregar = 0;
+                    map.removeInteraction(draw);
+                    map.removeInteraction(modifyInteraction);
+                }
 
-                var docOrigen = document.getElementById("origen").value.toString();
-                var docDestino = document.getElementById("destino").value.toString();
+            }
 
-
-                if ((tipo === "Origen" && docOrigen !== "") || (tipo === "Destino" && docDestino !== "")) {
-                    var nomCalle;
-                    var numPuerta;
-                    var tmp;
-
-                    if (tipo === "Origen") {
-                        tmp = docOrigen.split(",");
-                        if (tmp.length === 2) {
-                            nomCalle = tmp[0].toString().trim();
-                            numPuerta = tmp[1].toString().trim();
-                        } else {
-                            alert("Debe espesificar numero de puerta");
-                        }
-                    } else if (tipo === "Destino") {
-                        tmp = docDestino.split(",");
-                        if (tmp.length === 2) {
-                            nomCalle = tmp[0].toString().trim();
-                            numPuerta = tmp[1].toString().trim();
-                        } else {
-                            alert("Debe espesificar numero de puerta");
+            function getZona() {
+                estAgregar = 0;
+                if (geom !== "") {
+                    map.removeInteraction(modifyInteraction);
+                    map.removeInteraction(draw);
+                    source.clear();
+                    geom = "";
+                }
+                $.get("http://localhost:10070/calles/zonasGEO?id=" + document.getElementById("nomZona").value, function (result) {
+                    //alert(JSON.parse(result).geometry.coordinates);
+                    for (i = 0; i < tmp.length; i++) {
+                        if (tmp[i].id == document.getElementById("nomZona").value) {
+                            document.getElementById("precio").value = tmp[i].precio;
+                            document.getElementById("nombre").value = tmp[i].nombre;
                         }
                     }
 
-                    $.post("http://localhost:10070/calles/geo", "nombre=" + nomCalle + "&numero=" + numPuerta, function (resultNum) {
-                        //alert(resultNum);
-                        var xy = resultNum.split(",");
+                    //console.log(geomA);
+                    if (geomA !== "") {
+                        map.removeInteraction(selectInteraction);
+                        map.removeInteraction(modifyInteraction2);
+                        map.removeLayer(vector_layer);
+                    }
+                    geomA = JSON.parse(result).geometry.coordinates;
+                    var polygon = new ol.geom.Polygon([JSON.parse(result).geometry.coordinates]);
+                    var feature = new ol.Feature(polygon);
+                    var vectorSource = new ol.source.Vector();
+                    vectorSource.addFeature(feature);
 
-                        var point_feature = new ol.Feature({});
-                        var point_geom = new ol.geom.Point([xy[0], xy[1]]);
-                        point_feature.setGeometry(point_geom);
+                    selectInteraction = new ol.interaction.Select();
+                    map.addInteraction(selectInteraction);
 
-                        if (tipo === "Origen") {
-                            if (latlonOri !== "") {
-                                map.removeLayer(vector_layerO);
-                            }
-                            latlonOri = resultNum;
-                            vector_layerO = new ol.layer.Vector({
-                                source: new ol.source.Vector({
-                                    features: [point_feature]
-                                })
-                            });
-                            map.addLayer(vector_layerO);
-                        } else if (tipo === "Destino") {
-                            if (latlonDes !== "") {
-                                map.removeLayer(vector_layerD);
-                            }
-                            latlonDes = resultNum;
-                            vector_layerD = new ol.layer.Vector({
-                                source: new ol.source.Vector({
-                                    features: [point_feature]
-                                })
-                            });
-                            map.addLayer(vector_layerD);
-                        }
-                        map.setView(new ol.View({
-                            projection: 'EPSG:4326',
-                            center: [Number(xy[0]), Number(xy[1])],
-                            zoom: 14
-                        }));
+                    selectInteraction.getFeatures().push(feature);
+
+                    modifyInteraction2 = new ol.interaction.Modify({features: selectInteraction.getFeatures()});
+                    map.addInteraction(modifyInteraction2);
+
+                    vector_layer = new ol.layer.Vector({
+                        source: vectorSource
                     });
-                }
+                    map.addLayer(vector_layer);
+                    //map.addInteraction(modifyInteraction);
+                });
             }
 
-            function mostrarStep1() {
-                document.getElementById("step1").style.display = "block";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s1").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep2() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "block";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s2").classList.add('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep3() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "block";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s3").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep4() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "block";
-                document.getElementById("s4").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
-            }
-
-            function ingresar() {
-                var titulo = document.getElementById("titulo").value;
-                var volumen = document.getElementById("volumen").value;
-                var peso = document.getElementById("peso").value;
-                var descripcion = document.getElementById("descripcion").value;
-                var fecha = document.getElementById("fecha").value;
-                var precioMax = document.getElementById("precioMax").value;
-                var email = document.getElementById("emailCliente").innerHTML;
-
-                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
-                    if (peso === "")
-                        peso = "0";
-                    if (volumen === "")
-                        volumen = "0";
-
-                    var wgs84Sphere = new ol.Sphere(6378137);
-                    var xy = latlonOri.split(",");
-                    var xy2 = latlonDes.split(",");
-                    var length = wgs84Sphere.haversineDistance([Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]);
-                    var dist = (Math.round(length / 1000 * 100) / 100);
-
-                    var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
-                    $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
+            function ingresarZona() {
+                var precio = document.getElementById("precio").value;
+                var nombre = document.getElementById("nombre").value;
+                if (precio !== "" && nombre !== "" && email !== "" && geom !== "") {
+                    var postInfo = "email=" + email + "&precio=" + precio + "&nombre=" + nombre + "&geom=" + geom;
+                    $.post("http://localhost:10070/calles/zona", postInfo, function (result) {
                         if (result === true) {
-                            alert("Solicitud ingresada con exito");
+                            document.getElementById("precio").value = "";
+                            document.getElementById("nombre").value = "";
+                            geom = "";
+                            cargarC();
+                            alert("Zona ingresada con exito");
                         } else {
-                            alert("Error al ingresar la solicitud");
+                            alert("Error al ingresar la zona");
                         }
                     });
                 } else {
                     alert("Faltan datos");
                 }
-
             }
         </script>
     </body>

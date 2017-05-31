@@ -18,7 +18,8 @@ public abstract interface ISolicitud {
     public Solicitud getSolicitud(int id);
     public SolicitudCliente getSolicitudCli(int id);
     public List<Solicitud> getAllSolicitudes();
+    //public List<Solicitud> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo);
     public boolean addZona(Zona z);
     public boolean addZonaFletero(ZonaFletero zf);
-    
+    public List<Zona> getZonasByFletero(String email);    
 }
