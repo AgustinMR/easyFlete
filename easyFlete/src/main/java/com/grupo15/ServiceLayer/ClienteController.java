@@ -38,17 +38,17 @@ public class ClienteController implements ISLCliente {
     public Cliente getCliente(@RequestParam(name = "email") String email) {
         return new BLUsuario().getCliente(email);
     }
-    
-    @Override
-    @RequestMapping(value = "/solicitudes", method = RequestMethod.GET)
-    public List<Object[]> getSolicitudesByCliente(@RequestParam(name = "email") String email) {
-        return new BLUsuario().getSolicitudesByCliente(email);
-    }
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Cliente> getAllClientes() {
         return new BLUsuario().getAllClientes();
+    }
+
+    @Override
+    @RequestMapping(value = "/solicitudes", method = RequestMethod.GET)
+    public List<Object[]> getSolicitudesByCliente(@RequestParam(name = "email")String email, @RequestParam(name = "desde", required = false) String fechaDesde, @RequestParam(name = "hasta", required = false) String fechaHasta, @RequestParam(name = "titulo", required = false) String titulo) {
+        return new BLUsuario().getSolicitudesByCliente(email, fechaDesde, fechaHasta, titulo);
     }
     
 }
