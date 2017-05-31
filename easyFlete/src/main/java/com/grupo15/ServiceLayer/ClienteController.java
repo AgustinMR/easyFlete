@@ -17,7 +17,7 @@ public class ClienteController implements ISLCliente {
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public boolean addCliente(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email,@RequestParam(name = "password") String password,@RequestParam(name = "telefono") String telefono) {
+    public boolean addCliente(@RequestParam(name = "nombre") String nombre, @RequestParam(name = "email") String email,@RequestParam(name = "password", required = false) String password,@RequestParam(name = "telefono") String telefono) {
         return new BLUsuario().addCliente(nombre, password, email, telefono);
     }
 

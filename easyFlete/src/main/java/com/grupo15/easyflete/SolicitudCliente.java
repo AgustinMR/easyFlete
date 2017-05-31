@@ -59,10 +59,11 @@ public class SolicitudCliente implements Serializable {
         this.clienteEmail = clienteEmail;
     }
 
-    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente clienteEmail) {
+    public SolicitudCliente(Integer solicitudId, Date fecha, Cliente clienteEmail, String hora) {
         this.solicitudId = solicitudId;
         this.fecha = fecha;
         this.clienteEmail = clienteEmail;
+        this.hora = hora;
     }
 
     public Integer getSolicitudId() {

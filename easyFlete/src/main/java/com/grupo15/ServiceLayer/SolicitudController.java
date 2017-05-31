@@ -18,9 +18,9 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "",method = RequestMethod.POST)
-    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso, @RequestParam(name = "volumen") int volumen,@RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email, @RequestParam(name = "distancia") double distancia) {
+    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso,@RequestParam(name = "descripcion", required = false) String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email, @RequestParam(name = "distancia") double distancia, @RequestParam(name = "hora") String hora) {
         BLSolicitud bl = new BLSolicitud();
-        return bl.addSolicitud(jsonOrigen, jsonDestino, titulo, peso, volumen, descripcion, fecha, precioMax, email, distancia);
+        return bl.addSolicitud(jsonOrigen, jsonDestino, titulo, peso, descripcion, fecha, precioMax, email, distancia, hora);
     }
 
     @Override
@@ -43,12 +43,11 @@ public class SolicitudController implements ISLSolicitud {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitud(id);
     }
-    
+
     @Override
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    public List<Solicitud> getAllSolicitudes() {
-        BLSolicitud bl = new BLSolicitud();
-        return bl.getAllSolicitudes();
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<Object[]> getAllSolicitudes(@RequestParam(name = "desde", required = false) String fechaDesde, @RequestParam(name = "hasta", required = false) String fechaHasta, @RequestParam(name = "titulo", required = false) String titulo) {
+        return new BLSolicitud().getAllSolicitudes(fechaDesde, fechaHasta, titulo);
     }
     
 }
