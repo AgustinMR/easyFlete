@@ -151,6 +151,8 @@
                 type: "Polygon"
             });
             var modifyInteraction = new ol.interaction.Modify({features: features});
+            var modifyInteraction2;
+            var selectInteraction;
 
             var fea;
             draw.on('drawend', function (evt) {
@@ -200,11 +202,17 @@
                     document.getElementById("nomZona").value = "";
                     document.getElementById("precio").value = "";
                     document.getElementById("nombre").value = "";
-                    if (geomA !== "")
+                    if (geomA !== "") {
+                        map.removeInteraction(selectInteraction);
+                        map.removeInteraction(modifyInteraction2);
                         map.removeLayer(vector_layer);
+                    }
                     map.addInteraction(draw);
+                    map.addInteraction(modifyInteraction);
                 } else {
                     geom = "";
+                    document.getElementById("precio").value = "";
+                    document.getElementById("nombre").value = "";
                     estAgregar = 0;
                     map.removeInteraction(draw);
                     map.removeInteraction(modifyInteraction);
@@ -213,10 +221,13 @@
             }
 
             function getZona() {
-                geom = "";
                 estAgregar = 0;
-                map.removeInteraction(draw);
-                map.removeInteraction(modifyInteraction);
+                if (geom !== "") {
+                    map.removeInteraction(modifyInteraction);
+                    map.removeInteraction(draw);
+                    source.clear();
+                    geom = "";
+                }
                 $.get("http://localhost:10070/calles/zonasGEO?id=" + document.getElementById("nomZona").value, function (result) {
                     //alert(JSON.parse(result).geometry.coordinates);
                     for (i = 0; i < tmp.length; i++) {
@@ -226,20 +237,31 @@
                         }
                     }
 
-                    source.clear();
-                    if (geomA !== "")
+                    //console.log(geomA);
+                    if (geomA !== "") {
+                        map.removeInteraction(selectInteraction);
+                        map.removeInteraction(modifyInteraction2);
                         map.removeLayer(vector_layer);
+                    }
                     geomA = JSON.parse(result).geometry.coordinates;
                     var polygon = new ol.geom.Polygon([JSON.parse(result).geometry.coordinates]);
                     var feature = new ol.Feature(polygon);
                     var vectorSource = new ol.source.Vector();
                     vectorSource.addFeature(feature);
 
+                    selectInteraction = new ol.interaction.Select();
+                    map.addInteraction(selectInteraction);
+
+                    selectInteraction.getFeatures().push(feature);
+
+                    modifyInteraction2 = new ol.interaction.Modify({features: selectInteraction.getFeatures()});
+                    map.addInteraction(modifyInteraction2);
+
                     vector_layer = new ol.layer.Vector({
                         source: vectorSource
                     });
                     map.addLayer(vector_layer);
-                    map.addInteraction(modifyInteraction);
+                    //map.addInteraction(modifyInteraction);
                 });
             }
 
