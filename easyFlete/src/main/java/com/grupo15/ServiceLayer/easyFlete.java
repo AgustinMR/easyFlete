@@ -15,9 +15,9 @@ public class easyFlete {
     public static void main(String args[]){
         SpringApplication.run(easyFlete.class, args);
 
-        IMapa dal = new DALMapa();
-        String t = dal.precioZona(1, "fletero@gmail.com");
-        System.out.println(t);
+        //IMapa dal = new DALMapa();
+        //String t = dal.precioZona(2, "fletero@gmail.com");
+        //System.out.println(t);
         
         //new BLUsuario().addCliente("nombre", "pass", "email@algo.com", "145");
         //new BLSolicitud().updateSolicitud(13,-34.917822, -56.166215,-34.920267, -56.150364, 500, 50, "assafsaff", "14/1/2008", 5000);

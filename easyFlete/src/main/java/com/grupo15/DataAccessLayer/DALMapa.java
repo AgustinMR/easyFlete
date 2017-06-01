@@ -145,7 +145,6 @@ public class DALMapa implements IMapa {
         List<Zona> z = dalSol.getZonasByFletero(email);
         boolean o = false;
         boolean d = false;
-        boolean t = false;
         double precio = 0;
         //para cada una de las zonas del fletero
         for (int i = 0; i < z.size(); i++) {
@@ -185,20 +184,25 @@ public class DALMapa implements IMapa {
             lista.clear();
 
             if (o && d) {
-                t = true;
                 Solicitud sol = dalSol.getSolicitud(solId);
-                if(precio != 0){
-                }else{                    
+                if (precio != 0) {
+                    if (precio > z.get(i).getPrecio() * sol.getDistancia()) {
+                        precio = z.get(i).getPrecio() * sol.getDistancia();
+                    }
+                } else {
                     precio = z.get(i).getPrecio() * sol.getDistancia();
-                    System.out.println(precio);
-                }                 
+                }
             } else {
                 o = false;
                 d = false;
             }
 
         }
-        return "true";
+        if (precio == 0) {
+            return "false";
+        } else {
+            return String.valueOf(precio);
+        }
     }
 
     private List<String> lista = new ArrayList<String>();
