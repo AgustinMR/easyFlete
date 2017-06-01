@@ -43,6 +43,13 @@ public class SolicitudController implements ISLSolicitud {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitud(id);
     }
+    
+    @Override
+    @RequestMapping(value = "/geo",method = RequestMethod.GET)
+    public String getSolicitudGEO(@RequestParam(name = "id") int id) {
+        BLSolicitud bl = new BLSolicitud();
+        return bl.getSolicitudGEO(id);
+    }
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)

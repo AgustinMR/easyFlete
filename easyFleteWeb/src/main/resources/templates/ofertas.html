@@ -167,8 +167,7 @@
             var vector_layerO;
             var vector_layerD;
 
-            var latlonOri = "";
-            var latlonDes = "";
+            var geom = "";
 
 
             $(document).ready(function () {
@@ -177,73 +176,62 @@
             });
         </script> 
         <script>
-            function dibujarPunto(tipo) {
+            function dibujarPunto() {
+                $.get("http://localhost:10070/solicitudes/geo?id=" + document.getElementById("idActual").innerHTML, function (resultNum) {
+                    //alert(resultNum);
+                    var oriDes = resultNum.split("|");
+                    var xy1 = oriDes[0].split(",");
+                    var xy2 = oriDes[1].split(",");
 
-                var docOrigen = document.getElementById("origen").value.toString();
-                var docDestino = document.getElementById("destino").value.toString();
+                    var point_feature = new ol.Feature({});
+                    var point_geom = new ol.geom.Point([xy1[0], xy1[1]]);
+                    point_feature.setGeometry(point_geom);
 
-
-                if ((tipo === "Origen" && docOrigen !== "") || (tipo === "Destino" && docDestino !== "")) {
-                    var nomCalle;
-                    var numPuerta;
-                    var tmp;
-
-                    if (tipo === "Origen") {
-                        tmp = docOrigen.split(",");
-                        if (tmp.length === 2) {
-                            nomCalle = tmp[0].toString().trim();
-                            numPuerta = tmp[1].toString().trim();
-                        } else {
-                            alert("Debe espesificar numero de puerta");
-                        }
-                    } else if (tipo === "Destino") {
-                        tmp = docDestino.split(",");
-                        if (tmp.length === 2) {
-                            nomCalle = tmp[0].toString().trim();
-                            numPuerta = tmp[1].toString().trim();
-                        } else {
-                            alert("Debe espesificar numero de puerta");
-                        }
+                    if (geom !== "") {
+                        map.removeLayer(vector_layerO);
+                        map.removeLayer(vector_layerD);
                     }
-
-                    $.post("http://localhost:10070/calles/geo", "nombre=" + nomCalle + "&numero=" + numPuerta, function (resultNum) {
-                        //alert(resultNum);
-                        var xy = resultNum.split(",");
-
-                        var point_feature = new ol.Feature({});
-                        var point_geom = new ol.geom.Point([xy[0], xy[1]]);
-                        point_feature.setGeometry(point_geom);
-
-                        if (tipo === "Origen") {
-                            if (latlonOri !== "") {
-                                map.removeLayer(vector_layerO);
-                            }
-                            latlonOri = resultNum;
-                            vector_layerO = new ol.layer.Vector({
-                                source: new ol.source.Vector({
-                                    features: [point_feature]
+                    vector_layerO = new ol.layer.Vector({
+                        source: new ol.source.Vector({
+                            features: [point_feature]
+                        }),
+                        style: new ol.style.Style({
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: 'rgb(124, 215, 238)'
                                 })
-                            });
-                            map.addLayer(vector_layerO);
-                        } else if (tipo === "Destino") {
-                            if (latlonDes !== "") {
-                                map.removeLayer(vector_layerD);
-                            }
-                            latlonDes = resultNum;
-                            vector_layerD = new ol.layer.Vector({
-                                source: new ol.source.Vector({
-                                    features: [point_feature]
-                                })
-                            });
-                            map.addLayer(vector_layerD);
-                        }
-                        map.setView(new ol.View({
-                            projection: 'EPSG:4326',
-                            center: [Number(xy[0]), Number(xy[1])],
-                            zoom: 14
-                        }));
+                            })
+                        })
                     });
-                }
+                    map.addLayer(vector_layerO);
+
+
+                    var point_feature2 = new ol.Feature({});
+                    var point_geom2 = new ol.geom.Point([xy2[0], xy2[1]]);
+                    point_feature2.setGeometry(point_geom2);
+
+                    if (geom !== "") {
+                        map.removeLayer(vector_layerD);
+                    }
+                    vector_layerD = new ol.layer.Vector({
+                        source: new ol.source.Vector({
+                            features: [point_feature2]
+                        }),
+                        style: new ol.style.Style({
+                            image: new ol.style.Circle({
+                                radius: 7,
+                                fill: new ol.style.Fill({
+                                    color: 'orange'
+                                })
+                            })
+                        })
+                    });
+                    map.addLayer(vector_layerD);
+
+                    geom = resultNum;
+
+                });
             }
             function getAllSolicitudes() {
                 var fechaDesde = document.getElementById("fechaDesde").value;
@@ -272,6 +260,7 @@
                         h3.addEventListener("click", function () {
                             document.getElementById("tituloActual").innerHTML = solicitud[1];
                             document.getElementById("idActual").innerHTML = solicitud[0];
+                            dibujarPunto();
                         });
                         div.appendChild(h3);
                         var span3 = document.createElement("span");
@@ -321,13 +310,12 @@
             function verificarPrecio() {
                 var id = document.getElementById("idActual").innerHTML;
                 var fletero = document.getElementById("emailFletero").innerHTML;
-                if(id !== "" && fletero !== ""){
-                    $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function(response){
-                        if(response === "false"){
-                            
-                        }
-                        else{
-                            
+                if (id !== "" && fletero !== "") {
+                    $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function (response) {
+                        if (response === "false") {
+
+                        } else {
+
                         }
                     });
                 }

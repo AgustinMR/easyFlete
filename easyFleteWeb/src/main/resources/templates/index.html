@@ -375,6 +375,14 @@
                             vector_layerO = new ol.layer.Vector({
                                 source: new ol.source.Vector({
                                     features: [point_feature]
+                                }),
+                                style: new ol.style.Style({
+                                    image: new ol.style.Circle({
+                                        radius: 7,
+                                        fill: new ol.style.Fill({
+                                            color: 'rgb(124, 215, 238)'
+                                        })
+                                    })
                                 })
                             });
                             map.addLayer(vector_layerO);
@@ -386,6 +394,14 @@
                             vector_layerD = new ol.layer.Vector({
                                 source: new ol.source.Vector({
                                     features: [point_feature]
+                                }),
+                                style: new ol.style.Style({
+                                    image: new ol.style.Circle({
+                                        radius: 7,
+                                        fill: new ol.style.Fill({
+                                            color: 'orange'
+                                        })
+                                    })
                                 })
                             });
                             map.addLayer(vector_layerD);
