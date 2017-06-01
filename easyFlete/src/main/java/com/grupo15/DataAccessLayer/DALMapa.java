@@ -1,5 +1,7 @@
 package com.grupo15.DataAccessLayer;
 
+import com.grupo15.easyflete.Solicitud;
+import com.grupo15.easyflete.Zona;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -12,8 +14,10 @@ import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class DALMapa implements IMapa {
 
@@ -83,50 +87,131 @@ public class DALMapa implements IMapa {
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
         collection.createIndex(Indexes.geo2dsphere("destino"));
-        
+
         Block<Document> printBlock = new Block<Document>() {
             @Override
             public void apply(final Document document) {
                 System.out.println(document.toJson());
             }
         };
-        
+
         Point refPoint = new Point(new Position(-56.2269777330595, -34.8585389298685));
         collection.find(Filters.near("destino", refPoint, 10000.0, 0.0)).forEach(printBlock);
-        
+
         return 0;
     }
-    
+
     @Override
-    public String getZonasById(int id){
+    public String getZonasById(int id) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("zonasGeo");
-        
+
         Document doc = collection.find(eq("zonaId", id)).first();
-        
+        //System.out.println(doc.toJson());
         return doc.toJson();
     }
-    
+
     @Override
-    public boolean updateZona(int id, String geom){
+    public boolean updateZona(int id, String geom) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("zonasGeo");
-          
+
         collection.deleteOne(eq("zonaId", id));
-      
+
         return guardarZonas(id, geom);
     }
-    
+
     @Override
-    public boolean deleteZona(int id){
+    public boolean deleteZona(int id) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("zonasGeo");
-          
+
         collection.deleteOne(eq("zonaId", id));
-      
+
         return true;
     }
+
+    public String precioZona(int solId, String email) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+        collection.createIndex(Indexes.geo2dsphere("destino"));
+        collection.createIndex(Indexes.geo2dsphere("origen"));
+
+        DALSolicitud dalSol = new DALSolicitud();
+        List<Zona> z = dalSol.getZonasByFletero(email);
+        boolean o = false;
+        boolean d = false;
+        double precio = 0;
+        //para cada una de las zonas del fletero
+        for (int i = 0; i < z.size(); i++) {
+            //obtengo los datos de la zona
+            String zonaFlet = getZonasById(z.get(i).getId());
+
+            String[] tmp = zonaFlet.split("\\]\\]");
+            String[] tmp1 = tmp[0].split("\\[\\[");
+            String[] tmp2 = tmp1[1].split("\\], \\[");
+
+            //creo el poligono de la zona
+            List<List<Double>> polygons = new ArrayList<>();
+            for (int j = 0; j < tmp2.length; j++) {
+                String[] coo = tmp2[j].split(",");
+                polygons.add(Arrays.asList(Double.parseDouble(coo[0]), Double.parseDouble(coo[1])));
+            }
+            //realizo la consulta de los puntos de destino que esten dentro de la zona actual en la iteracion
+            Bson query = Filters.geoWithinPolygon("destino", polygons);
+            collection.find(query).forEach(printBlock);;
+
+            for (int g = 0; g < lista.size(); g++) {
+                if (lista.get(g).trim().equals(String.valueOf(solId))) {
+                    d = true;
+                }
+            }
+
+            lista.clear();
+
+            Bson query2 = Filters.geoWithinPolygon("origen", polygons);
+            collection.find(query2).forEach(printBlock);;
+
+            for (int g = 0; g < lista.size(); g++) {
+                if (lista.get(g).trim().equals(String.valueOf(solId))) {
+                    o = true;
+                }
+            }
+            lista.clear();
+
+            if (o && d) {
+                Solicitud sol = dalSol.getSolicitud(solId);
+                if (precio != 0) {
+                    if (precio > z.get(i).getPrecio() * sol.getDistancia()) {
+                        precio = z.get(i).getPrecio() * sol.getDistancia();
+                    }
+                } else {
+                    precio = z.get(i).getPrecio() * sol.getDistancia();
+                }
+            } else {
+                o = false;
+                d = false;
+            }
+
+        }
+        if (precio == 0) {
+            return "false";
+        } else {
+            return String.valueOf(precio);
+        }
+    }
+
+    private List<String> lista = new ArrayList<String>();
+
+    Block<Document> printBlock = new Block<Document>() {
+        @Override
+        public void apply(final Document document) {
+            //System.out.println(document.toJson());
+            lista.add(document.toJson().split(":")[3].split(",")[0]);
+        }
+    };
 }
