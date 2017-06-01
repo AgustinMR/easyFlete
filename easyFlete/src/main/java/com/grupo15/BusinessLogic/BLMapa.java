@@ -105,6 +105,25 @@ public class BLMapa implements IBLMapa {
         }
         return false;
     }
+    
+    @Override
+    public boolean updateZona(int id, double precio, String nombre, String geom) {
+        ISolicitud sol = new DALSolicitud();
+        Zona z = new Zona(id, precio, nombre);
+        if (sol.updateZona(z)) {
+            return DLMapa.updateZona(id, geom);
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean deleteZona(int id) {
+        ISolicitud sol = new DALSolicitud();
+        if (sol.deleteZona(id)) {
+            return DLMapa.deleteZona(id);
+        }
+        return false;
+    }
 
     @Override
     public List<Zona> getZonasByFletero(String email) {

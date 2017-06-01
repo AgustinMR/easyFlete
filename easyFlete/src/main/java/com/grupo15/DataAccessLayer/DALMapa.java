@@ -107,4 +107,26 @@ public class DALMapa implements IMapa {
         
         return doc.toJson();
     }
+    
+    @Override
+    public boolean updateZona(int id, String geom){
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("zonasGeo");
+          
+        collection.deleteOne(eq("zonaId", id));
+      
+        return guardarZonas(id, geom);
+    }
+    
+    @Override
+    public boolean deleteZona(int id){
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("zonasGeo");
+          
+        collection.deleteOne(eq("zonaId", id));
+      
+        return true;
+    }
 }
