@@ -1,5 +1,6 @@
 package com.grupo15.DataAccessLayer;
 
+import com.grupo15.easyflete.FleteroSolicitudCliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
@@ -26,4 +27,5 @@ public abstract interface ISolicitud {
     public boolean deleteZona(int id);
     public boolean deleteZonaFletero(int id);
     public boolean aceptarSolicitud(int solicitud, String fletero, int precio);
+    public List<FleteroSolicitudCliente> getSolicitudFletero(String email);
 }
