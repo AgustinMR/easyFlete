@@ -80,4 +80,9 @@ public class BLSolicitud implements IBLSolicitud {
         return DLsol.getAllSolicitudes(fechaDesde, fechaHasta, titulo, fletero);
     }
 
+    @Override
+    public String calcularPrecio(String solicitud, String fletero) {
+        return DLsol.calcularPrecio(solicitud, fletero);
+    }
+
 }
