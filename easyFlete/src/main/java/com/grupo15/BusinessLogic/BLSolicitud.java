@@ -85,4 +85,9 @@ public class BLSolicitud implements IBLSolicitud {
         return DLsol.calcularPrecio(solicitud, fletero);
     }
 
+    @Override
+    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+        return DLsol.aceptarSolicitud(solicitud, fletero, precio);
+    }
+
 }

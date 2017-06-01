@@ -324,7 +324,12 @@
                 if(id !== "" && fletero !== ""){
                     $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function(response){
                         if(response === "false"){
-                            
+                            if(response === "err_precio"){
+                                
+                            }
+                            else{
+                                
+                            }
                         }
                         else{
                             
