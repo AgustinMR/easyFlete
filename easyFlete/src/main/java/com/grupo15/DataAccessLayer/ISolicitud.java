@@ -19,7 +19,6 @@ public abstract interface ISolicitud {
     public SolicitudCliente getSolicitudCli(int id);
     public List<Solicitud> getAllSolicitudes();
     public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero);
-    public String calcularPrecio(String solicitud, String fletero);
     public boolean addZona(Zona z);
     public boolean addZonaFletero(ZonaFletero zf);
     public List<Zona> getZonasByFletero(String email); 
