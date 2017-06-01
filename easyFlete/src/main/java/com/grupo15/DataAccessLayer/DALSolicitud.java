@@ -105,6 +105,39 @@ public class DALSolicitud implements ISolicitud {
     }
     
     @Override
+    public boolean updateZona(Zona z) {
+        EntityManager em = new EMHandler().entityManager();
+        Zona zz = em.find(Zona.class, z.getId());
+        em.getTransaction().begin();
+        zz.setPrecio(z.getPrecio());
+        zz.setNombre(z.getNombre());
+        em.getTransaction().commit();
+        return true;
+    }
+    
+    @Override
+    public boolean deleteZona(int id) {
+        deleteZonaFletero(id);
+        EntityManager em = new EMHandler().entityManager();
+        Zona zz = em.find(Zona.class, id);
+        em.getTransaction().begin();
+        em.remove(zz);
+        em.getTransaction().commit();
+        return true;
+    }
+    
+    @Override
+    public boolean deleteZonaFletero(int id) {
+        EntityManager em = new EMHandler().entityManager();
+        ZonaFletero zf = em.find(ZonaFletero.class, id);
+        em.getTransaction().begin();
+        em.remove(zf);
+        em.getTransaction().commit();
+        return true;
+    }
+    
+    
+    @Override
     public boolean addZonaFletero(ZonaFletero zf) {
         EntityManager em = new EMHandler().entityManager();
         em.getTransaction().begin();

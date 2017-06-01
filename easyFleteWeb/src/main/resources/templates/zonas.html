@@ -67,8 +67,8 @@
                                     <option value="" disabled>Seleccione una zona de trabajo</option>
                                 </select>
                                 <div class="ui icon buttons w3-margin-left">
-                                    <button class="ui button"><i class="trash red icon"></i></button>
-                                    <button class="ui button"><i class="save green icon"></i></button>
+                                    <button class="ui button" onclick="eliminarZona()"><i class="trash red icon"></i></button>
+                                    <button class="ui button" onclick="modificarZona()"><i class="save green icon"></i></button>
                                     <button class="ui button" onclick="agregar()"><i class="add blue icon"></i></button>
                                 </div>
                             </div>
@@ -166,6 +166,7 @@
                 //alert(geom);
             });
 
+
             $(document).ready(function () {
                 "use strict";
                 blurBackground();
@@ -261,6 +262,11 @@
                         source: vectorSource
                     });
                     map.addLayer(vector_layer);
+
+                    modifyInteraction2.on('modifyend', function (evt) {
+                        geomA = feature.getGeometry().getCoordinates();
+                        //alert(geomA);
+                    });
                     //map.addInteraction(modifyInteraction);
                 });
             }
@@ -274,6 +280,7 @@
                         if (result === true) {
                             document.getElementById("precio").value = "";
                             document.getElementById("nombre").value = "";
+                            source.clear();
                             geom = "";
                             cargarC();
                             alert("Zona ingresada con exito");
@@ -283,6 +290,59 @@
                     });
                 } else {
                     alert("Faltan datos");
+                }
+            }
+
+            function modificarZona() {
+                var precio = document.getElementById("precio").value;
+                var nombre = document.getElementById("nombre").value;
+                var id = document.getElementById("nomZona").value;
+                if (precio !== "" && nombre !== "" && id !== "" && geomA !== "") {
+                    var postInfo = "id=" + id + "&precio=" + precio + "&nombre=" + nombre + "&geom=" + geomA;
+                    $.ajax({
+                        url: 'http://localhost:10070/calles/zona',
+                        type: 'PUT',
+                        data: postInfo,
+                        success: function (data) {
+                            if (data === true) {
+                                document.getElementById("precio").value = "";
+                                document.getElementById("nombre").value = "";
+                                geomA = "";
+                                cargarC();
+                                alert("Zona modificada con exito");
+                            } else {
+                                alert("Error al modificar la zona");
+                            }
+                        }
+                    });
+                } else {
+                    alert("Faltan datos");
+                }
+            }
+
+            function eliminarZona() {
+                var id = document.getElementById("nomZona").value;
+                if (id !== "") {
+                    $.ajax({
+                        url: 'http://localhost:10070/calles/zona?id=' + id,
+                        type: 'DELETE',
+                        success: function (data) {
+                            if (data === true) {
+                                document.getElementById("precio").value = "";
+                                document.getElementById("nombre").value = "";
+                                geomA = "";
+                                map.removeInteraction(selectInteraction);
+                                map.removeInteraction(modifyInteraction2);
+                                map.removeLayer(vector_layer);
+                                cargarC();
+                                alert("Zona eliminada con exito");
+                            } else {
+                                alert("Error al eliminar la zona");
+                            }
+                        }
+                    });
+                } else {
+                    alert("Debe seleccionar una zona");
                 }
             }
         </script>

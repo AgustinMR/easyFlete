@@ -51,6 +51,12 @@ public class Zona implements Serializable {
         this.precio = precio;
         this.nombre = nombre;
     }
+    
+    public Zona(Integer id, double precio,String nombre) {
+        this.id = id;
+        this.precio = precio;
+        this.nombre = nombre;
+    }
 
     public Integer getId() {
         return id;
