@@ -174,4 +174,9 @@ public class DALSolicitud implements ISolicitud {
         return sql.getResultList();
     }
 
+    @Override
+    public String calcularPrecio(String solicitud, String fletero) {
+        return "456";
+    }
+
 }

@@ -83,13 +83,19 @@
                 <div class="ui two column doubling stackable grid container">
                     <div class="column">
                         <div class="ui segments">
+                            <div class="ui segment" style="background-color: #FBFBFB">
+                                <div class="ui secondary menu">
+                                    <h3 class="ui header w3-text-easyFlete-grey w3-left" id="tituloActual"></h3>
+                                    <span style="display: none" id="idActual"></span>
+                                    <div class="right menu"><button class="positive ui button w3-right" onclick="verificarPrecio();">Aceptar Solicitud</button></div>
+                                </div>
+                            </div>
                             <div class="ui segment sticky w3-bottombar" style="background-color: #FBFBFB">
                                 <div class="ui secondary menu" >
                                     <div class="ui icon input" id="filtro" style="width: 100%;">
                                         <input id="tituloFiltro" placeholder="Buscar por t&iacute;tulo" type="text">
                                         <i class="search circular inverted link icon" onclick="getAllSolicitudes();"></i>
                                     </div>
-                                    <div class="right menu" id="coso2" style="display: none"><button class="positive ui button">Aceptar Solicitud</button></div>
                                 </div>
                             </div>
                             <div class="ui raised segment" id="fletesContext">
@@ -264,13 +270,8 @@
                         h3.className = "ui header text w3-text-easyFlete-orange w3-left";
                         h3.innerHTML = solicitud[1];
                         h3.addEventListener("click", function () {
-                            document.getElementById("coso2").style.display = "block";
-                            document.getElementById("filtro").style.display = "none";
-                        });
-                        h3.addEventListener("blur", function () {
-                            alert();
-                            document.getElementById("coso2").style.display = "none";
-                            document.getElementById("filtro").style.display = "block";
+                            document.getElementById("tituloActual").innerHTML = solicitud[1];
+                            document.getElementById("idActual").innerHTML = solicitud[0];
                         });
                         div.appendChild(h3);
                         var span3 = document.createElement("span");
@@ -316,6 +317,20 @@
                         document.getElementById("items").appendChild(item);
                     });
                 });
+            }
+            function verificarPrecio() {
+                var id = document.getElementById("idActual").innerHTML;
+                var fletero = document.getElementById("emailFletero").innerHTML;
+                if(id !== "" && fletero !== ""){
+                    $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function(response){
+                        if(response === "false"){
+                            
+                        }
+                        else{
+                            
+                        }
+                    });
+                }
             }
         </script>
     </body>
