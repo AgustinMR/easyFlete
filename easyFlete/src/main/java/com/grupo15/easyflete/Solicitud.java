@@ -75,16 +75,14 @@ public class Solicitud implements Serializable {
         this.distancia = distancia;
     }
 
-    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, double distancia) {
-        this.volumen = volumen;
+    public Solicitud(double precioMax, String titulo, String descripcion, double distancia) {
         this.precioMax = precioMax;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.distancia = distancia;
     }
 
-    public Solicitud(double precioMax, String titulo, String descripcion, Integer volumen, Integer peso, double distancia) {
-        this.volumen = volumen;
+    public Solicitud(double precioMax, String titulo, String descripcion, Integer peso, double distancia) {
         this.peso = peso;
         this.precioMax = precioMax;
         this.titulo = titulo;

@@ -80,6 +80,24 @@
                 <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Solicitar Flete</span> </h2>
             </div>
             <div class="w3-padding w3-panel w3-padding-24" style="min-height: 600px">
+                <div class="ui active dimmer" style="display: none" id="dimmer">
+                    <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
+                    <div class="w3-display-middle" id="exito" style="display: none">
+                        <img src="img/success.svg" style="height: 45px"><br>
+                        <h4 style="color: white">Tu Solicitud ha sido creada correctamente!</h4>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="error" style="display: none">
+                        <img src="img/error.svg" style="height: 45px"><br>
+                        <h4 style="color: white">Ha ocurrido un error, y no se podido crear la solicitud.<br>Por favor vuelve a intentar</h4>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="warning" style="display: none">
+                        <img src="img/warning.svg" style="height: 45px"><br>
+                        <h4 style="color: white"> Completa los datos necesarios para poder crear tu solicitud.</h4>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                </div>
                 <div class="w3-content">
                     <div class="w3-col s12 m4 l4">
                         <div class="ui vertical steps">
@@ -122,11 +140,6 @@
                                 <div class="ui basic label">Kg</div>
                             </div>
                             <div class="ui right labeled fluid input w3-margin">
-                                <div class="ui label">Volumen:</div>
-                                <input id="volumen" placeholder="Ingrese el volumen a transportar..." type="text">
-                                <div class="ui basic label">m³</div>
-                            </div>
-                            <div class="ui right labeled fluid input w3-margin">
                                 <div class="ui label">Precio:</div>
                                 <input id="precioMax" placeholder="Ingrese el precio m&aacute;ximo a pagar..." type="text">
                                 <div class="ui basic label">UY</div>
@@ -135,9 +148,13 @@
                                 <div class="ui label">Fecha:</div>
                                 <input id="fecha" placeholder="Ingrese la fecha del flete..." type="date">
                             </div>
+                            <div class="ui labeled fluid input w3-margin">
+                                <div class="ui label">Hora:</div>
+                                <input id="hora" placeholder="Ingrese una hora para el flete..." type="datetime">
+                            </div>
                             <div class="ui reply form w3-margin">
                                 <div class="field">
-                                    <textarea id="descripcion" cols="30" rows="7" style="min-height: 100px" placeholder="Escriba aqu&iacute; una descripci&oacute;n para el flete..."></textarea>
+                                    <textarea id="descripcion" cols="30" rows="5" style="min-height: 100px" placeholder="Escriba aqu&iacute; una descripci&oacute;n para el flete..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -383,53 +400,51 @@
                 }
             }
 
-            function mostrarStep1() {
-                document.getElementById("step1").style.display = "block";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s1").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
+            function mostrarMensajeExito() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "block";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+
             }
 
-            function mostrarStep2() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "block";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s2").classList.add('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
+            function mostrarMensajeError() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "block";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
             }
 
-            function mostrarStep3() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "block";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s3").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
+            function mostrarMensajeWarning() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "block";
+                document.getElementById("loading").style.display = "none";
             }
 
-            function mostrarStep4() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "block";
-                document.getElementById("s4").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
+            function mostrarMensajeLoading() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "block";
+            }
+
+            function ocultarMensajes() {
+                document.getElementById("dimmer").style.display = "none";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
             }
 
             function ingresar() {
+
                 var titulo = document.getElementById("titulo").value;
-                var volumen = document.getElementById("volumen").value;
+                var hora = document.getElementById("hora").value;
                 var peso = document.getElementById("peso").value;
                 var descripcion = document.getElementById("descripcion").value;
                 var fecha = document.getElementById("fecha").value;
@@ -437,13 +452,11 @@
                 var email = document.getElementById("email").value;
                 var nombre = document.getElementById("nombre").value;
                 var telefono = document.getElementById("telefono").value;
-
-                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "" && nombre !== "" && telefono !== "") {
-                    $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&password=&telefono=" + telefono, function (result1) {
+                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && fecha !== "" && precioMax !== "" && email !== "" && nombre !== "" && telefono !== "") {
+                    mostrarMensajeLoading();
+                    $.post("http://localhost:10070/clientes", "nombre=" + nombre + "&email=" + email + "&telefono=" + telefono, function (result1) {
                         if (peso === "")
                             peso = "0";
-                        if (volumen === "")
-                            volumen = "0";
 
                         var wgs84Sphere = new ol.Sphere(6378137);
                         var xy = latlonOri.split(",");
@@ -451,19 +464,18 @@
                         var length = wgs84Sphere.haversineDistance([Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]);
                         var dist = (Math.round(length / 1000 * 100) / 100);
 
-                        var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
+                        var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&hora=" + hora + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
                         $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
                             if (result === true) {
-                                alert("Solicitud ingresada con exito");
+                                mostrarMensajeExito();
                             } else {
-                                alert("Error al ingresar la solicitud");
+                                mostrarMensajeError();
                             }
                         });
                     });
                 } else {
-                    alert("Faltan datos");
+                    mostrarMensajeWarning();
                 }
-
             }
         </script>
     </body>

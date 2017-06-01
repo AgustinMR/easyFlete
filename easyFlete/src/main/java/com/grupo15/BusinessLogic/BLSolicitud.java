@@ -20,14 +20,12 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(String origen, String destino, String titulo, int peso, int volumen, String descripcion, String fecha, double precioMax, String email, double distancia) {
+    public boolean addSolicitud(String origen, String destino, String titulo,int peso, String descripcion, String fecha, double precioMax, String email, double distancia, String hora){
         Solicitud s;
         if(peso == 0){
-            s = new Solicitud(precioMax, titulo, descripcion, volumen, distancia);
-        }else if(volumen == 0){
-            s = new Solicitud(peso, precioMax, titulo, descripcion, distancia);
+            s = new Solicitud(precioMax, titulo, descripcion, distancia);
         }else{
-            s = new Solicitud(precioMax, titulo, descripcion, volumen, peso, distancia);
+            s = new Solicitud(precioMax, titulo, descripcion, peso, distancia);
         }
         s.setEstado("Nuevo");
         s.setValoracion(0);
@@ -39,7 +37,7 @@ public class BLSolicitud implements IBLSolicitud {
             Calendar calendar = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));
             Cliente cli = BLusu.getCliente(email);
 
-            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli);
+            SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli, hora);
             DLsol.addSolicitudCliente(solCli);
             return new BLMapa().guardarSolicitud(s.getId(), origen, destino);
         }
@@ -75,6 +73,11 @@ public class BLSolicitud implements IBLSolicitud {
     @Override
     public List<Solicitud> getAllSolicitudes() {
         return DLsol.getAllSolicitudes();
+    }
+
+    @Override
+    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo) {
+        return DLsol.getAllSolicitudes(fechaDesde, fechaHasta, titulo);
     }
 
 }
