@@ -55,5 +55,11 @@ public class SolicitudController implements ISLSolicitud {
     public String calcularPrecio(@RequestParam(name = "solicitud") String solicitud, @RequestParam(name = "fletero") String fletero) {
         return new BLSolicitud().calcularPrecio(solicitud, fletero);
     }
+
+    @Override
+    @RequestMapping(value = "aceptar", method = RequestMethod.POST)
+    public boolean aceptarSolicitud(@RequestParam(name = "solicitud") int solicitud, @RequestParam(name = "fletero") String fletero, @RequestParam(name = "precio") int precio) {
+        return new BLSolicitud().aceptarSolicitud(solicitud, fletero, precio);
+    }
     
 }

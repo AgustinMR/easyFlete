@@ -2,6 +2,7 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Fecha;
 import com.grupo15.easyflete.Fletero;
+import com.grupo15.easyflete.FleteroSolicitudCliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
@@ -177,6 +178,29 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public String calcularPrecio(String solicitud, String fletero) {
         return "456";
+    }
+
+    @Override
+    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+        EntityManager em = new EMHandler().entityManager();
+        Solicitud s = getSolicitud(solicitud);
+        if(s == null){
+            em.close();
+            return false;
+        }
+        Fletero f = em.find(Fletero.class, fletero);
+        if(f == null){
+            em.close();
+            return false;
+        }
+        FleteroSolicitudCliente fsc = new FleteroSolicitudCliente(solicitud, s, f);
+        em.getTransaction().begin();
+        em.persist(em);
+        s.setEstado("Confirmado");
+        s.setPrecio(Double.valueOf(precio));
+        em.getTransaction().commit();
+        em.close();
+        return true;
     }
 
 }
