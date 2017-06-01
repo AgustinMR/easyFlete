@@ -30,7 +30,7 @@
         </script>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 27px" class="w3-margin-left w3-margin-top">
-            <br><div class="ui label w3-margin"><i class="user icon"></i><span th:text="${usuario}"></span></div>
+            <br><div class="ui label w3-margin"><i class="user icon"></i><span id="emailFletero" th:text="${usuario}"></span></div>
             <a href="/inicio" class="item">Inicio</a>
             <a class="active item">Ofertas</a>
             <a class="item">Zonas</a>
@@ -82,35 +82,19 @@
             <div class="w3-padding w3-padding-48">
                 <div class="ui two column doubling stackable grid container">
                     <div class="column">
-                        <div class="ui raised segment" id="fletesContext">
-                            <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
-                                <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
-                                    <div class="ui icon input" style="width: 100%">
-                                        <input placeholder="Buscar por t&iacute;tulo..." type="text" id="tituloFiltro">
+                        <div class="ui segments">
+                            <div class="ui segment sticky w3-bottombar" style="background-color: #FBFBFB">
+                                <div class="ui secondary menu" >
+                                    <div class="ui icon input" id="filtro" style="width: 100%;">
+                                        <input id="tituloFiltro" placeholder="Buscar por t&iacute;tulo" type="text">
                                         <i class="search circular inverted link icon" onclick="getAllSolicitudes();"></i>
                                     </div>
+                                    <div class="right menu" id="coso2" style="display: none"><button class="positive ui button">Aceptar Solicitud</button></div>
                                 </div>
                             </div>
-                            <div class="ui active tab">
-                                <div class="ui divided items w3-padding-16" id="items" style="min-height: 400px">
-                                    <!-- ESTE ES UN FLETE -->
-                                    <div class="item">
-                                        <div class="content" style="background-color: #FBFBFB">
-                                            <div class="row w3-light-gray">
-                                                <div class="w3-padding" style="height: 32px">
-                                                    <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                                                    <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                                                </div>
-                                            </div>
-                                            <div class="meta w3-row">
-                                                <span class="w3-margin-left"><strong>Cliente</strong></span>
-                                                <span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                                                <span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-                                            </div>
-                                            <div class="description">
-                                                <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                                            </div>
-                                        </div>
+                            <div class="ui raised segment" id="fletesContext">
+                                <div class="ui active tab">
+                                    <div class="ui divided items w3-padding-16" id="items" style="min-height: 400px">
                                     </div>
                                 </div>
                             </div>
@@ -144,14 +128,16 @@
             </div>
         </div>
         <script>
-            window.onload = function(){
+            window.onload = function () {
                 getAllSolicitudes();
             };
             $(document).ready(function () {
                 "use strict";
-                $('.ui.sticky').sticky({
+                $('#map').sticky({
+                    context: '#fletesContext',
                     offset: 0,
                     bottomOffset: 0
+
                 });
                 $('.ui.dropdown').dropdown();
                 $('.ui.rating').rating();
@@ -253,45 +239,11 @@
                     });
                 }
             }
-            function ingresar() {
-                var titulo = document.getElementById("titulo").value;
-                var volumen = document.getElementById("volumen").value;
-                var peso = document.getElementById("peso").value;
-                var descripcion = document.getElementById("descripcion").value;
-                var fecha = document.getElementById("fecha").value;
-                var precioMax = document.getElementById("precioMax").value;
-                var email = document.getElementById("emailCliente").innerHTML;
-
-                if (latlonOri !== "" && latlonDes !== "" && titulo !== "" && (peso !== "" || volumen !== "") && descripcion !== "" && fecha !== "" && precioMax !== "" && email !== "") {
-                    if (peso === "")
-                        peso = "0";
-                    if (volumen === "")
-                        volumen = "0";
-
-                    var wgs84Sphere = new ol.Sphere(6378137);
-                    var xy = latlonOri.split(",");
-                    var xy2 = latlonDes.split(",");
-                    var length = wgs84Sphere.haversineDistance([Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]);
-                    var dist = (Math.round(length / 1000 * 100) / 100);
-
-                    var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&volumen=" + volumen + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
-                    $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
-                        if (result === true) {
-                            alert("Solicitud ingresada con exito");
-                        } else {
-                            alert("Error al ingresar la solicitud");
-                        }
-                    });
-                } else {
-                    alert("Faltan datos");
-                }
-
-            }
             function getAllSolicitudes() {
                 var fechaDesde = document.getElementById("fechaDesde").value;
                 var fechaHasta = document.getElementById("fechaHasta").value;
                 var titulo = document.getElementById("tituloFiltro").value;
-                $.get("http://localhost:10070/solicitudes", "desde=" + fechaDesde + "&hasta=" + fechaHasta + "&titulo=" + titulo, function (response) {
+                $.get("http://localhost:10070/solicitudes", "desde=" + fechaDesde + "&hasta=" + fechaHasta + "&titulo=" + titulo + "&fletero=" + document.getElementById("emailFletero").innerHTML, function (response) {
                     while (document.getElementById("items").firstChild) {
                         document.getElementById("items").removeChild(document.getElementById("items").firstChild);
                     }
@@ -308,9 +260,18 @@
                         var div = document.createElement("div");
                         div.className = "w3-padding";
                         div.style.height = "32px";
-                        var h3 = document.createElement("h3");
+                        var h3 = document.createElement("a");
                         h3.className = "ui header text w3-text-easyFlete-orange w3-left";
                         h3.innerHTML = solicitud[1];
+                        h3.addEventListener("click", function () {
+                            document.getElementById("coso2").style.display = "block";
+                            document.getElementById("filtro").style.display = "none";
+                        });
+                        h3.addEventListener("blur", function () {
+                            alert();
+                            document.getElementById("coso2").style.display = "none";
+                            document.getElementById("filtro").style.display = "block";
+                        });
                         div.appendChild(h3);
                         var span3 = document.createElement("span");
                         span3.className = "w3-margin-left w3-right";
