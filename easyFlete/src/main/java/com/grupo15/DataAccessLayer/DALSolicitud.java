@@ -176,11 +176,6 @@ public class DALSolicitud implements ISolicitud {
     }
 
     @Override
-    public String calcularPrecio(String solicitud, String fletero) {
-        return "456";
-    }
-
-    @Override
     public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = getSolicitud(solicitud);
