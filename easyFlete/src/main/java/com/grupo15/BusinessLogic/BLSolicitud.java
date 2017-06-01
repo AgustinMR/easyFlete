@@ -73,6 +73,12 @@ public class BLSolicitud implements IBLSolicitud {
     public Solicitud getSolicitud(int id) {
         return DLsol.getSolicitud(id);
     }
+    
+    @Override
+    public String getSolicitudGEO(int id) {
+        IBLMapa map = new BLMapa();
+        return map.getSolicitudGEO(id);
+    }
 
     @Override
     public List<Solicitud> getAllSolicitudes() {

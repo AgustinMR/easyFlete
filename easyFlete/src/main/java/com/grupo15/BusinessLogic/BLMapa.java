@@ -136,5 +136,11 @@ public class BLMapa implements IBLMapa {
         IMapa map = new DALMapa();
         return map.getZonasById(id);
     }
+    
+    @Override
+    public String getSolicitudGEO(int id) {
+       IMapa map = new DALMapa();
+       return map.getSolicitudGEO(id);
+    }
 
 }

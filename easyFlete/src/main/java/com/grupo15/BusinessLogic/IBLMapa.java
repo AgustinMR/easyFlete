@@ -12,4 +12,5 @@ public abstract interface IBLMapa {
     public String getZonasById(int id);
     public boolean updateZona(int id, double precio, String nombre, String geom);
     public boolean deleteZona(int id);
+    public String getSolicitudGEO(int id);
 }

@@ -13,4 +13,5 @@ public abstract interface IMapa {
     public boolean updateZona(int id, String geom);
     public boolean deleteZona(int id);
     public String precioZona(int solId, String email);
+    public String getSolicitudGEO(int id);
 }

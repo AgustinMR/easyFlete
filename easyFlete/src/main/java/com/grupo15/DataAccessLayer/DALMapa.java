@@ -214,4 +214,18 @@ public class DALMapa implements IMapa {
             lista.add(document.toJson().split(":")[3].split(",")[0]);
         }
     };
+    
+    @Override
+    public String getSolicitudGEO(int id) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+
+        Document doc = collection.find(eq("solicitudId", id)).first();
+        String[] tmp = doc.toJson().split("\\[");
+        String[] tmp2 = tmp[1].split("\\]");
+        String[] tmp3 = tmp[2].split("\\]");
+        
+        return tmp2[0] + "|" + tmp3[0];
+    }
 }
