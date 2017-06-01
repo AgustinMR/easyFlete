@@ -48,7 +48,7 @@ public class Solicitud implements Serializable {
     private Double precio;
     @Size(max = 2147483647)
     @Column(name = "descripcion")
-    private String descripcion;
+    private String descripcion; 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
     private FleteroSolicitudCliente fleteroSolicitudCliente;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "solicitud", fetch = FetchType.EAGER)
