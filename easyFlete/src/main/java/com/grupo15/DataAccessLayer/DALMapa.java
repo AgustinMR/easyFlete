@@ -1,5 +1,6 @@
 package com.grupo15.DataAccessLayer;
 
+import com.grupo15.easyflete.FleteroSolicitudCliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.Zona;
 import com.mongodb.Block;
@@ -214,7 +215,7 @@ public class DALMapa implements IMapa {
             lista.add(document.toJson().split(":")[3].split(",")[0]);
         }
     };
-    
+
     @Override
     public String getSolicitudGEO(int id) {
         MongoClient mongoClient = new MongoClient();
@@ -225,7 +226,38 @@ public class DALMapa implements IMapa {
         String[] tmp = doc.toJson().split("\\[");
         String[] tmp2 = tmp[1].split("\\]");
         String[] tmp3 = tmp[2].split("\\]");
-        
+
         return tmp2[0] + "|" + tmp3[0];
     }
+
+    public void getSugerencias(String email) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+        collection.createIndex(Indexes.geo2dsphere("origen"));
+
+        ISolicitud sol = new DALSolicitud();
+        List<FleteroSolicitudCliente> fleSol = sol.getSolicitudFletero(email);
+        for (int i = 0; i < fleSol.size(); i++) {
+            Document doc = collection.find(eq("solicitudId", fleSol.get(i).getSolicitudId())).first();
+            String[] tmp = doc.toJson().split("\\[");
+            String[] tmp2 = tmp[1].split("\\]");
+            String[] tmp3 = tmp[2].split("\\]");
+            Point refPoint = new Point(new Position(Integer.parseInt(tmp3[0].split(",")[0]),Integer.parseInt(tmp3[0].split(",")[1])));
+            collection.find(Filters.near("origen", refPoint, 1000.0, 0.0)).forEach(printBlock2);
+            //chequear hora....
+            
+        }
+    }
+    
+    private List<String> listaSug = new ArrayList<String>();
+    
+    Block<Document> printBlock2 = new Block<Document>() {
+        @Override
+        public void apply(final Document document) {
+            //System.out.println(document.toJson());
+            listaSug.add(document.toJson().split(":")[3].split(",")[0]);
+        }
+    };
+
 }
