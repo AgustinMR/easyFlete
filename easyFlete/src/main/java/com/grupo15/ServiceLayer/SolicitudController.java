@@ -46,8 +46,14 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Object[]> getAllSolicitudes(@RequestParam(name = "desde", required = false) String fechaDesde, @RequestParam(name = "hasta", required = false) String fechaHasta, @RequestParam(name = "titulo", required = false) String titulo) {
-        return new BLSolicitud().getAllSolicitudes(fechaDesde, fechaHasta, titulo);
+    public List<Object[]> getAllSolicitudes(@RequestParam(name = "desde", required = false) String fechaDesde, @RequestParam(name = "hasta", required = false) String fechaHasta, @RequestParam(name = "titulo", required = false) String titulo, @RequestParam(name = "fletero") String fletero) {
+        return new BLSolicitud().getAllSolicitudes(fechaDesde, fechaHasta, titulo, fletero);
+    }
+
+    @Override
+    @RequestMapping(value = "precio", method = RequestMethod.GET)
+    public String calcularPrecio(@RequestParam(name = "solicitud") String solicitud, @RequestParam(name = "fletero") String fletero) {
+        return new BLSolicitud().calcularPrecio(solicitud, fletero);
     }
     
 }

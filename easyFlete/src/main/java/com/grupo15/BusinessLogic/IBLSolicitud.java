@@ -10,6 +10,7 @@ public abstract interface IBLSolicitud {
     public boolean deleteSolicitud(int id);
     public Solicitud getSolicitud(int id);
     public List<Solicitud> getAllSolicitudes();
-    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo);
+    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero);
+    public String calcularPrecio(String solicitud, String fletero);
 
 }
