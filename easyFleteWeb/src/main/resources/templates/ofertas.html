@@ -114,6 +114,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="ui active dimmer" style="display: none" id="dimmer">
+                    <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
+                    <div class="w3-display-middle" id="exito" style="display: none">
+                        <img src="img/success.svg" style="height: 45px"><br>
+                        <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="error" style="display: none">
+                        <img src="img/error.svg" style="height: 45px"><br>
+                        <h4 style="color: white">Ha ocurrido un error, y no se podido aceptar la solicitud.<br>Por favor vuelve a intentar</h4>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="warning" style="display: none">
+                        <img src="img/warning.svg" style="height: 45px"><br>
+                        <h4 style="color: white" id="precioAceptar"></h4>
+                        <button class="ui inverted red button w3-center" onclick="ocultarMensajes()">Salir</button>
+                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="aceptarSolicitud()">Confirmar</button>
+                    </div>
+                </div>
             </div>
             <div class="ui inverted vertical footer segment">
                 <div class="ui container">
@@ -174,7 +193,7 @@
                 "use strict";
                 blurBackground();
             });
-        </script> 
+        </script>
         <script>
             function dibujarPunto() {
                 $.get("http://localhost:10070/solicitudes/geo?id=" + document.getElementById("idActual").innerHTML, function (resultNum) {
@@ -313,12 +332,25 @@
                 if (id !== "" && fletero !== "") {
                     $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function (response) {
                         if (response === "false") {
-
+                            mostrarMensajeExito();
                         } else {
-
+                            mostrarMensajeWarning();
                         }
                     });
                 }
+            }
+            function aceptarSolicitud(){
+                mostrarMensajeLoading();
+                var id = document.getElementById("idActual").innerHTML;
+                var fletero = document.getElementById("emailFletero").innerHTML;
+                $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio = " + document.getElementById("precioActual").innerHTML, function(response){
+                    if(response === true){
+                        mostrarMensajeExito();
+                    }
+                    else{
+                        mostrarMensajeError();
+                    }
+                });
             }
         </script>
     </body>

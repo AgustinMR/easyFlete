@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.grupo15.easyflete;
 
 import java.io.Serializable;
@@ -13,23 +8,14 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Agustin
- */
 @Entity
 @Table(name = "fleteros_solicitudes_clientes")
-@NamedQueries({
-    @NamedQuery(name = "FleteroSolicitudCliente.findAll", query = "SELECT f FROM FleteroSolicitudCliente f")})
 public class FleteroSolicitudCliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -40,7 +26,7 @@ public class FleteroSolicitudCliente implements Serializable {
     private Solicitud solicitud;
     @JoinColumn(name = "fletero_email", referencedColumnName = "username")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Cliente fleteroEmail;
+    private Fletero fleteroEmail;
 
     public FleteroSolicitudCliente() {
     }
@@ -48,6 +34,13 @@ public class FleteroSolicitudCliente implements Serializable {
     public FleteroSolicitudCliente(Integer solicitudId) {
         this.solicitudId = solicitudId;
     }
+
+    public FleteroSolicitudCliente(Integer solicitudId, Solicitud solicitud, Fletero fleteroEmail) {
+        this.solicitudId = solicitudId;
+        this.solicitud = solicitud;
+        this.fleteroEmail = fleteroEmail;
+    }
+    
 
     public Integer getSolicitudId() {
         return solicitudId;
@@ -65,37 +58,12 @@ public class FleteroSolicitudCliente implements Serializable {
         this.solicitud = solicitud;
     }
 
-    public Cliente getFleteroEmail() {
+    public Fletero getFleteroEmail() {
         return fleteroEmail;
     }
 
-    public void setFleteroEmail(Cliente fleteroEmail) {
+    public void setFleteroEmail(Fletero fleteroEmail) {
         this.fleteroEmail = fleteroEmail;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (solicitudId != null ? solicitudId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FleteroSolicitudCliente)) {
-            return false;
-        }
-        FleteroSolicitudCliente other = (FleteroSolicitudCliente) object;
-        if ((this.solicitudId == null && other.solicitudId != null) || (this.solicitudId != null && !this.solicitudId.equals(other.solicitudId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.grupo15.easyflete.FleteroSolicitudCliente[ solicitudId=" + solicitudId + " ]";
     }
     
 }

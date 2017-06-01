@@ -1,7 +1,9 @@
 package com.grupo15.BusinessLogic;
 
+import com.grupo15.DataAccessLayer.DALMapa;
 import com.grupo15.DataAccessLayer.ISolicitud;
 import com.grupo15.DataAccessLayer.DALSolicitud;
+import com.grupo15.DataAccessLayer.IMapa;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
@@ -13,10 +15,12 @@ public class BLSolicitud implements IBLSolicitud {
 
     private static ISolicitud DLsol = null;
     private static IBLUsuario BLusu = null;
+    private static IMapa DLMapa = null;
 
     public BLSolicitud() {
         DLsol = new DALSolicitud();
         BLusu = new BLUsuario();
+        DLMapa = new DALMapa();
     }
 
     @Override
@@ -88,7 +92,12 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public String calcularPrecio(String solicitud, String fletero) {
-        return DLsol.calcularPrecio(solicitud, fletero);
+        return DLMapa.precioZona(Integer.valueOf(solicitud), fletero);
+    }
+
+    @Override
+    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+        return DLsol.aceptarSolicitud(solicitud, fletero, precio);
     }
 
 }
