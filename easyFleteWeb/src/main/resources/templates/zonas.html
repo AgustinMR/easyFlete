@@ -308,6 +308,9 @@
                                 document.getElementById("precio").value = "";
                                 document.getElementById("nombre").value = "";
                                 geomA = "";
+                                map.removeInteraction(selectInteraction);
+                                map.removeInteraction(modifyInteraction2);
+                                map.removeLayer(vector_layer);
                                 cargarC();
                                 alert("Zona modificada con exito");
                             } else {

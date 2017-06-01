@@ -81,6 +81,14 @@ public class DALSolicitud implements ISolicitud {
         EntityManager em = new EMHandler().entityManager();
         return em.find(Solicitud.class, id);
     }
+    @Override
+    public List<FleteroSolicitudCliente> getSolicitudFletero(String email) {
+        EntityManager em = new EMHandler().entityManager();
+        List<FleteroSolicitudCliente> S = em.createQuery("SELECT s FROM FleteroSolicitudCliente s WHERE s.fleteroEmail.username = :D AND s.solicitud.estado = 'Aceptado'", FleteroSolicitudCliente.class).setParameter("D", email).getResultList();
+        em.close();
+        return S;
+    }
+    
 
     @Override
     public SolicitudCliente getSolicitudCli(int id) {
