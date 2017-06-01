@@ -90,7 +90,7 @@
                                     <div class="right menu"><button class="positive ui button w3-right" onclick="verificarPrecio();">Aceptar Solicitud</button></div>
                                 </div>
                             </div>
-                            <div class="ui segment sticky w3-bottombar" style="background-color: #FBFBFB">
+                            <div class="ui segment sticky w3-bottombar" style="left: 936.5px; height: 43px !important;background-color: #FBFBFB">
                                 <div class="ui secondary menu" >
                                     <div class="ui icon input" id="filtro" style="width: 100%;">
                                         <input id="tituloFiltro" placeholder="Buscar por t&iacute;tulo" type="text">
@@ -187,12 +187,46 @@
             var vector_layerD;
 
             var geom = "";
+            function mostrarMensajeExito() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "block";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
 
+            }
 
-            $(document).ready(function () {
-                "use strict";
-                blurBackground();
-            });
+            function mostrarMensajeError() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "block";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+            }
+
+            function mostrarMensajeWarning() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "block";
+                document.getElementById("loading").style.display = "none";
+            }
+
+            function mostrarMensajeLoading() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "block";
+            }
+
+            function ocultarMensajes() {
+                document.getElementById("dimmer").style.display = "none";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+            }
         </script>
         <script>
             function dibujarPunto() {
@@ -332,22 +366,22 @@
                 if (id !== "" && fletero !== "") {
                     $.get("http://localhost:10070/solicitudes/precio", "fletero=" + fletero + "&solicitud=" + id, function (response) {
                         if (response === "false") {
-                            mostrarMensajeExito();
+                            mostrarMensajeError();
                         } else {
+                            document.getElementById("precioActual").innerHTML = "Se le cobrar&aacute;n $" + response + " al cliente. Deseas aceptar la solicitud?";
                             mostrarMensajeWarning();
                         }
                     });
                 }
             }
-            function aceptarSolicitud(){
+            function aceptarSolicitud() {
                 mostrarMensajeLoading();
                 var id = document.getElementById("idActual").innerHTML;
                 var fletero = document.getElementById("emailFletero").innerHTML;
-                $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio = " + document.getElementById("precioActual").innerHTML, function(response){
-                    if(response === true){
+                $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio = " + document.getElementById("precioActual").innerHTML, function (response) {
+                    if (response === true) {
                         mostrarMensajeExito();
-                    }
-                    else{
+                    } else {
                         mostrarMensajeError();
                     }
                 });
