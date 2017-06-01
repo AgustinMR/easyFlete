@@ -9,6 +9,6 @@ public abstract interface ISLSolicitud {
     public boolean updateSolicitud(int id, String origen, String destino, String titulo, int peso, String descripcion, String fecha, double precioMax);
     public boolean deleteSolicitud(int id);
     public Solicitud getSolicitud(int id);
-    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo);
+    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero);
 
 }

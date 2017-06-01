@@ -1,6 +1,7 @@
 package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.Fecha;
+import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
@@ -120,14 +121,14 @@ public class DALSolicitud implements ISolicitud {
     }
 
     @Override
-    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo) {
-        String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, s.solicitudCliente.fecha, s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono "
-                + "FROM Solicitud s "
-                + "WHERE s.estado = 'Nuevo'";
+    public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero) {
+        String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, s.solicitudCliente.fecha, s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
         if(fechaDesde != null && !fechaDesde.isEmpty()) query += " AND s.solicitudCliente.fecha >= :desde";
         if(fechaHasta != null && !fechaHasta.isEmpty()) query += " AND s.solicitudCliente.fecha <= :hasta";
         if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo";
-        TypedQuery<Object[]> sql = new EMHandler().entityManager().createQuery(query, Object[].class);
+        EntityManager em = new EMHandler().entityManager();
+        TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
+        sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
         if(fechaDesde != null && !fechaDesde.isEmpty()){
             Fecha f1 = new Fecha(fechaDesde);
             sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime());
