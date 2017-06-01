@@ -280,6 +280,7 @@
                         if (result === true) {
                             document.getElementById("precio").value = "";
                             document.getElementById("nombre").value = "";
+                            source.clear();
                             geom = "";
                             cargarC();
                             alert("Zona ingresada con exito");
@@ -318,18 +319,21 @@
                     alert("Faltan datos");
                 }
             }
-            
+
             function eliminarZona() {
                 var id = document.getElementById("nomZona").value;
                 if (id !== "") {
                     $.ajax({
-                        url: 'http://localhost:10070/calles/zona?id='+id,
+                        url: 'http://localhost:10070/calles/zona?id=' + id,
                         type: 'DELETE',
                         success: function (data) {
                             if (data === true) {
                                 document.getElementById("precio").value = "";
                                 document.getElementById("nombre").value = "";
                                 geomA = "";
+                                map.removeInteraction(selectInteraction);
+                                map.removeInteraction(modifyInteraction2);
+                                map.removeLayer(vector_layer);
                                 cargarC();
                                 alert("Zona eliminada con exito");
                             } else {
