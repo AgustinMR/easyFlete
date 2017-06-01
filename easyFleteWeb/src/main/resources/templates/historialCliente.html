@@ -63,16 +63,16 @@
                             <div class="ui fluid secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
                                 <div class="ui labeled input w3-hide-small w3-hide-medium">
                                     <div class="ui label">Desde:</div>
-                                    <input type="date">
+                                    <input id="fechaDesde" type="date">
                                 </div>
                                 <div class="ui labeled input w3-margin-left w3-hide-small w3-hide-medium">
                                     <div class="ui label">Hasta:</div>
-                                    <input type="date">
+                                    <input id="fechaHasta" type="date">
                                 </div>
                                 <div class="right menu w3-hide-small w3-hide-medium">
                                     <div class="ui action input">
-                                        <input placeholder="Buscar por t&iacute;tulo..." type="text">
-                                        <div class="ui button">Filtrar</div>
+                                        <input placeholder="Buscar por t&iacute;tulo..." type="text" id="titulo">
+                                        <div class="ui button" onclick="getSolicitudesByCliente()">Filtrar</div>
                                     </div>
                                 </div>
                             </div>
@@ -117,11 +117,18 @@
                         })
                         ;
                 blurBackground();
-                getSolicitudesByCliente(document.getElementById("emailCliente").innerHTML);
+                getSolicitudesByCliente();
             });
 
-            function getSolicitudesByCliente(email) {
-                $.get("http://localhost:10070/clientes/solicitudes", "email=" + email, function (response) {
+            function getSolicitudesByCliente() {
+                var email = document.getElementById("emailCliente").innerHTML;
+                var fechaDesde = document.getElementById("fechaDesde").value;
+                var fechaHasta = document.getElementById("fechaHasta").value;
+                var titulo = document.getElementById("titulo").value;
+                $.get("http://localhost:10070/clientes/solicitudes", "email=" + email + "&desde=" + fechaDesde + "&hasta=" + fechaHasta + "&titulo=" + titulo, function (response) {
+                    while (document.getElementById("items").firstChild) {
+                        document.getElementById("items").removeChild(document.getElementById("items").firstChild);
+                    }
                     $.each(response, function (index, x) {
                         var s = JSON.stringify(x);
                         var solicitud = JSON.parse(s);
@@ -176,7 +183,7 @@
                         var div2 = document.createElement("div");
                         div2.className = "ui star rating w3-margin-left";
                         div2.id = "rating" + solicitud[0];
-                        $('.ui.rating').rating({initialRating: solicitud[5], maxRating: 5 });
+                        $('.ui.rating').rating({initialRating: solicitud[5], maxRating: 5});
                         row2.appendChild(span1);
                         row2.appendChild(span2);
                         row2.appendChild(div2);

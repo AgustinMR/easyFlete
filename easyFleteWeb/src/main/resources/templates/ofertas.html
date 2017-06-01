@@ -30,7 +30,7 @@
         </script>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
             <img src="img/easyFlete-white.png" style="height: 27px" class="w3-margin-left w3-margin-top">
-			<br><div class="ui label w3-margin"><i class="user icon"></i><span th:text="${usuario}"></span></div>
+            <br><div class="ui label w3-margin"><i class="user icon"></i><span th:text="${usuario}"></span></div>
             <a href="/inicio" class="item">Inicio</a>
             <a class="active item">Ofertas</a>
             <a class="item">Zonas</a>
@@ -57,187 +57,74 @@
                 <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Ofertas disponibles</span> </h2>
             </div>
             <div class="ui secondary basic segment w3-easyFlete-grey" style="margin-top: 0px">
-					   	<div class="w3-content">
-					   		<div class="ui fluid secondary menu w3-padding w3-round w3-easyFlete-grey">
+                <div class="w3-content">
+                    <div class="ui fluid secondary menu w3-padding w3-round w3-easyFlete-grey">
+                        <div class="ui icon input">
+                            <input placeholder="Ofertas desde..." type="text" id="fechaDesde">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="ui icon input w3-margin-left">
+                            <input placeholder="Ofertas hasta..." type="text" id="fechaHasta">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="right menu w3-hide-small w3-hide-medium">
+                            <div class="ui search">
                                 <div class="ui icon input">
-  <input placeholder="Search..." type="text">
-  <i class="search icon"></i>
-</div>
-                                <div class="ui icon input w3-margin-left">
-  <input placeholder="Search..." type="text">
-  <i class="search icon"></i>
-</div>
-                                <div class="right menu w3-hide-small w3-hide-medium">
-                                    <div class="ui search">
-  <div class="ui icon input">
-    <input class="prompt" placeholder="Common passwords..." type="text">
-    <i class="search icon"></i>
-  </div>
-  <div class="results"></div>
-</div>
+                                    <input class="prompt" placeholder="Common passwords..." type="text">
+                                    <i class="search icon"></i>
+                                </div>
+                                <div class="results"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-padding w3-padding-48">
+                <div class="ui two column doubling stackable grid container">
+                    <div class="column">
+                        <div class="ui raised segment" id="fletesContext">
+                            <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
+                                <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
+                                    <div class="ui icon input" style="width: 100%">
+                                        <input placeholder="Buscar por t&iacute;tulo..." type="text" id="tituloFiltro">
+                                        <i class="search circular inverted link icon" onclick="getAllSolicitudes();"></i>
+                                    </div>
                                 </div>
                             </div>
-					   	</div>
-				   </div>
-              <div class="w3-padding w3-padding-48">
-    <div class="ui two column doubling stackable grid container">
-      <div class="column">
-        <div class="ui raised segment" id="fletesContext">
-          <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
-            <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
-             	<div class="ui icon input" style="width: 100%">
-  					<input placeholder="Buscar por t&iacute;tulo" type="text">
-  					<i class="search circular inverted link icon"></i>
-				</div>
+                            <div class="ui active tab">
+                                <div class="ui divided items w3-padding-16" id="items" style="min-height: 400px">
+                                    <!-- ESTE ES UN FLETE -->
+                                    <div class="item">
+                                        <div class="content" style="background-color: #FBFBFB">
+                                            <div class="row w3-light-gray">
+                                                <div class="w3-padding" style="height: 32px">
+                                                    <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
+                                                    <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
+                                                </div>
+                                            </div>
+                                            <div class="meta w3-row">
+                                                <span class="w3-margin-left"><strong>Cliente</strong></span>
+                                                <span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
+                                                <span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
+                                            </div>
+                                            <div class="description">
+                                                <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column" id="mapa" style="margin-top: 15px">
+                        <div class="ui rail" style="width: 100%">
+                            <div class="ui sticky">
+                                <div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="ui active tab">
-            <div class="ui divided items w3-padding-16" style="min-height: 400px">
-             <!-- ESTE ES UN FLETE -->
-              <div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-           		<!-- FIN -->
-           		
-           		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-          		<div class="item">
-                <div class="content" style="background-color: #FBFBFB">
-                  <div class="row w3-light-gray">
-                    <div class="w3-padding" style="height: 32px">
-                      <h3 class="ui header text w3-text-easyFlete-orange w3-left">Titulo del flete</h3>
-                      <span class="w3-margin-left w3-right" style="margin-top: -5px">9/11/2016 - 15:50</span>
-                    </div>
-                  </div>
-                  <div class="meta w3-row">
-                  	<span class="w3-margin-left"><strong>Cliente</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right"><strong>$$$</strong></span>
-                  	<span class="w3-margin-left w3-right w3-margin-right">Distancia</span>
-				</div>
-                  <div class="description">
-                    <p class="w3-margin-left w3-margin-right w3-margin-bottom w3-margin-top">descripcion del flete</p>
-                  </div>
-                </div>
-				</div>
-           		
-           		
-           		
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column" id="mapa" style="margin-top: 15px">
-      	<div class="ui rail" style="width: 100%">
-		  <div class="ui sticky">
-			<div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
-		  </div>
-		</div>
-      </div>
-    </div>
-  </div>
             <div class="ui inverted vertical footer segment">
                 <div class="ui container">
                     <div class="ui stackable inverted divided equal height stackable grid">
@@ -257,17 +144,20 @@
             </div>
         </div>
         <script>
+            window.onload = function(){
+                getAllSolicitudes();
+            };
             $(document).ready(function () {
                 "use strict";
                 $('.ui.sticky').sticky({
                     offset: 0,
-                    bottomOffset: 0,
+                    bottomOffset: 0
                 });
                 $('.ui.dropdown').dropdown();
                 $('.ui.rating').rating();
                 blurBackground();
             });</script>
-            <script>
+        <script>
             var raster = new ol.layer.Tile({source: new ol.source.OSM()});
             var source = new ol.source.Vector({wrapX: false});
             var vector = new ol.layer.Vector({source: source});
@@ -363,51 +253,6 @@
                     });
                 }
             }
-
-            function mostrarStep1() {
-                document.getElementById("step1").style.display = "block";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s1").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep2() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "block";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s2").classList.add('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep3() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "block";
-                document.getElementById("step4").style.display = "none";
-                document.getElementById("s3").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
-                document.getElementById("s4").classList.remove('active');
-            }
-
-            function mostrarStep4() {
-                document.getElementById("step1").style.display = "none";
-                document.getElementById("step2").style.display = "none";
-                document.getElementById("step3").style.display = "none";
-                document.getElementById("step4").style.display = "block";
-                document.getElementById("s4").classList.add('active');
-                document.getElementById("s2").classList.remove('active');
-                document.getElementById("s3").classList.remove('active');
-                document.getElementById("s1").classList.remove('active');
-            }
-
             function ingresar() {
                 var titulo = document.getElementById("titulo").value;
                 var volumen = document.getElementById("volumen").value;
@@ -441,6 +286,75 @@
                     alert("Faltan datos");
                 }
 
+            }
+            function getAllSolicitudes() {
+                var fechaDesde = document.getElementById("fechaDesde").value;
+                var fechaHasta = document.getElementById("fechaHasta").value;
+                var titulo = document.getElementById("tituloFiltro").value;
+                $.get("http://localhost:10070/solicitudes", "desde=" + fechaDesde + "&hasta=" + fechaHasta + "&titulo=" + titulo, function (response) {
+                    while (document.getElementById("items").firstChild) {
+                        document.getElementById("items").removeChild(document.getElementById("items").firstChild);
+                    }
+                    $.each(response, function (index, x) {
+                        var s = JSON.stringify(x);
+                        var solicitud = JSON.parse(s);
+                        var item = document.createElement("div");
+                        item.className = "item";
+                        var content = document.createElement("div");
+                        content.style.backgroundColor = "#FBFBFB";
+                        content.className = "content";
+                        var row1 = document.createElement("div");
+                        row1.className = "row w3-light-grey";
+                        var div = document.createElement("div");
+                        div.className = "w3-padding";
+                        div.style.height = "32px";
+                        var h3 = document.createElement("h3");
+                        h3.className = "ui header text w3-text-easyFlete-orange w3-left";
+                        h3.innerHTML = solicitud[1];
+                        div.appendChild(h3);
+                        var span3 = document.createElement("span");
+                        span3.className = "w3-margin-left w3-right";
+                        span3.style.marginTop = "-5px";
+                        span3.innerHTML = solicitud[5] + " - " + solicitud[6];
+                        div.appendChild(span3);
+                        row1.appendChild(div);
+                        content.appendChild(row1);
+                        var row2 = document.createElement("div");
+                        row2.className = "meta w3-row";
+                        var span1 = document.createElement("span");
+                        span1.className = "w3-margin-left";
+                        var strong1 = document.createElement("strong");
+                        strong1.innerHTML = solicitud[7];
+                        span1.appendChild(strong1);
+                        var span2 = document.createElement("span");
+                        span2.className = "w3-margin-left";
+                        span2.innerHTML = solicitud[8];
+                        row2.appendChild(span1);
+                        row2.appendChild(span2);
+                        var span4 = document.createElement("span");
+                        span4.className = "w3-margin-left w3-right w3-margin-right";
+                        var strong4 = document.createElement("strong");
+                        strong4.innerHTML = solicitud[3];
+                        span4.appendChild(strong4);
+                        var span5 = document.createElement("span");
+                        span5.className = "w3-margin-left w3-right w3-margin-right";
+                        var strong5 = document.createElement("strong");
+                        strong5.innerHTML = solicitud[4];
+                        span5.appendChild(strong5);
+                        row2.appendChild(span4);
+                        row2.appendChild(span5);
+                        content.appendChild(row2);
+                        var div3 = document.createElement("div");
+                        div3.className = "description";
+                        var p = document.createElement("p");
+                        p.className = "w3-margin";
+                        p.innerHTML = solicitud[2];
+                        div3.appendChild(p);
+                        content.appendChild(div3);
+                        item.appendChild(content);
+                        document.getElementById("items").appendChild(item);
+                    });
+                });
             }
         </script>
     </body>
