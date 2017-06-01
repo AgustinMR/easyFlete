@@ -35,6 +35,18 @@ public class CalleController {
         return mapa.addZona(email, precio, nombre, geom);
     }
     
+    @RequestMapping(value = "/zona", method = RequestMethod.PUT)
+    public boolean updateZona(@RequestParam(name = "id") int id,@RequestParam(name = "precio") double precio, @RequestParam(name = "nombre") String nombre, @RequestParam(name = "geom") String geom) {
+        IBLMapa mapa = new BLMapa();
+        return mapa.updateZona(id, precio, nombre, geom);
+    }
+    
+    @RequestMapping(value = "/zona", method = RequestMethod.DELETE)
+    public boolean borrarZona(@RequestParam(name = "id") int id) {
+        IBLMapa mapa = new BLMapa();
+        return mapa.deleteZona(id);
+    }
+    
     @RequestMapping(value = "/zonas", method = RequestMethod.GET)
     public List<Zona> getZonasByFletero(@RequestParam(name = "email") String email) {
         IBLMapa mapa = new BLMapa();

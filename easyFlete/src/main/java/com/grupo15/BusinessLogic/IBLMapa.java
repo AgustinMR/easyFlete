@@ -10,4 +10,6 @@ public abstract interface IBLMapa {
     public boolean addZona(String email, double precio, String nombre, String geom);
     public List<Zona> getZonasByFletero(String email);
     public String getZonasById(int id);
+    public boolean updateZona(int id, double precio, String nombre, String geom);
+    public boolean deleteZona(int id);
 }

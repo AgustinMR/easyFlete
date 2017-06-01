@@ -10,4 +10,6 @@ public abstract interface IMapa {
     public boolean guardarZonas(Integer zonaId, String geoZona);
     public int getDistance();
     public String getZonasById(int id);
+    public boolean updateZona(int id, String geom);
+    public boolean deleteZona(int id);
 }
