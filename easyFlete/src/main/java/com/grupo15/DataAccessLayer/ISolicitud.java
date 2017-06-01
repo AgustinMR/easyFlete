@@ -24,4 +24,5 @@ public abstract interface ISolicitud {
     public List<Zona> getZonasByFletero(String email); 
     public boolean updateZona(Zona z);
     public boolean deleteZona(int id);
+    public boolean deleteZonaFletero(int id);
 }
