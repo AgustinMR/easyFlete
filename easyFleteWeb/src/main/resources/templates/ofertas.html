@@ -26,6 +26,10 @@
                 });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
+                $('.ui.sticky').sticky({
+                    offset: 0,
+                    bottomOffset: 0,
+                });
             });
         </script>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
@@ -80,6 +84,25 @@
                 </div>
             </div>
             <div class="w3-padding w3-padding-48">
+                <div class="ui active dimmer" style="display: none" id="dimmer">
+                    <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
+                    <div class="w3-display-middle" id="exito" style="display: none">
+                        <img src="img/success.svg" style="height: 45px"><br>
+                        <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
+                        <button class="ui secondary button green w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="error" style="display: none">
+                        <img src="img/error.svg" style="height: 45px"><br>
+                        <h4 style="color: white">Ha ocurrido un error, y no se podido aceptar la solicitud.<br>Por favor vuelve a intentar</h4>
+                        <button class="ui secondary button green w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                    </div>
+                    <div class="w3-display-middle" id="warning" style="display: none">
+                        <img src="img/warning.svg" style="height: 45px"><br>
+                        <h4 style="color: white" id="precioAceptar"></h4>
+                        <button class="ui inverted red button w3-center" onclick="ocultarMensajes()">Salir</button>
+                        <button class="ui inverted green button w3-center" onclick="aceptarSolicitud()">Confirmar</button>
+                    </div>
+                </div>
                 <div class="ui two column doubling stackable grid container">
                     <div class="column">
                         <div class="ui segments">
@@ -90,9 +113,9 @@
                                     <div class="right menu"><button class="positive ui button w3-right" onclick="verificarPrecio();">Aceptar Solicitud</button></div>
                                 </div>
                             </div>
-                            <div class="ui segment sticky w3-bottombar" style="left: 936.5px; height: 43px !important;background-color: #FBFBFB">
+                            <div class="ui segment sticky w3-bottombar" style="background-color: #FBFBFB">
                                 <div class="ui secondary menu" >
-                                    <div class="ui icon input" id="filtro" style="width: 100%;">
+                                    <div class="ui icon input" style="width: 100%;">
                                         <input id="tituloFiltro" placeholder="Buscar por t&iacute;tulo" type="text">
                                         <i class="search circular inverted link icon" onclick="getAllSolicitudes();"></i>
                                     </div>
@@ -109,28 +132,9 @@
                     <div class="column" id="mapa" style="margin-top: 15px">
                         <div class="ui rail" style="width: 100%">
                             <div class="ui sticky">
-                                <div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
+                                <div class="w3-card-2" id="map" style="height: 430px; width: 100%"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="ui active dimmer" style="display: none" id="dimmer">
-                    <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
-                    <div class="w3-display-middle" id="exito" style="display: none">
-                        <img src="img/success.svg" style="height: 45px"><br>
-                        <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
-                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
-                    </div>
-                    <div class="w3-display-middle" id="error" style="display: none">
-                        <img src="img/error.svg" style="height: 45px"><br>
-                        <h4 style="color: white">Ha ocurrido un error, y no se podido aceptar la solicitud.<br>Por favor vuelve a intentar</h4>
-                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="ocultarMensajes()">Aceptar</button>
-                    </div>
-                    <div class="w3-display-middle" id="warning" style="display: none">
-                        <img src="img/warning.svg" style="height: 45px"><br>
-                        <h4 style="color: white" id="precioAceptar"></h4>
-                        <button class="ui inverted red button w3-center" onclick="ocultarMensajes()">Salir</button>
-                        <button class="ui secondary button w3-easyFlete-grey w3-center" onclick="aceptarSolicitud()">Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -152,9 +156,11 @@
                 </div>
             </div>
         </div>
+        <p style="display: none" id="precioActual"></p>
         <script>
             window.onload = function () {
                 getAllSolicitudes();
+                blurBackground();
             };
             $(document).ready(function () {
                 "use strict";
@@ -166,7 +172,6 @@
                 });
                 $('.ui.dropdown').dropdown();
                 $('.ui.rating').rating();
-                blurBackground();
             });</script>
         <script>
             var raster = new ol.layer.Tile({source: new ol.source.OSM()});
@@ -368,7 +373,8 @@
                         if (response === "false") {
                             mostrarMensajeError();
                         } else {
-                            document.getElementById("precioActual").innerHTML = "Se le cobrar&aacute;n $" + response + " al cliente. Deseas aceptar la solicitud?";
+                            document.getElementById("precioActual").innerHTML = response;
+                            document.getElementById("precioAceptar").innerHTML = "Se le cobrar&aacute;n $" + response + " al cliente. Deseas aceptar la solicitud?";
                             mostrarMensajeWarning();
                         }
                     });
@@ -378,13 +384,15 @@
                 mostrarMensajeLoading();
                 var id = document.getElementById("idActual").innerHTML;
                 var fletero = document.getElementById("emailFletero").innerHTML;
-                $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio = " + document.getElementById("precioActual").innerHTML, function (response) {
-                    if (response === true) {
-                        mostrarMensajeExito();
-                    } else {
-                        mostrarMensajeError();
-                    }
-                });
+                if (id !== "" && fletero !== "" && document.getElementById("precioAceptar").innerHTML !== "") {
+                    $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response) {
+                        if (response === true) {
+                            mostrarMensajeExito();
+                        } else {
+                            mostrarMensajeError();
+                        }
+                    });
+                }
             }
         </script>
     </body>

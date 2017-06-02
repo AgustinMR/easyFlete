@@ -65,7 +65,7 @@ public class SolicitudController implements ISLSolicitud {
 
     @Override
     @RequestMapping(value = "aceptar", method = RequestMethod.POST)
-    public boolean aceptarSolicitud(@RequestParam(name = "solicitud") int solicitud, @RequestParam(name = "fletero") String fletero, @RequestParam(name = "precio") int precio) {
+    public boolean aceptarSolicitud(@RequestParam(name = "solicitud") int solicitud, @RequestParam(name = "fletero") String fletero, @RequestParam(name = "precio") double precio) {
         return new BLSolicitud().aceptarSolicitud(solicitud, fletero, precio);
     }
     
