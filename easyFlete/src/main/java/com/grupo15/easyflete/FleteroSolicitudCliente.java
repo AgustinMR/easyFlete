@@ -40,7 +40,6 @@ public class FleteroSolicitudCliente implements Serializable {
         this.solicitud = solicitud;
         this.fleteroEmail = fleteroEmail;
     }
-    
 
     public Integer getSolicitudId() {
         return solicitudId;

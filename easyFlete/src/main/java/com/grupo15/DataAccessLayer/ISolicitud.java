@@ -26,6 +26,6 @@ public abstract interface ISolicitud {
     public boolean updateZona(Zona z);
     public boolean deleteZona(int id);
     public boolean deleteZonaFletero(int id);
-    public boolean aceptarSolicitud(int solicitud, String fletero, int precio);
+    public boolean aceptarSolicitud(int solicitud, String fletero, double precio);
     public List<FleteroSolicitudCliente> getSolicitudFletero(String email);
 }

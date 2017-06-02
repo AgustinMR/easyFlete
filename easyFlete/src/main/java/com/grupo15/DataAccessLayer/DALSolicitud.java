@@ -184,7 +184,7 @@ public class DALSolicitud implements ISolicitud {
     }
 
     @Override
-    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+    public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = getSolicitud(solicitud);
         if(s == null){
@@ -200,7 +200,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().begin();
         em.persist(em);
         s.setEstado("Confirmado");
-        s.setPrecio(Double.valueOf(precio));
+        s.setPrecio(precio);
         em.getTransaction().commit();
         em.close();
         return true;
