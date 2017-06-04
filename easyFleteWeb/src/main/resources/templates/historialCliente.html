@@ -141,6 +141,10 @@
                         h3.innerHTML = solicitud[1];
                         var select = document.createElement("select");
                         select.className = "ui dropdown w3-right";
+                        select.id = "estado" + solicitud[0];
+                        select.addEventListener("change", function(){
+                            actualizarEstado(solicitud[0], document.getElementById("estado" + solicitud[0]).value);
+                        });
                         var option1 = document.createElement("option");
                         option1.value = "Nuevo";
                         option1.innerHTML = "Nuevo";
@@ -177,17 +181,12 @@
                         span2.appendChild(strong2);
                         var div2 = document.createElement("div");
                         div2.className = "ui star rating w3-margin-left";
+                        div2.id = solicitud[0];
                         div2.setAttribute("data-rating", solicitud[5]);
                         div2.setAttribute("data-max-rating", 5);
-                        /*$( "<div/>", {
-                            class: "ui star rating w3-margin-left",
-                            "data-rating": solicitud[5],
-                            "data-max-rating": 5
-                        }).appendTo("row2" + solicitud[0]);*/
                         row2.appendChild(span1);
                         row2.appendChild(span2);
                         row2.appendChild(div2);
-                        //$(row2).rating({ initialRating: solicitud[5], maxRating: 5 });
                         content.appendChild(row2);
                         var div3 = document.createElement("div");
                         div3.className = "description";
@@ -200,10 +199,29 @@
                         document.getElementById("items").appendChild(item);
                     });
                     $('.ui.dropdown').dropdown();
-                        $('.ui.rating').rating();
+                    $('.ui.rating').rating('setting', 'onRate', function (value) {
+                        actualizarRating(this.id, value);
+                    });
                 });
             }
-
+            function actualizarRating(solicitud, rating) {
+                var postInfo = "rating=" + rating + "&solicitud=" + solicitud;
+                $.ajax({
+                    url: 'http://localhost:10070/solicitudes/rating',
+                    type: 'PUT',
+                    data: postInfo,
+                    success: function () { }
+                });
+            }
+            function actualizarEstado(solicitud, estado) {
+                var postInfo = "estado=" + estado + "&solicitud=" + solicitud;
+                $.ajax({
+                    url: 'http://localhost:10070/solicitudes/estado',
+                    type: 'PUT',
+                    data: postInfo,
+                    success: function () { }
+                });
+            }
         </script>
     </body>
 </html>

@@ -13,4 +13,6 @@ public abstract interface ISLSolicitud {
     public String calcularPrecio(String solicitud, String fletero);
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio);
     public String getSolicitudGEO(int id);
+    public boolean actualizarRating(int solicitud, int rating);
+    public boolean actualizarEstado(int solicitud, String estado);
 }
