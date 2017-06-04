@@ -14,6 +14,6 @@ public abstract interface IMapa {
     public boolean deleteZona(int id);
     public String precioZona(int solId, String email);
     public String getSolicitudGEO(int id);
-    public List<Integer> getSugerencias(String email);
+    public List<Integer> getSugerencias(String email, int idSol);
     public List<Integer> getSolSercanas(String point, int distance);
 }
