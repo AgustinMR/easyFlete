@@ -107,15 +107,9 @@
                 "use strict";
                 $('.ui.sticky').sticky({
                     offset: 0,
-                    bottomOffset: 0,
+                    bottomOffset: 0
                 });
                 $('.ui.dropdown').dropdown();
-                $('.ui.rating')
-                        .rating({
-                            initialRating: 0,
-                            maxRating: 5
-                        })
-                        ;
                 blurBackground();
                 getSolicitudesByCliente();
             });
@@ -170,6 +164,7 @@
                         content.appendChild(row1);
                         var row2 = document.createElement("div");
                         row2.className = "meta w3-row";
+                        row2.id = "row2" + solicitud[0];
                         var span1 = document.createElement("span");
                         span1.className = "w3-margin-left";
                         var strong1 = document.createElement("strong");
@@ -182,11 +177,17 @@
                         span2.appendChild(strong2);
                         var div2 = document.createElement("div");
                         div2.className = "ui star rating w3-margin-left";
-                        div2.id = "rating" + solicitud[0];
-                        $('.ui.rating').rating({initialRating: solicitud[5], maxRating: 5});
+                        div2.setAttribute("data-rating", solicitud[5]);
+                        div2.setAttribute("data-max-rating", 5);
+                        /*$( "<div/>", {
+                            class: "ui star rating w3-margin-left",
+                            "data-rating": solicitud[5],
+                            "data-max-rating": 5
+                        }).appendTo("row2" + solicitud[0]);*/
                         row2.appendChild(span1);
                         row2.appendChild(span2);
                         row2.appendChild(div2);
+                        //$(row2).rating({ initialRating: solicitud[5], maxRating: 5 });
                         content.appendChild(row2);
                         var div3 = document.createElement("div");
                         div3.className = "description";
@@ -197,8 +198,9 @@
                         content.appendChild(div3);
                         item.appendChild(content);
                         document.getElementById("items").appendChild(item);
-                        $('.ui.dropdown').dropdown();
                     });
+                    $('.ui.dropdown').dropdown();
+                        $('.ui.rating').rating();
                 });
             }
 
