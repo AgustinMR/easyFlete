@@ -44,7 +44,7 @@ public abstract interface ISolicitud {
 
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio);
 
-    public List<FleteroSolicitudCliente> getSolicitudFletero(String email);
+    public FleteroSolicitudCliente getSolicitudFletero(int id);
 
     public boolean actualizarRating(int solicitud, int rating);
 
