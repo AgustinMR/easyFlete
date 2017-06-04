@@ -38,7 +38,7 @@ public class FleteroController implements ISLFletero {
     public Fletero getFletero(@PathVariable(name = "email") String email) {
         return new BLUsuario().getFletero(email);
     }
-
+    
     @Override
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Fletero> getAllFleteros() {
@@ -47,8 +47,8 @@ public class FleteroController implements ISLFletero {
     
     @Override
     @RequestMapping(value = "/solicitudes", method = RequestMethod.GET)
-    public List<Object[]> getSolicitudesByFletero(@RequestParam(name = "email") String email) {
-        return new BLUsuario().getSolicitudesByFletero(email);
+    public List<Object[]> getSolicitudesByFletero(@RequestParam(name = "email") String email, @RequestParam(name = "titulo", required = false) String titulo) {
+        return new BLUsuario().getSolicitudesByFletero(email, titulo);
     }
     
 }
