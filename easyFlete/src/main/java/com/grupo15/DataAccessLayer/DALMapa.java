@@ -2,6 +2,7 @@ package com.grupo15.DataAccessLayer;
 
 import com.grupo15.easyflete.FleteroSolicitudCliente;
 import com.grupo15.easyflete.Solicitud;
+import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -230,7 +231,8 @@ public class DALMapa implements IMapa {
         return tmp2[0] + "|" + tmp3[0];
     }
 
-    public void getSugerencias(String email) {
+    @Override
+    public List<Integer> getSugerencias(String email) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
@@ -238,25 +240,58 @@ public class DALMapa implements IMapa {
 
         ISolicitud sol = new DALSolicitud();
         List<FleteroSolicitudCliente> fleSol = sol.getSolicitudFletero(email);
+        //System.out.println(fleSol.size());
+        List<Integer> returnList = new ArrayList<Integer>();
         for (int i = 0; i < fleSol.size(); i++) {
             Document doc = collection.find(eq("solicitudId", fleSol.get(i).getSolicitudId())).first();
+            System.out.println(doc.toJson());
             String[] tmp = doc.toJson().split("\\[");
-            String[] tmp2 = tmp[1].split("\\]");
             String[] tmp3 = tmp[2].split("\\]");
-            Point refPoint = new Point(new Position(Integer.parseInt(tmp3[0].split(",")[0]),Integer.parseInt(tmp3[0].split(",")[1])));
-            collection.find(Filters.near("origen", refPoint, 1000.0, 0.0)).forEach(printBlock2);
-            //chequear hora....
-            
+            Point refPoint = new Point(new Position(Double.parseDouble(tmp3[0].split(",")[0]), Double.parseDouble(tmp3[0].split(",")[1])));
+            collection.find(Filters.near("origen", refPoint, 1500.0, 0.0)).forEach(printBlock2);
+            for (int j = 0; j < listaSug.size(); j++) {
+                SolicitudCliente solCli = sol.getSolicitudCli(Integer.parseInt(listaSug.get(j)));
+                if (Integer.parseInt(listaSug.get(j)) != fleSol.get(i).getSolicitudId() && solCli.getFecha().equals(fleSol.get(i).getSolicitud().getSolicitudCliente().getFecha())) {
+                    String hora = fleSol.get(i).getSolicitud().getSolicitudCliente().getHora();
+                    //System.out.println(hora);
+                    String[] tmpHora = hora.split(":");
+                    double trallecto = ((solCli.getSolicitud().getDistancia() * 60) / 30);
+                    double horaFin = trallecto + 75;
+                    double roundedTime = (double) Math.round(horaFin / 60 * 100) / 100;
+                    //System.out.println(String.valueOf(roundedTime));
+                    int minsFin = Integer.parseInt(tmpHora[1]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[1]);
+                    int horasFin = Integer.parseInt(tmpHora[0]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[0]);
+                    if (minsFin > 60) {
+                        minsFin = minsFin - 60;
+                        horasFin = horasFin + 1;
+                    }
+                    if (horasFin < 24) {
+                        //System.out.println("Hora inicio: " + hora + " Hora fin + 1H: " + horasFin + ":" + minsFin);
+                        int horaNext = Integer.parseInt(solCli.getHora().split(":")[0]);
+                        int minNext = Integer.parseInt(solCli.getHora().split(":")[1]);
+                        if (minsFin < 40) {
+                            if ((horasFin == horaNext && minsFin + 20 <= minNext) || (horasFin + 1 == horaNext && minNext <= minsFin)) {
+                                returnList.add(Integer.parseInt(listaSug.get(j)));
+                            }
+                        } else {
+                            if ((horasFin + 1 == horaNext && (20 - (60 - minsFin)) >= minNext) || (horasFin + 1 == horaNext && minNext <= minsFin)) {
+                                returnList.add(Integer.parseInt(listaSug.get(j)));
+                            }
+                        }
+                    }
+                }
+            }
         }
+        return returnList;
     }
-    
+
     private List<String> listaSug = new ArrayList<String>();
-    
+
     Block<Document> printBlock2 = new Block<Document>() {
         @Override
         public void apply(final Document document) {
             //System.out.println(document.toJson());
-            listaSug.add(document.toJson().split(":")[3].split(",")[0]);
+            listaSug.add(document.toJson().split(": ")[3].split(",")[0]);
         }
     };
 
