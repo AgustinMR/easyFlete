@@ -77,6 +77,28 @@
             <div class="w3-padding w3-padding-48">
                 <div class="ui active dimmer" style="display: none" id="dimmer">
                     <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
+                    <div class="w3-display-topmiddle ui text container" id="exitoSugerencia" style="display: none; margin-top: 150px">
+                        <h1 class="ui text header horizontal divider inverted">La Solicitud ha sido aceptada!</h1>
+                        <h4 class="ui text header horizontal divider inverted">Recibiras en tu correo la informaci&oacute;n del cliente para coordinar</h4>
+                        <button class="circular inverted green ui icon button huge w3-margin-top" onclick="ocultarMensajes()"><i class="icon checkmark"></i></button>
+                        <div class="ui segment" style="margin-top: 50px">
+                            <h2 class="ui text header horizontal divider inverted w3-text-easyFlete-orange w3-padding">Sugerencias de trabajo</h2>
+                            <h3 class="ui text w3-margin-left header">Fletes del dia <span class="w3-text-easyFlete-orange">7/8/2016</span> cercanos al destino de la solicitud aceptada:</h3>
+                            <div class="ui raised segments w3-margin-top">
+                                <div class="ui left aligned segment secondary w3-padding">
+                                    <div class="row" style="height: 18px">
+                                        <span class="ui text header w3-left">titulo del flete</span>
+                                        <span class="ui text w3-margin-left w3-right" style="margin-top:-3px">45:30 hs</span>
+                                        <span class="ui text w3-margin-left w3-right" style="margin-top:-3px">45km</span>
+                                        <span class="ui text w3-margin-left w3-right" style="margin-top:-3px">50 kg</span>
+                                    </div>
+                                    <div class="w3-row">
+                                        <p class="ui text">d</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="w3-display-middle" id="exito" style="display: none">
                         <img src="img/success.svg" style="height: 45px"><br>
                         <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
