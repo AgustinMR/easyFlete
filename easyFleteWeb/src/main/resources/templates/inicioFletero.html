@@ -8,8 +8,6 @@
     <script src="js/jquery.js"></script>
     <script src="js/semantic.min.js"></script>
     <script src="https://openlayers.org/en/v4.1.0/build/ol.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4-src.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js"></script>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.1.0/css/ol.css" type="text/css">
     <script src="js/easyFlete.js" type="text/javascript"></script>
     <body>
@@ -28,8 +26,14 @@
                 $('.ui.embed').embed();
             });
         </script>
-        <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey"> <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top"> <a href="/inicio" class="active item">Inicio</a> <a class="item" href="/ofertas">Ofertas</a> <a class="item" href="/zonas">Reportes</a>
-            <div class="right item"> <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> </div>
+        <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
+            <img src="img/easyFlete-white.png" style="height: 30px" class="w3-margin-left w3-margin-top"> 
+            <br><div class="ui label w3-margin"><i class="user icon"></i><span id="emailFletero" th:text="${usuario}"></span></div>
+            <a href="/inicio" class="active item">Inicio</a> <a class="item" href="/ofertas">Ofertas</a> 
+            <a class="item" href="/zonas">Reportes</a>
+            <div class="right item"> 
+                <a class="ui inverted button" href="logout" style="margin-top: 0px"><i class="sign out icon"></i>Cerrar Sesi&oacute;n</a> 
+            </div>
         </div>
         <div class="pusher">
             <div class="ui inverted vertical masterhead mhead center aligned segment w3-easyFlete-grey w3-bottombar" id="backgr" style="background-image: url(img/ub1610v2.jpg); background-repeat: no-repeat; background-position: bottom">
@@ -42,20 +46,20 @@
             <div class="w3-padding w3-padding-64 w3-card" style="background-color: #FBFBFB">
                 <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Fletes pr&oacute;ximos</span> </h2>
             </div>
-            <div class="w3-padding w3-padding-48">
+            <div class="w3-padding w3-padding-48" style="min-height: 700px">
                 <div class="ui two column doubling stackable grid container">
                     <div class="column">
                         <div class="ui raised segment" id="fletesContext">
                             <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
                                 <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
                                     <div class="ui icon input" style="width: 100%">
-                                        <input placeholder="Buscar por t&iacute;tulo" type="text">
+                                        <input placeholder="Buscar por t&iacute;tulo" type="text" id="tituloFiltro">
                                         <i class="search circular inverted link icon"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="ui active tab">
-                                <div class="ui divided items w3-padding-16" style="min-height: 400px">
+                                <div class="ui divided items w3-padding-16" id="items">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="ui inverted vertical footer segment">
+            <div class="ui inverted vertical footer segment w3-hide-small">
                 <div class="ui container">
                     <div class="ui stackable inverted divided equal height stackable grid">
                         <div class="four wide right aligned column">
@@ -91,10 +95,11 @@
         </div>
         <script>
             $(document).ready(function () {
+                getAllSolicitudes();
                 "use strict";
                 $('.ui.sticky').sticky({
                     offset: 0,
-                    bottomOffset: 0,
+                    bottomOffset: 0
                 });
                 $('.ui.dropdown').dropdown();
                 $('.ui.rating').rating();
@@ -242,7 +247,7 @@
             }
             function getAllSolicitudes() {
                 var titulo = document.getElementById("tituloFiltro").value;
-                $.get("http://localhost:10070/fleteros/solicitudes", "titulo=" + titulo + "&fletero=" + document.getElementById("emailFletero").innerHTML, function (response) {
+                $.get("http://localhost:10070/fleteros/solicitudes", "titulo=" + titulo + "&email=" + document.getElementById("emailFletero").innerHTML, function (response) {
                     while (document.getElementById("items").firstChild) {
                         document.getElementById("items").removeChild(document.getElementById("items").firstChild);
                     }
@@ -271,35 +276,38 @@
                         var span3 = document.createElement("span");
                         span3.className = "w3-margin-left w3-right";
                         span3.style.marginTop = "-5px";
-                        span3.innerHTML = solicitud[5] + " - " + solicitud[6]; // cliente nombre - telefono
+                        span3.innerHTML = solicitud[3] + " - " + solicitud[4]; // fecha - hora
                         div.appendChild(span3);
                         row1.appendChild(div);
                         content.appendChild(row1);
                         var row2 = document.createElement("div");
                         row2.className = "meta w3-row";
                         var span1 = document.createElement("span");
-                        span1.className = "w3-margin-left";
+                        span1.className = "w3-margin-left w3-margin-right w3-right";
                         var strong1 = document.createElement("strong");
                         strong1.innerHTML = solicitud[7] + " km"; // distancia
                         span1.appendChild(strong1);
                         var span2 = document.createElement("span");
-                        span2.className = "w3-margin-left";
+                        span2.className = "w3-margin-left w3-margin-right w3-right";
                         span2.innerHTML = "$" + solicitud[8]; // precio
                         row2.appendChild(span1);
                         row2.appendChild(span2);
                         var span4 = document.createElement("span");
-                        span4.className = "w3-margin-left w3-right w3-margin-right";
+                        span4.className = "w3-margin-left w3-margin-right w3-left";
                         var strong4 = document.createElement("strong");
-                        strong4.innerHTML = solicitud[3]; // fecha
+                        strong4.innerHTML = solicitud[5]; // nombre cliente
                         span4.appendChild(strong4);
                         var span5 = document.createElement("span");
-                        span5.className = "w3-margin-left w3-right w3-margin-right";
+                        span5.className = "w3-margin-left w3-margin-right w3-text-silver";
                         var strong5 = document.createElement("strong");
-                        strong5.innerHTML = solicitud[4]; //hora
+                        strong5.innerHTML = solicitud[6]; // email cliente
                         span5.appendChild(strong5);
+                        var row3 = document.createElement("div");
+                        row3.className = "meta w3-row";
                         row2.appendChild(span4);
-                        row2.appendChild(span5);
+                        row3.appendChild(span5);
                         content.appendChild(row2);
+                        content.appendChild(row3);
                         var div3 = document.createElement("div");
                         div3.className = "description";
                         var p = document.createElement("p");

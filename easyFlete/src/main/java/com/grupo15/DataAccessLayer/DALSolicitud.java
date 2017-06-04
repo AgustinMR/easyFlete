@@ -76,6 +76,18 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
+    
+    public void actualizarSolicitud(int solicitud, double precio, String estado){
+        EntityManager em = new EMHandler().entityManager();
+        Solicitud s = em.find(Solicitud.class, solicitud);
+        if(s != null){
+            em.getTransaction().begin();
+            s.setPrecio(precio);
+            s.setEstado(estado);
+            em.getTransaction().commit();
+            em.close();
+        } else em.close();
+    }
 
     @Override
     public Solicitud getSolicitud(int id) {
@@ -200,10 +212,9 @@ public class DALSolicitud implements ISolicitud {
         FleteroSolicitudCliente fsc = new FleteroSolicitudCliente(solicitud, s, f);
         em.getTransaction().begin();
         em.persist(fsc);
-        s.setEstado("Confirmado");
-        s.setPrecio(precio);
         em.getTransaction().commit();
         em.close();
+        actualizarSolicitud(solicitud, precio, "Confirmado");
         return true;
     }
 
