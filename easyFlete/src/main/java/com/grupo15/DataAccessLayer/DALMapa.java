@@ -298,7 +298,7 @@ public class DALMapa implements IMapa {
     };
 
     @Override
-    public List<Integer> getSolSercanas(String point, int distance) {
+    public List<Integer> getSolCercanas(String point, int distance) {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
         MongoCollection<Document> collection = database.getCollection("solicitudesGeo");

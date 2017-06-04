@@ -25,5 +25,5 @@ public abstract interface ISLSolicitud {
 
     public boolean actualizarEstado(int solicitud, String estado);
 
-    public List<Object[]> getSolSercanas(String piont, int distancia, String fletero);
+    public List<Object[]> getSolCercanas(String piont, int distancia, String fletero);
 }
