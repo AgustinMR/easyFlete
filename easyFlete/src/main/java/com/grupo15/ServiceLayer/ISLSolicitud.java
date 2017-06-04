@@ -11,6 +11,6 @@ public abstract interface ISLSolicitud {
     public Solicitud getSolicitud(int id);
     public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero);
     public String calcularPrecio(String solicitud, String fletero);
-    public boolean aceptarSolicitud(int solicitud, String fletero, int precio);
+    public boolean aceptarSolicitud(int solicitud, String fletero, double precio);
     public String getSolicitudGEO(int id);
 }

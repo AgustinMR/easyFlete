@@ -91,8 +91,8 @@ public class BLUsuario implements IBLUsuario {
     }
 
     @Override
-    public List<Object[]> getSolicitudesByFletero(String email) {
-        return DLusu.getSolicitudesByFletero(email);
+    public List<Object[]> getSolicitudesByFletero(String email, String titulo) {
+        return DLusu.getSolicitudesByFletero(email, titulo);
     }
 
     @Override

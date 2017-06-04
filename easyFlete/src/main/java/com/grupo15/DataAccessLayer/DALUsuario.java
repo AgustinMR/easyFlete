@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 public class DALUsuario implements IUsuario {
@@ -145,7 +146,7 @@ public class DALUsuario implements IUsuario {
     
     @Override
     public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo){
-        String query = "SELECT s.id, s.titulo, s.descripcion, s.estado, s.precio, s.valoracion, s.solicitudCliente.fecha FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D";
+        String query = "SELECT s.id, s.titulo, s.descripcion, s.estado, s.precio, s.valoracion, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY') FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D";
         if(fechaDesde != null && !fechaDesde.isEmpty()) query += " AND s.solicitudCliente.fecha >= :desde";
         if(fechaHasta != null && !fechaHasta.isEmpty()) query += " AND s.solicitudCliente.fecha <= :hasta";
         if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo";
@@ -153,22 +154,27 @@ public class DALUsuario implements IUsuario {
         sql.setParameter("D", email);
         if(fechaDesde != null && !fechaDesde.isEmpty()){
             Fecha f1 = new Fecha(fechaDesde);
-            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime());
+            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime(), TemporalType.DATE);
         }
         if(fechaHasta != null && !fechaHasta.isEmpty()){
             Fecha f2 = new Fecha(fechaHasta);
-            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime());
+            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime(), TemporalType.DATE);
         }
         if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
         return sql.getResultList();
     }
     
     @Override
-    public List<Object[]> getSolicitudesByFletero(String email) {
-        //System.out.println("HOLA");
-        EntityManager em = new EMHandler().entityManager();
-        List<Object[]> ret = em.createQuery("SELECT s.id, s.titulo, s.descripcion, s.solicitudCliente.fecha, s.solicitudCliente.clienteEmail.nombre, s.distancia, s.precio FROM Solicitud s WHERE s.fleteroSolicitudCliente.fleteroEmail.username = :D ORDER BY s.solicitudCliente.fecha", Object[].class).setParameter("D", email).getResultList();
-        return ret;
+    public List<Object[]> getSolicitudesByFletero(String email, String titulo) {
+        String query = "SELECT s.id, s.titulo, s.descripcion, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.username, s.distancia, s.precio "
+                + "FROM Solicitud s "
+                + "WHERE s.fleteroSolicitudCliente.fleteroEmail.username = :D";
+        if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo ORDER BY s.solicitudCliente.fecha";
+        else query += " ORDER BY s.solicitudCliente.fecha";
+        TypedQuery<Object[]> sql = new EMHandler().entityManager().createQuery(query, Object[].class);
+        sql.setParameter("D", email);
+        if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
+        return sql.getResultList();
     }
 
 }

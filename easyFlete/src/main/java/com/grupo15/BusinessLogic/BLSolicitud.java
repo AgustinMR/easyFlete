@@ -96,7 +96,7 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+    public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
         return DLsol.aceptarSolicitud(solicitud, fletero, precio);
     }
 

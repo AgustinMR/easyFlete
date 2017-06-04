@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 public class DALSolicitud implements ISolicitud {
@@ -164,7 +165,7 @@ public class DALSolicitud implements ISolicitud {
 
     @Override
     public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero) {
-        String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, s.solicitudCliente.fecha, s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
+        String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
         if(fechaDesde != null && !fechaDesde.isEmpty()) query += " AND s.solicitudCliente.fecha >= :desde";
         if(fechaHasta != null && !fechaHasta.isEmpty()) query += " AND s.solicitudCliente.fecha <= :hasta";
         if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo";
@@ -173,18 +174,18 @@ public class DALSolicitud implements ISolicitud {
         sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
         if(fechaDesde != null && !fechaDesde.isEmpty()){
             Fecha f1 = new Fecha(fechaDesde);
-            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime());
+            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime(), TemporalType.DATE);
         }
         if(fechaHasta != null && !fechaHasta.isEmpty()){
             Fecha f2 = new Fecha(fechaHasta);
-            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime());
+            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime(), TemporalType.DATE);
         }
         if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
         return sql.getResultList();
     }
 
     @Override
-    public boolean aceptarSolicitud(int solicitud, String fletero, int precio) {
+    public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = getSolicitud(solicitud);
         if(s == null){
@@ -200,7 +201,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().begin();
         em.persist(em);
         s.setEstado("Confirmado");
-        s.setPrecio(Double.valueOf(precio));
+        s.setPrecio(precio);
         em.getTransaction().commit();
         em.close();
         return true;
