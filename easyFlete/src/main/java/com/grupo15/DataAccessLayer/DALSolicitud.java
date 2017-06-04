@@ -77,17 +77,19 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
-    public void actualizarSolicitud(int solicitud, double precio, String estado){
+
+    public void actualizarSolicitud(int solicitud, double precio, String estado) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = em.find(Solicitud.class, solicitud);
-        if(s != null){
+        if (s != null) {
             em.getTransaction().begin();
             s.setPrecio(precio);
             s.setEstado(estado);
             em.getTransaction().commit();
             em.close();
-        } else em.close();
+        } else {
+            em.close();
+        }
     }
 
     @Override
@@ -260,13 +262,17 @@ public class DALSolicitud implements ISolicitud {
     public List<Object[]> getSolicitudesById(List<Integer> ids, String fletero) {
         List<Object[]> returnList = new ArrayList<Object[]>();
         for (int i = 0; i < ids.size(); i++) {
-            String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
-            query += " AND s.id = :I";
+            System.out.println(ids.get(i));
             EntityManager em = new EMHandler().entityManager();
+            Solicitud sol = getSolicitud(ids.get(i));
+            if (sol.getEstado().equals("Nuevo") && sol.getPeso() <= em.find(Fletero.class, fletero).getVehiculoCarga()){}
+            String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.id = :I";
             TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
-            sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
             sql.setParameter("I", ids.get(i));
-            returnList.add(sql.getSingleResult());
+            Object[] a = sql.getSingleResult();
+            if (a != null) {
+                returnList.add(a);
+            }
         }
         return returnList;
     }
