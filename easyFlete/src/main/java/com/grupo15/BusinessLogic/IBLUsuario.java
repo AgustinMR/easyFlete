@@ -18,5 +18,5 @@ public abstract interface IBLUsuario {
     public abstract List<Cliente> getAllClientes();
     public List<Object[]> getSolicitudesByCliente(String email);
     public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo);
-    public List<Object[]> getSolicitudesByFletero(String email);
+    public List<Object[]> getSolicitudesByFletero(String email, String titulo);
 }
