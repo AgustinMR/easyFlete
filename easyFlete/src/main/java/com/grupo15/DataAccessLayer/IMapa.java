@@ -15,4 +15,5 @@ public abstract interface IMapa {
     public String precioZona(int solId, String email);
     public String getSolicitudGEO(int id);
     public List<Integer> getSugerencias(String email);
+    public List<Integer> getSolSercanas(String point, int distance);
 }

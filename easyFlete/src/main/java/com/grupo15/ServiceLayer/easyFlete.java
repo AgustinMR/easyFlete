@@ -16,8 +16,8 @@ public class easyFlete {
         SpringApplication.run(easyFlete.class, args);
 
         //IMapa dal = new DALMapa();
-        //dal.getSugerencias("fletero@gmail.com");
-        //System.out.println(t);
+        //dal.getSolSercanas("-56.22441456179094, -34.86609857408927", 500);
+//        System.out.println(t);
         
         //new BLUsuario().addCliente("nombre", "pass", "email@algo.com", "145");
         //new BLSolicitud().updateSolicitud(13,-34.917822, -56.166215,-34.920267, -56.150364, 500, 50, "assafsaff", "14/1/2008", 5000);

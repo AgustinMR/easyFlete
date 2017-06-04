@@ -201,8 +201,10 @@ public class DALMapa implements IMapa {
 
         }
         if (precio == 0) {
+            lista.clear();
             return "false";
         } else {
+            lista.clear();
             return String.valueOf((double) Math.round(precio * 100) / 100);
         }
     }
@@ -282,6 +284,7 @@ public class DALMapa implements IMapa {
                 }
             }
         }
+        listaSug.clear();
         return returnList;
     }
 
@@ -295,4 +298,20 @@ public class DALMapa implements IMapa {
         }
     };
 
+    @Override
+    public List<Integer> getSolSercanas(String point, int distance) {
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("easyFleteGEO");
+        MongoCollection<Document> collection = database.getCollection("solicitudesGeo");
+        collection.createIndex(Indexes.geo2dsphere("origen"));
+
+        String[] tmp = point.split(",");
+        Point refPoint = new Point(new Position(Double.parseDouble(tmp[0]), Double.parseDouble(tmp[1])));
+        collection.find(Filters.near("origen", refPoint,(double)distance, 0.0)).forEach(printBlock2);
+        List<Integer> returnList = new ArrayList<Integer>();
+        for (int i = 0; i< listaSug.size(); i++){
+            returnList.add(Integer.parseInt(listaSug.get(i)));
+        }
+        return returnList;        
+    }
 }
