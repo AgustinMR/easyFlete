@@ -8,6 +8,7 @@ import com.grupo15.easyflete.SolicitudCliente;
 import com.grupo15.easyflete.Zona;
 import com.grupo15.easyflete.ZonaFletero;
 import com.grupo15.handlers.EMHandler;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -66,7 +67,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
+
     @Override
     public boolean deleteSolicitudCliente(int id) {
         EntityManager em = new EMHandler().entityManager();
@@ -82,6 +83,7 @@ public class DALSolicitud implements ISolicitud {
         EntityManager em = new EMHandler().entityManager();
         return em.find(Solicitud.class, id);
     }
+
     @Override
     public List<FleteroSolicitudCliente> getSolicitudFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
@@ -89,7 +91,6 @@ public class DALSolicitud implements ISolicitud {
         em.close();
         return S;
     }
-    
 
     @Override
     public SolicitudCliente getSolicitudCli(int id) {
@@ -104,7 +105,7 @@ public class DALSolicitud implements ISolicitud {
         em.close();
         return S;
     }
-    
+
     @Override
     public boolean addZona(Zona z) {
         EntityManager em = new EMHandler().entityManager();
@@ -113,7 +114,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
+
     @Override
     public boolean updateZona(Zona z) {
         EntityManager em = new EMHandler().entityManager();
@@ -124,7 +125,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
+
     @Override
     public boolean deleteZona(int id) {
         deleteZonaFletero(id);
@@ -135,7 +136,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
+
     @Override
     public boolean deleteZonaFletero(int id) {
         EntityManager em = new EMHandler().entityManager();
@@ -145,8 +146,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
-    
+
     @Override
     public boolean addZonaFletero(ZonaFletero zf) {
         EntityManager em = new EMHandler().entityManager();
@@ -155,7 +155,7 @@ public class DALSolicitud implements ISolicitud {
         em.getTransaction().commit();
         return true;
     }
-    
+
     @Override
     public List<Zona> getZonasByFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
@@ -166,21 +166,29 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public List<Object[]> getAllSolicitudes(String fechaDesde, String fechaHasta, String titulo, String fletero) {
         String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
-        if(fechaDesde != null && !fechaDesde.isEmpty()) query += " AND s.solicitudCliente.fecha >= :desde";
-        if(fechaHasta != null && !fechaHasta.isEmpty()) query += " AND s.solicitudCliente.fecha <= :hasta";
-        if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo";
+        if (fechaDesde != null && !fechaDesde.isEmpty()) {
+            query += " AND s.solicitudCliente.fecha >= :desde";
+        }
+        if (fechaHasta != null && !fechaHasta.isEmpty()) {
+            query += " AND s.solicitudCliente.fecha <= :hasta";
+        }
+        if (titulo != null && !titulo.isEmpty()) {
+            query += " AND s.titulo LIKE :titulo";
+        }
         EntityManager em = new EMHandler().entityManager();
         TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
         sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
-        if(fechaDesde != null && !fechaDesde.isEmpty()){
+        if (fechaDesde != null && !fechaDesde.isEmpty()) {
             Fecha f1 = new Fecha(fechaDesde);
             sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime(), TemporalType.DATE);
         }
-        if(fechaHasta != null && !fechaHasta.isEmpty()){
+        if (fechaHasta != null && !fechaHasta.isEmpty()) {
             Fecha f2 = new Fecha(fechaHasta);
             sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime(), TemporalType.DATE);
         }
-        if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
+        if (titulo != null && !titulo.isEmpty()) {
+            sql.setParameter("titulo", "%" + titulo + "%");
+        }
         return sql.getResultList();
     }
 
@@ -188,12 +196,12 @@ public class DALSolicitud implements ISolicitud {
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = getSolicitud(solicitud);
-        if(s == null){
+        if (s == null) {
             em.close();
             return false;
         }
         Fletero f = em.find(Fletero.class, fletero);
-        if(f == null){
+        if (f == null) {
             em.close();
             return false;
         }
@@ -211,7 +219,7 @@ public class DALSolicitud implements ISolicitud {
     public boolean actualizarRating(int solicitud, int rating) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = em.find(Solicitud.class, solicitud);
-        if(s == null){
+        if (s == null) {
             em.close();
             return false;
         }
@@ -226,7 +234,7 @@ public class DALSolicitud implements ISolicitud {
     public boolean actualizarEstado(int solicitud, String estado) {
         EntityManager em = new EMHandler().entityManager();
         Solicitud s = em.find(Solicitud.class, solicitud);
-        if(s == null){
+        if (s == null) {
             em.close();
             return false;
         }
@@ -237,4 +245,18 @@ public class DALSolicitud implements ISolicitud {
         return true;
     }
 
+    @Override
+    public List<Object[]> getSolicitudesById(List<Integer> ids, String fletero) {
+        List<Object[]> returnList = new ArrayList<Object[]>();
+        for (int i = 0; i < ids.size(); i++) {
+            String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.estado = 'Nuevo' AND s.peso <= :p";
+            query += " AND s.id = :I";
+            EntityManager em = new EMHandler().entityManager();
+            TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
+            sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
+            sql.setParameter("I", ids.get(i));
+            returnList.add(sql.getSingleResult());
+        }
+        return returnList;
+    }
 }

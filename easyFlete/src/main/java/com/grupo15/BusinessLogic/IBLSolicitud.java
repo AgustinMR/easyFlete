@@ -26,4 +26,6 @@ public abstract interface IBLSolicitud {
     public boolean actualizarRating(int solicitud, int rating);
 
     public boolean actualizarEstado(int solicitud, String estado);
+    
+    public List<Object[]> getSolicitudesById(String piont, int distancia ,String fletero);
 }

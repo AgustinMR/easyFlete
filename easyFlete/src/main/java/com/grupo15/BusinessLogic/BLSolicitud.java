@@ -109,5 +109,11 @@ public class BLSolicitud implements IBLSolicitud {
     public boolean actualizarEstado(int solicitud, String estado) {
         return DLsol.actualizarEstado(solicitud, estado);
     }
+    
+    @Override
+    public List<Object[]> getSolicitudesById(String piont, int distancia ,String fletero) {
+        List<Integer> ids = DLMapa.getSolSercanas(piont, distancia);
+        return DLsol.getSolicitudesById(ids, fletero);
+    }
 
 }
