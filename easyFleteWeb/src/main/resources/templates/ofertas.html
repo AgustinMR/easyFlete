@@ -71,15 +71,6 @@
                             <input placeholder="Ofertas hasta..." type="text" id="fechaHasta">
                             <i class="search icon"></i>
                         </div>
-                        <div class="right menu w3-hide-small w3-hide-medium">
-                            <div class="ui search">
-                                <div class="ui icon input">
-                                    <input class="prompt" placeholder="Common passwords..." type="text">
-                                    <i class="search icon"></i>
-                                </div>
-                                <div class="results"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -131,6 +122,10 @@
                     </div>
                     <div class="column" id="mapa" style="margin-top: 15px">
                         <div class="ui rail" style="width: 100%">
+                            <div class="ui input">
+                                <button class="ui blue button w3-center" style="margin-bottom: 10px" onclick="dibujarPuntoCerca()">Buscar solicitudes cercanas</button>
+                                <input id="radio" type="text" value="1000"> 
+                            </div>                            
                             <div class="ui sticky">
                                 <div class="w3-card-2" id="map" style="height: 430px; width: 100%"></div>
                             </div>
@@ -187,11 +182,95 @@
                     zoom: 12
                 })
             });
+            
+            var features = new ol.Collection();
 
             var vector_layerO;
             var vector_layerD;
 
+            var draw;
             var geom = "";
+            draw = new ol.interaction.Draw({
+                source: source,
+                features: features,
+                type: "Point"
+            });
+
+            draw.on('drawend', function (evt) {
+                var geomC = evt.feature.getGeometry().getCoordinates();
+                map.removeInteraction(draw);
+                $.get("http://localhost:10070/solicitudes/cerca?point=" + geomC + "&distancia=" + document.getElementById("radio").value + "&fletero=" + document.getElementById("emailFletero").innerHTML, function (response) {
+                    while (document.getElementById("items").firstChild) {
+                        document.getElementById("items").removeChild(document.getElementById("items").firstChild);
+                    }
+                    $.each(response, function (index, x) {
+                        var s = JSON.stringify(x);
+                        var solicitud = JSON.parse(s);
+                        var item = document.createElement("div");
+                        item.className = "item";
+                        var content = document.createElement("div");
+                        content.style.backgroundColor = "#FBFBFB";
+                        content.className = "content";
+                        var row1 = document.createElement("div");
+                        row1.className = "row w3-light-grey";
+                        var div = document.createElement("div");
+                        div.className = "w3-padding";
+                        div.style.height = "32px";
+                        var h3 = document.createElement("a");
+                        h3.className = "ui header text w3-text-easyFlete-orange w3-left";
+                        h3.innerHTML = solicitud[1];
+                        h3.addEventListener("click", function () {
+                            document.getElementById("tituloActual").innerHTML = solicitud[1];
+                            document.getElementById("idActual").innerHTML = solicitud[0];
+                            dibujarPunto();
+                        });
+                        div.appendChild(h3);
+                        var span3 = document.createElement("span");
+                        span3.className = "w3-margin-left w3-right";
+                        span3.style.marginTop = "-5px";
+                        span3.innerHTML = solicitud[5] + " - " + solicitud[6];
+                        div.appendChild(span3);
+                        row1.appendChild(div);
+                        content.appendChild(row1);
+                        var row2 = document.createElement("div");
+                        row2.className = "meta w3-row";
+                        var span1 = document.createElement("span");
+                        span1.className = "w3-margin-left";
+                        var strong1 = document.createElement("strong");
+                        strong1.innerHTML = solicitud[7];
+                        span1.appendChild(strong1);
+                        var span2 = document.createElement("span");
+                        span2.className = "w3-margin-left";
+                        span2.innerHTML = solicitud[8];
+                        row2.appendChild(span1);
+                        row2.appendChild(span2);
+                        var span4 = document.createElement("span");
+                        span4.className = "w3-margin-left w3-right w3-margin-right";
+                        var strong4 = document.createElement("strong");
+                        strong4.innerHTML = solicitud[3];
+                        span4.appendChild(strong4);
+                        var span5 = document.createElement("span");
+                        span5.className = "w3-margin-left w3-right w3-margin-right";
+                        var strong5 = document.createElement("strong");
+                        strong5.innerHTML = solicitud[4];
+                        span5.appendChild(strong5);
+                        row2.appendChild(span4);
+                        row2.appendChild(span5);
+                        content.appendChild(row2);
+                        var div3 = document.createElement("div");
+                        div3.className = "description";
+                        var p = document.createElement("p");
+                        p.className = "w3-margin";
+                        p.innerHTML = solicitud[2];
+                        div3.appendChild(p);
+                        content.appendChild(div3);
+                        item.appendChild(content);
+                        document.getElementById("items").appendChild(item);
+                    });
+                });
+            }, this);
+
+
             function mostrarMensajeExito() {
                 document.getElementById("dimmer").style.display = "block";
                 document.getElementById("exito").style.display = "block";
@@ -291,6 +370,18 @@
 
                 });
             }
+
+            function dibujarPuntoCerca() {
+                if (document.getElementById("radio").value !== "") {
+                    source.clear();
+                    if (geom !== "") {
+                        map.removeLayer(vector_layerO);
+                        map.removeLayer(vector_layerD);
+                    }
+                    map.addInteraction(draw);
+                }
+            }
+
             function getAllSolicitudes() {
                 var fechaDesde = document.getElementById("fechaDesde").value;
                 var fechaHasta = document.getElementById("fechaHasta").value;
