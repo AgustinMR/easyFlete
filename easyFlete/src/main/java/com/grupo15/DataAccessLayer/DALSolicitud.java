@@ -85,7 +85,7 @@ public class DALSolicitud implements ISolicitud {
     @Override
     public List<FleteroSolicitudCliente> getSolicitudFletero(String email) {
         EntityManager em = new EMHandler().entityManager();
-        List<FleteroSolicitudCliente> S = em.createQuery("SELECT s FROM FleteroSolicitudCliente s WHERE s.fleteroEmail.username = :D AND s.solicitud.estado = 'Aceptado'", FleteroSolicitudCliente.class).setParameter("D", email).getResultList();
+        List<FleteroSolicitudCliente> S = em.createQuery("SELECT s FROM FleteroSolicitudCliente s WHERE s.fleteroEmail.username = :D AND s.solicitud.estado = 'Confirmado'", FleteroSolicitudCliente.class).setParameter("D", email).getResultList();
         em.close();
         return S;
     }
@@ -199,7 +199,7 @@ public class DALSolicitud implements ISolicitud {
         }
         FleteroSolicitudCliente fsc = new FleteroSolicitudCliente(solicitud, s, f);
         em.getTransaction().begin();
-        em.persist(em);
+        em.persist(fsc);
         s.setEstado("Confirmado");
         s.setPrecio(precio);
         em.getTransaction().commit();

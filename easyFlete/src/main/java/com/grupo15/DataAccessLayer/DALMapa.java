@@ -203,7 +203,7 @@ public class DALMapa implements IMapa {
         if (precio == 0) {
             return "false";
         } else {
-            return String.valueOf(precio);
+            return String.valueOf((double) Math.round(precio * 100) / 100);
         }
     }
 
