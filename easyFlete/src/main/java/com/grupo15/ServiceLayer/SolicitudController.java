@@ -1,4 +1,3 @@
-
 package com.grupo15.ServiceLayer;
 
 import com.grupo15.BusinessLogic.BLSolicitud;
@@ -17,35 +16,35 @@ import org.springframework.web.bind.annotation.RestController;
 public class SolicitudController implements ISLSolicitud {
 
     @Override
-    @RequestMapping(value = "",method = RequestMethod.POST)
-    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen,@RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso,@RequestParam(name = "descripcion", required = false) String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email, @RequestParam(name = "distancia") double distancia, @RequestParam(name = "hora") String hora) {
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public boolean addSolicitud(@RequestParam(name = "origen") String jsonOrigen, @RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso, @RequestParam(name = "descripcion", required = false) String descripcion, @RequestParam(name = "fecha") String fecha, @RequestParam(name = "precioMax") double precioMax, @RequestParam(name = "email") String email, @RequestParam(name = "distancia") double distancia, @RequestParam(name = "hora") String hora) {
         BLSolicitud bl = new BLSolicitud();
         return bl.addSolicitud(jsonOrigen, jsonDestino, titulo, peso, descripcion, fecha, precioMax, email, distancia, hora);
     }
 
     @Override
-    @RequestMapping(value = "",method = RequestMethod.PUT)
-    public boolean updateSolicitud(@RequestParam(name = "id")int id, @RequestParam(name = "origen") String jsonOrigen, @RequestParam(name = "destino") String jsonDestino , @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso, @RequestParam(name = "descripcion") String descripcion,@RequestParam(name = "fecha") String fecha,@RequestParam(name = "precioMax") double precioMax) {
+    @RequestMapping(value = "", method = RequestMethod.PUT)
+    public boolean updateSolicitud(@RequestParam(name = "id") int id, @RequestParam(name = "origen") String jsonOrigen, @RequestParam(name = "destino") String jsonDestino, @RequestParam(name = "titulo") String titulo, @RequestParam(name = "peso") int peso, @RequestParam(name = "descripcion") String descripcion, @RequestParam(name = "fecha") String fecha, @RequestParam(name = "precioMax") double precioMax) {
         BLSolicitud bl = new BLSolicitud();
         return bl.updateSolicitud(id, jsonOrigen, jsonDestino, peso, descripcion, fecha, precioMax);
     }
 
     @Override
-    @RequestMapping(value = "{id:int}",method = RequestMethod.DELETE)
-    public boolean deleteSolicitud(@PathVariable(name="id")int id ) {
+    @RequestMapping(value = "{id:int}", method = RequestMethod.DELETE)
+    public boolean deleteSolicitud(@PathVariable(name = "id") int id) {
         BLSolicitud bl = new BLSolicitud();
         return bl.deleteSolicitud(id);
     }
 
     @Override
-    @RequestMapping(value = "{id:int}",method = RequestMethod.GET)
-    public Solicitud getSolicitud(@PathVariable(name="id")int id) {
+    @RequestMapping(value = "{id:int}", method = RequestMethod.GET)
+    public Solicitud getSolicitud(@PathVariable(name = "id") int id) {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitud(id);
     }
-    
+
     @Override
-    @RequestMapping(value = "/geo",method = RequestMethod.GET)
+    @RequestMapping(value = "/geo", method = RequestMethod.GET)
     public String getSolicitudGEO(@RequestParam(name = "id") int id) {
         BLSolicitud bl = new BLSolicitud();
         return bl.getSolicitudGEO(id);
@@ -80,5 +79,12 @@ public class SolicitudController implements ISLSolicitud {
     public boolean actualizarEstado(@RequestParam(name = "solicitud") int solicitud, @RequestParam(name = "estado") String estado) {
         return new BLSolicitud().actualizarEstado(solicitud, estado);
     }
-    
+
+    @Override
+    @RequestMapping(value = "/serca", method = RequestMethod.GET)
+    public List<Object[]> getSolSercanas(@RequestParam(name = "point") String point, @RequestParam(name = "distancia") int distancia, @RequestParam(name = "fletero") String fletero) {
+        //System.out.println("serca " + point + " " + distancia + " " + fletero);
+        return new BLSolicitud().getSolSercanas(point, distancia, fletero);
+    }
+
 }

@@ -111,7 +111,7 @@ public class BLSolicitud implements IBLSolicitud {
     }
     
     @Override
-    public List<Object[]> getSolicitudesById(String piont, int distancia ,String fletero) {
+    public List<Object[]> getSolSercanas(String piont, int distancia ,String fletero) {
         List<Integer> ids = DLMapa.getSolSercanas(piont, distancia);
         return DLsol.getSolicitudesById(ids, fletero);
     }
