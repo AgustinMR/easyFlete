@@ -24,18 +24,18 @@ public class BLSolicitud implements IBLSolicitud {
     }
 
     @Override
-    public boolean addSolicitud(String origen, String destino, String titulo,int peso, String descripcion, String fecha, double precioMax, String email, double distancia, String hora){
+    public boolean addSolicitud(String origen, String destino, String titulo, int peso, String descripcion, String fecha, double precioMax, String email, double distancia, String hora) {
         Solicitud s;
-        if(peso == 0){
+        if (peso == 0) {
             s = new Solicitud(precioMax, titulo, descripcion, distancia);
-        }else{
+        } else {
             s = new Solicitud(precioMax, titulo, descripcion, peso, distancia);
         }
         s.setEstado("Nuevo");
         s.setValoracion(0);
         s.setPrecio(Double.valueOf("0"));
         boolean ingreso = DLsol.addSolicitud(s);
-        
+
         if (ingreso) {
             String fech[] = fecha.split("/");
             Calendar calendar = new GregorianCalendar(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]) - 1, Integer.parseInt(fech[0]));
@@ -73,7 +73,7 @@ public class BLSolicitud implements IBLSolicitud {
     public Solicitud getSolicitud(int id) {
         return DLsol.getSolicitud(id);
     }
-    
+
     @Override
     public String getSolicitudGEO(int id) {
         IBLMapa map = new BLMapa();
@@ -98,6 +98,16 @@ public class BLSolicitud implements IBLSolicitud {
     @Override
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
         return DLsol.aceptarSolicitud(solicitud, fletero, precio);
+    }
+
+    @Override
+    public boolean actualizarRating(int solicitud, int rating) {
+        return DLsol.actualizarRating(solicitud, rating);
+    }
+
+    @Override
+    public boolean actualizarEstado(int solicitud, String estado) {
+        return DLsol.actualizarEstado(solicitud, estado);
     }
 
 }

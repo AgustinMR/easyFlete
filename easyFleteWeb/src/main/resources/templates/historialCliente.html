@@ -107,19 +107,12 @@
                 "use strict";
                 $('.ui.sticky').sticky({
                     offset: 0,
-                    bottomOffset: 0,
+                    bottomOffset: 0
                 });
                 $('.ui.dropdown').dropdown();
-                $('.ui.rating')
-                        .rating({
-                            initialRating: 0,
-                            maxRating: 5
-                        })
-                        ;
                 blurBackground();
                 getSolicitudesByCliente();
             });
-
             function getSolicitudesByCliente() {
                 var email = document.getElementById("emailCliente").innerHTML;
                 var fechaDesde = document.getElementById("fechaDesde").value;
@@ -147,6 +140,10 @@
                         h3.innerHTML = solicitud[1];
                         var select = document.createElement("select");
                         select.className = "ui dropdown w3-right";
+                        select.id = "estado" + solicitud[0];
+                        select.addEventListener("change", function(){
+                            actualizarEstado(solicitud[0], document.getElementById("estado" + solicitud[0]).value);
+                        });
                         var option1 = document.createElement("option");
                         option1.value = "Nuevo";
                         option1.innerHTML = "Nuevo";
@@ -170,6 +167,7 @@
                         content.appendChild(row1);
                         var row2 = document.createElement("div");
                         row2.className = "meta w3-row";
+                        row2.id = "row2" + solicitud[0];
                         var span1 = document.createElement("span");
                         span1.className = "w3-margin-left";
                         var strong1 = document.createElement("strong");
@@ -182,8 +180,9 @@
                         span2.appendChild(strong2);
                         var div2 = document.createElement("div");
                         div2.className = "ui star rating w3-margin-left";
-                        div2.id = "rating" + solicitud[0];
-                        $('.ui.rating').rating({initialRating: solicitud[5], maxRating: 5});
+                        div2.id = solicitud[0];
+                        div2.setAttribute("data-rating", solicitud[5]);
+                        div2.setAttribute("data-max-rating", 5);
                         row2.appendChild(span1);
                         row2.appendChild(span2);
                         row2.appendChild(div2);
@@ -197,11 +196,31 @@
                         content.appendChild(div3);
                         item.appendChild(content);
                         document.getElementById("items").appendChild(item);
-                        $('.ui.dropdown').dropdown();
+                    });
+                    $('.ui.dropdown').dropdown();
+                    $('.ui.rating').rating('setting', 'onRate', function (value) {
+                        actualizarRating(this.id, value);
                     });
                 });
             }
-
+            function actualizarRating(solicitud, rating) {
+                var postInfo = "rating=" + rating + "&solicitud=" + solicitud;
+                $.ajax({
+                    url: 'http://localhost:10070/solicitudes/rating',
+                    type: 'PUT',
+                    data: postInfo,
+                    success: function () { }
+                });
+            }
+            function actualizarEstado(solicitud, estado) {
+                var postInfo = "estado=" + estado + "&solicitud=" + solicitud;
+                $.ajax({
+                    url: 'http://localhost:10070/solicitudes/estado',
+                    type: 'PUT',
+                    data: postInfo,
+                    success: function () { }
+                });
+            }
         </script>
     </body>
 </html>
