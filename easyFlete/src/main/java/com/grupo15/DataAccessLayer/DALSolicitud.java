@@ -207,4 +207,34 @@ public class DALSolicitud implements ISolicitud {
         return true;
     }
 
+    @Override
+    public boolean actualizarRating(int solicitud, int rating) {
+        EntityManager em = new EMHandler().entityManager();
+        Solicitud s = em.find(Solicitud.class, solicitud);
+        if(s == null){
+            em.close();
+            return false;
+        }
+        em.getTransaction().begin();
+        s.setValoracion(rating);
+        em.getTransaction().commit();
+        em.close();
+        return true;
+    }
+
+    @Override
+    public boolean actualizarEstado(int solicitud, String estado) {
+        EntityManager em = new EMHandler().entityManager();
+        Solicitud s = em.find(Solicitud.class, solicitud);
+        if(s == null){
+            em.close();
+            return false;
+        }
+        em.getTransaction().begin();
+        s.setEstado(estado);
+        em.getTransaction().commit();
+        em.close();
+        return true;
+    }
+
 }
