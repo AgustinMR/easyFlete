@@ -77,6 +77,16 @@
             <div class="w3-padding w3-padding-48">
                 <div class="ui active dimmer" style="display: none" id="dimmer">
                     <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
+                    <div class="w3-display-topmiddle ui text container" id="exitoSugerencia" style="display: none; margin-top: 150px">
+                        <h1 class="ui text header horizontal divider inverted">La Solicitud ha sido aceptada!</h1>
+                        <h4 class="ui text header horizontal divider inverted">Recibiras en tu correo la informaci&oacute;n del cliente para coordinar</h4>
+                        <button class="circular inverted green ui icon button huge w3-margin-top" onclick="ocultarMensajes()"><i class="icon checkmark"></i></button>
+                        <div class="ui segment" style="margin-top: 50px">
+                            <h2 class="ui text header horizontal divider inverted w3-text-easyFlete-orange w3-padding">Sugerencias de trabajo</h2>
+                            <h3 class="ui text w3-margin-left header">Fletes del dia <span class="w3-text-easyFlete-orange">7/8/2016</span> cercanos al destino de la solicitud aceptada:</h3>
+                            <div class="ui raised segments w3-margin-top" id="sugerenciasList"></div>
+                        </div>
+                    </div>
                     <div class="w3-display-middle" id="exito" style="display: none">
                         <img src="img/success.svg" style="height: 45px"><br>
                         <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
@@ -182,7 +192,7 @@
                     zoom: 12
                 })
             });
-            
+
             var features = new ol.Collection();
 
             var vector_layerO;
@@ -277,6 +287,7 @@
                 document.getElementById("error").style.display = "none";
                 document.getElementById("warning").style.display = "none";
                 document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoSugerencia").style.display = "none";
 
             }
 
@@ -286,6 +297,7 @@
                 document.getElementById("error").style.display = "block";
                 document.getElementById("warning").style.display = "none";
                 document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoSugerencia").style.display = "none";
             }
 
             function mostrarMensajeWarning() {
@@ -294,6 +306,7 @@
                 document.getElementById("error").style.display = "none";
                 document.getElementById("warning").style.display = "block";
                 document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoSugerencia").style.display = "none";
             }
 
             function mostrarMensajeLoading() {
@@ -302,14 +315,23 @@
                 document.getElementById("error").style.display = "none";
                 document.getElementById("warning").style.display = "none";
                 document.getElementById("loading").style.display = "block";
+                document.getElementById("exitoSugerencia").style.display = "none";
             }
-
+            function mostrarMensajeExitoSugerencias() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoSugerencia").style.display = "block";
+            }
             function ocultarMensajes() {
                 document.getElementById("dimmer").style.display = "none";
                 document.getElementById("exito").style.display = "none";
                 document.getElementById("error").style.display = "none";
                 document.getElementById("warning").style.display = "none";
                 document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoSugerencia").style.display = "none";
             }
         </script>
         <script>
@@ -478,7 +500,50 @@
                 if (id !== "" && fletero !== "" && document.getElementById("precioAceptar").innerHTML !== "") {
                     $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response) {
                         if (response === true) {
-                            mostrarMensajeExito();
+                            $.get("http://localhost:10070/solicitudes/sugerencias", "solicitud=" + id + "&fletero=" + fletero, function (response) {
+                                if (response !== null) {
+                                    $.each(response, function (index, x) {
+                                        var s = JSON.stringify(x);
+                                        var solicitud = JSON.parse(s);
+                                        while (document.getElementById("sugerenciasList").firstChild) {
+                                            document.getElementById("sugerenciasList").removeChild(document.getElementById("sugerenciasList").firstChild);
+                                        }
+                                        var segment = document.createElement("div");
+                                        segment.className = "ui left aligned segment secondary w3-padding";
+                                        var row1 = document.createElement("div");
+                                        row1.className = "row";
+                                        row1.style.height = "18px";
+                                        var span1 = document.createElement("span");
+                                        span1.className = "ui text header w3-left";
+                                        span1.innerHTML = solicitud[0]; // titulo
+                                        row1.appendChild(span1);
+                                        var span2 = document.createElement("span");
+                                        span2.className = "ui text w3-margin-left w3-right";
+                                        span2.innerHTML = solicitud[4] + " hs"; // hora
+                                        row1.appendChild(span2);
+                                        var span3 = document.createElement("span");
+                                        span3.className = "ui text w3-margin-left w3-right";
+                                        span3.innerHTML = solicitud[3] + " km"; // distancia
+                                        row1.appendChild(span3);
+                                        var span4 = document.createElement("span");
+                                        span4.className = "ui text w3-margin-left w3-right";
+                                        span4.innerHTML = solicitud[1] + " kg"; // hora
+                                        row1.appendChild(span4);
+                                        segment.appendChild(row1);
+                                        var row2 = document.createElement("div");
+                                        row2.className = "w3-row";
+                                        var p = document.createElement("p");
+                                        p.innerHtml = solicitud[2];
+                                        p.className = "ui text";
+                                        row2.appendChild(p);
+                                        segment.appendChild(row2);
+                                        document.getElementById("sugerenciasList").appendChild(segment);
+                                    });
+                                    mostrarMensajeExitoSugerencias();
+                                } else {
+                                    mostrarMensajeExito();
+                                }
+                            });
                         } else {
                             mostrarMensajeError();
                         }
