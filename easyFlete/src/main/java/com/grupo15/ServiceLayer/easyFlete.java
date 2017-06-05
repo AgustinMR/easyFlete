@@ -6,6 +6,7 @@ import com.grupo15.DataAccessLayer.DALUsuario;
 import com.grupo15.DataAccessLayer.IMapa;
 import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.easyflete.Cliente;
+import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,8 +16,11 @@ public class easyFlete {
     public static void main(String args[]){
         SpringApplication.run(easyFlete.class, args);
 
-        //IMapa dal = new DALMapa();
-        //dal.getSolSercanas("-56.22441456179094, -34.86609857408927", 500);
+//        IMapa dal = new DALMapa();
+//        List<Integer> a = dal.getSugerencias("fletero@gmail.com", 6);
+//        for (int i = 0; i< a.size(); i++){
+//            System.out.println(a.get(i));
+//        }
 //        System.out.println(t);
         
         //new BLUsuario().addCliente("nombre", "pass", "email@algo.com", "145");
