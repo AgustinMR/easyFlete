@@ -2,6 +2,7 @@ package com.grupo15.BusinessLogic;
 
 import com.grupo15.DataAccessLayer.IUsuario;
 import com.grupo15.DataAccessLayer.DALUsuario;
+import com.grupo15.ServiceLayer.MailHandler;
 import com.grupo15.easyflete.Cliente;
 import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Rol;
@@ -19,7 +20,11 @@ public class BLUsuario implements IBLUsuario {
     public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
         Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
         if (DLusu.addUsuario(f)) {
-            return DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)));
+            if(DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)))){
+                new MailHandler().SendUsuarioRegistradoMail(f);
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -34,7 +39,11 @@ public class BLUsuario implements IBLUsuario {
                 c = new Cliente(email, nombre, telefono, password);
             }
             if (DLusu.addUsuario(c)) {
-                return DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)));
+                if(DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)))){
+                    new MailHandler().SendUsuarioRegistradoMail(c);
+                    return true;
+                }
+                return false;
             }
             return false;
         } else {
@@ -98,5 +107,10 @@ public class BLUsuario implements IBLUsuario {
     @Override
     public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo) {
         return DLusu.getSolicitudesByCliente(email, fechaDesde, fechaHasta, titulo);
+    }
+
+    @Override
+    public Cliente getClienteBySolicitud(int solicitud) {
+        return DLusu.getClienteBySolicitud(solicitud);
     }
 }

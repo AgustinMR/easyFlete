@@ -5,8 +5,6 @@ import com.grupo15.easyflete.Fecha;
 import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Rol;
 import com.grupo15.handlers.EMHandler;
-import java.sql.Date;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -143,38 +141,59 @@ public class DALUsuario implements IUsuario {
                         + "WHERE s.solicitudCliente.clienteEmail.username = :D", Object[].class)
                 .setParameter("D", email).getResultList();
     }
-    
+
     @Override
-    public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo){
+    public List<Object[]> getSolicitudesByCliente(String email, String fechaDesde, String fechaHasta, String titulo) {
         String query = "SELECT s.id, s.titulo, s.descripcion, s.estado, s.precio, s.valoracion, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY') FROM Solicitud s WHERE s.solicitudCliente.clienteEmail.username = :D";
-        if(fechaDesde != null && !fechaDesde.isEmpty()) query += " AND s.solicitudCliente.fecha >= :desde";
-        if(fechaHasta != null && !fechaHasta.isEmpty()) query += " AND s.solicitudCliente.fecha <= :hasta";
-        if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo";
+        if (fechaDesde != null && !fechaDesde.isEmpty()) {
+            query += " AND s.solicitudCliente.fecha >= :desde";
+        }
+        if (fechaHasta != null && !fechaHasta.isEmpty()) {
+            query += " AND s.solicitudCliente.fecha <= :hasta";
+        }
+        if (titulo != null && !titulo.isEmpty()) {
+            query += " AND s.titulo LIKE :titulo";
+        }
         TypedQuery<Object[]> sql = new EMHandler().entityManager().createQuery(query, Object[].class);
         sql.setParameter("D", email);
-        if(fechaDesde != null && !fechaDesde.isEmpty()){
+        if (fechaDesde != null && !fechaDesde.isEmpty()) {
             Fecha f1 = new Fecha(fechaDesde);
             sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime(), TemporalType.DATE);
         }
-        if(fechaHasta != null && !fechaHasta.isEmpty()){
+        if (fechaHasta != null && !fechaHasta.isEmpty()) {
             Fecha f2 = new Fecha(fechaHasta);
             sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime(), TemporalType.DATE);
         }
-        if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
+        if (titulo != null && !titulo.isEmpty()) {
+            sql.setParameter("titulo", "%" + titulo + "%");
+        }
         return sql.getResultList();
     }
-    
+
     @Override
     public List<Object[]> getSolicitudesByFletero(String email, String titulo) {
         String query = "SELECT s.id, s.titulo, s.descripcion, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.username, s.distancia, s.precio "
                 + "FROM Solicitud s "
                 + "WHERE s.fleteroSolicitudCliente.fleteroEmail.username = :D";
-        if(titulo != null && !titulo.isEmpty()) query += " AND s.titulo LIKE :titulo ORDER BY s.solicitudCliente.fecha";
-        else query += " ORDER BY s.solicitudCliente.fecha";
+        if (titulo != null && !titulo.isEmpty()) {
+            query += " AND s.titulo LIKE :titulo ORDER BY s.solicitudCliente.fecha";
+        } else {
+            query += " ORDER BY s.solicitudCliente.fecha";
+        }
         TypedQuery<Object[]> sql = new EMHandler().entityManager().createQuery(query, Object[].class);
         sql.setParameter("D", email);
-        if(titulo != null && !titulo.isEmpty()) sql.setParameter("titulo", "%" + titulo + "%");
+        if (titulo != null && !titulo.isEmpty()) {
+            sql.setParameter("titulo", "%" + titulo + "%");
+        }
         return sql.getResultList();
+    }
+
+    @Override
+    public Cliente getClienteBySolicitud(int solicitud) {
+        EntityManager em = new EMHandler().entityManager();
+        Cliente c = em.createQuery("SELECT s.solicitudCliente.clienteEmail FROM Solicitud s WHERE s.id = :D", Cliente.class).setParameter("D", solicitud).getSingleResult();
+        em.close();
+        return c;
     }
 
 }
