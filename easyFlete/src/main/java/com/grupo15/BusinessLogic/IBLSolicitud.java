@@ -30,4 +30,5 @@ public abstract interface IBLSolicitud {
     public List<Object[]> getSolCercanas(String piont, int distancia ,String fletero);
     
     public List<Object[]> getSugerenciasBySolicitud(int solicitud, String fletero);
+    
 }
