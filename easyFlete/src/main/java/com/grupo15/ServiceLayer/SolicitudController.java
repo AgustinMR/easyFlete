@@ -87,4 +87,12 @@ public class SolicitudController implements ISLSolicitud {
         return new BLSolicitud().getSolCercanas(point, distancia, fletero);
     }
 
+    @Override
+    @RequestMapping(value = "sugerencias", method = RequestMethod.GET)
+    public List<Object[]> getSugerenciasBySolicitud(@RequestParam(name = "solicitud") int solicitud, @RequestParam(name = "fletero") String fletero) {
+        return new BLSolicitud().getSugerenciasBySolicitud(solicitud, fletero);
+    }
+    
+    
+
 }

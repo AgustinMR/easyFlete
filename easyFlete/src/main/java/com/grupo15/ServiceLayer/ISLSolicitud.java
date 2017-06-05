@@ -26,4 +26,6 @@ public abstract interface ISLSolicitud {
     public boolean actualizarEstado(int solicitud, String estado);
 
     public List<Object[]> getSolCercanas(String piont, int distancia, String fletero);
+    
+    public List<Object[]> getSugerenciasBySolicitud(int solicitud, String fletero);
 }

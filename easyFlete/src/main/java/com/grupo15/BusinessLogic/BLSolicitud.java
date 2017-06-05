@@ -116,4 +116,9 @@ public class BLSolicitud implements IBLSolicitud {
         return DLsol.getSolicitudesById(ids, fletero);
     }
 
+    @Override
+    public List<Object[]> getSugerenciasBySolicitud(int solicitud, String fletero) {
+        return DLsol.getSolicitudesById(DLMapa.getSugerencias(fletero, solicitud), fletero);
+    }
+
 }
