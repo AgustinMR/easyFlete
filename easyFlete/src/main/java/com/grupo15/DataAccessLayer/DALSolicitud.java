@@ -99,14 +99,6 @@ public class DALSolicitud implements ISolicitud {
     }
 
     @Override
-    public FleteroSolicitudCliente getSolicitudFletero(int id) {
-        EntityManager em = new EMHandler().entityManager();
-        FleteroSolicitudCliente S = em.find(FleteroSolicitudCliente.class, id);
-        em.close();
-        return S;
-    }
-
-    @Override
     public SolicitudCliente getSolicitudCli(int id) {
         EntityManager em = new EMHandler().entityManager();
         return em.find(SolicitudCliente.class, id);

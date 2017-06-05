@@ -242,9 +242,9 @@ public class DALMapa implements IMapa {
 
         ISolicitud sol = new DALSolicitud();
         List<Integer> returnList = new ArrayList<Integer>();
-        FleteroSolicitudCliente fleSol = sol.getSolicitudFletero(idSol);
+        SolicitudCliente solCliOri = sol.getSolicitudCli(idSol);
         
-        Document doc = collection.find(eq("solicitudId", fleSol.getSolicitudId())).first();
+        Document doc = collection.find(eq("solicitudId", idSol)).first();
         //System.out.println(doc.toJson());
         String[] tmp = doc.toJson().split("\\[");
         String[] tmp3 = tmp[2].split("\\]");
@@ -252,9 +252,9 @@ public class DALMapa implements IMapa {
         collection.find(Filters.near("origen", refPoint, 1500.0, 0.0)).forEach(printBlock2);
         for (int j = 0; j < listaSug.size(); j++) {
             SolicitudCliente solCli = sol.getSolicitudCli(Integer.parseInt(listaSug.get(j)));
-            if (Integer.parseInt(listaSug.get(j)) != fleSol.getSolicitudId() && solCli.getFecha().equals(fleSol.getSolicitud().getSolicitudCliente().getFecha())) {
-                String hora = fleSol.getSolicitud().getSolicitudCliente().getHora();
-                //System.out.println(hora);
+            if (Integer.parseInt(listaSug.get(j)) != idSol && solCli.getFecha().equals(solCliOri.getFecha())) {
+                String hora = solCliOri.getHora();
+                
                 String[] tmpHora = hora.split(":");
                 double trallecto = ((solCli.getSolicitud().getDistancia() * 60) / 30);
                 double horaFin = trallecto + 75;
@@ -267,7 +267,7 @@ public class DALMapa implements IMapa {
                     horasFin = horasFin + 1;
                 }
                 if (horasFin < 24) {
-                    //System.out.println("Hora inicio: " + hora + " Hora fin + 1H: " + horasFin + ":" + minsFin);
+                    //System.out.println("Hora inicio: " + hora + " Hora fin: " + horasFin + ":" + minsFin);
                     int horaNext = Integer.parseInt(solCli.getHora().split(":")[0]);
                     int minNext = Integer.parseInt(solCli.getHora().split(":")[1]);
                     if (minsFin < 40) {
