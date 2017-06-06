@@ -24,6 +24,42 @@
                 });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
+                $('.ui.search')
+                        .search({
+                            apiSettings: {
+                                url: 'http://localhost:10070/calles/calleNum/{query}',
+                                onResponse: function (data) {
+                                    var calle = {results: {}};
+                                    $.each(data, function (index, item) {
+                                        if (calle.results[index] === undefined) {
+                                            calle.results[index] = {results: [item]};
+                                        }
+                                        calle.results[index].results.push({
+                                            title: item
+                                        });
+                                    });
+                                    return calle;
+                                    /*var response = {results: {}};
+                                     $.each(data, function (index, item) {
+                                     alert(item);
+                                     var maxResults = 8;
+                                     if (index >= maxResults) {
+                                     return false;
+                                     }
+                                     if (response.results[index] === undefined) {
+                                     response.results[index] = {results: []};
+                                     }
+                                     response.results[index].results.push({
+                                     title: item
+                                     });
+                                     });
+                                     return response;*/
+                                }
+
+                            },
+                            minCharacters: 3
+                        })
+                        ;
             });
         </script>
         <p style="display:none" id="emailCliente" th:text="${usuario}"></p>
@@ -132,6 +168,13 @@
                                     <option value="" selected disabled>Busque una calle</option>
                                     <option value="Easy Flete" >Easy Flete</option>
                                 </select>
+                                <div class="ui search">
+                                    <div class="ui icon input">
+                                        <input class="prompt" placeholder="Buscar calle seguido del numero de puerta..." type="text">
+                                        <i class="search icon"></i>
+                                    </div>
+                                    <div class="results"></div>
+                                </div>
                             </div>
                             <script>
                                 var busquedaOld;
