@@ -258,7 +258,7 @@ public class DALSolicitud implements ISolicitud {
             EntityManager em = new EMHandler().entityManager();
             Solicitud sol = getSolicitud(ids.get(i));
             if (sol.getEstado().equals("Nuevo") && sol.getPeso() <= em.find(Fletero.class, fletero).getVehiculoCarga()) {
-                String query = "SELECT s.titulo, s.peso, s.descripcion, s.distancia, s.solicitudCliente.hora FROM Solicitud s WHERE s.id = :I";
+                String query = "SELECT s.id, s.titulo, s.descripcion, s.precioMax, s.distancia, function('to_char', s.solicitudCliente.fecha, 'DD/MM/YYYY'), s.solicitudCliente.hora, s.solicitudCliente.clienteEmail.nombre, s.solicitudCliente.clienteEmail.telefono FROM Solicitud s WHERE s.id = :I";
                 TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
                 sql.setParameter("I", ids.get(i));
                 Object[] a = sql.getSingleResult();
