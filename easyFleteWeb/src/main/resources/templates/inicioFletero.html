@@ -13,6 +13,7 @@
     <body>
         <script>
             $(document).ready(function () {
+                getAllSolicitudes();
                 $('.masthead').visibility({
                     once: false,
                     onBottomPassed: function () {
@@ -24,6 +25,12 @@
                 });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
+                $('.ui.sticky').sticky({
+                    offset: 0,
+                    bottomOffset: 0
+                });
+                $('.ui.dropdown').dropdown();
+                $('.ui.rating').rating();
             });
         </script>
         <div class="ui vertical inverted sidebar menu left w3-easyFlete-grey">
@@ -46,36 +53,38 @@
             <div class="w3-padding w3-padding-64 w3-card" style="background-color: #FBFBFB">
                 <h2 class="ui center aligned icon header"> <i class="marker icon w3-text-easyFlete-orange"></i><span class="w3-text-easyFlete-grey">Fletes pr&oacute;ximos</span> </h2>
             </div>
-            <div class="w3-padding w3-padding-48" style="min-height: 700px">
-                <div class="ui two column doubling stackable grid container">
-                    <div class="column">
-                        <div class="ui raised segment" id="fletesContext">
-                            <div class="ui sticky" style="left: 936.5px; height: 43px !important;">
-                                <div class="ui secondary pointing menu w3-padding w3-round" style="background-color: #FBFBFB">
-                                    <div class="ui icon input" style="width: 100%">
-                                        <input placeholder="Buscar por t&iacute;tulo" type="text" id="tituloFiltro">
-                                        <i class="search circular inverted link icon"></i>
+            <div class="row w3-padding-64" id="goyete">
+                <div class="ui grid stackable container">
+                    <div class="eight wide column w3-padding-64">
+                        <div class="ui segments">
+                            <div class="ui grey segment sticky w3-bottombar" style="background-color: #FBFBFB">
+                                <div class="ui secondary menu" >
+                                    <div class="ui icon input" style="width: 100%;">
+                                        <input id="tituloFiltro" placeholder="Buscar por t&iacute;tulo" type="text">
+                                        <i class="search circular inverted link icon" onclick="getAllSolicitudes();"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui active tab">
-                                <div class="ui divided items w3-padding-16" id="items">
+                            <div class="ui raised segment" id="fletesContext">
+                                <div class="ui active tab">
+                                    <div class="ui divided items w3-padding-16" id="items" style="min-height: 323px">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="column" id="mapa" style="margin-top: 15px">
-                        <div class="ui rail" style="width: 100%">
-                            <div class="ui sticky">
-                                <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange" id="tituloActual"></h4>
+                    <div class="eight wide column w3-padding-64">
+                        <div class="ui segments sticky" id="mapa">
+                            <div class="ui segment grey w3-bottombar">
+                                <h3 class="ui header w3-text-easyFlete-orange" id="tituloActual">s</h3>
                                 <span style="display: none" id="idActual"></span>
-                                <div class="w3-card-2" id="map" style="height: 480px; width: 100%"></div>
                             </div>
+                            <div id="map" class="w3-card" style="width: 100%; height: 420px"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ui inverted vertical footer segment w3-hide-small">
+            <div class="ui inverted vertical footer segment w3-hide-small w3-hide-medium">
                 <div class="ui container">
                     <div class="ui stackable inverted divided equal height stackable grid">
                         <div class="four wide right aligned column">
@@ -93,18 +102,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                getAllSolicitudes();
-                "use strict";
-                $('.ui.sticky').sticky({
-                    offset: 0,
-                    bottomOffset: 0
-                });
-                $('.ui.dropdown').dropdown();
-                $('.ui.rating').rating();
-                blurBackground();
-            });</script>
         <script>
             var raster = new ol.layer.Tile({source: new ol.source.OSM()});
             var source = new ol.source.Vector({wrapX: false});
@@ -124,21 +121,9 @@
             var vector_layerD;
 
             var geom = "";
-
-
-            $(document).ready(function () {
-                "use strict";
-                blurBackground();
-                $('#map').sticky({
-                    context: '#fletesContext',
-                    offset: 0,
-                    bottomOffset: 0
-
-                });
-            });
         </script> 
         <script>
-             function dibujarPunto() {
+            function dibujarPunto() {
                 $.get("http://localhost:10070/solicitudes/geo?id=" + document.getElementById("idActual").innerHTML, function (resultNum) {
                     //alert(resultNum);
                     var oriDes = resultNum.split("|");
