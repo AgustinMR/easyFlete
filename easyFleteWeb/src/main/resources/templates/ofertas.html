@@ -490,7 +490,7 @@
                     $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response) {
                         if (response === true) {
                             $.get("http://localhost:10070/solicitudes/sugerencias", "solicitud=" + id + "&fletero=" + fletero, function (response) {
-                                if (response !== undefined) {
+                                if (response !== null) {
                                     $.each(response, function (index, x) {
                                         var s = JSON.stringify(x);
                                         var solicitud = JSON.parse(s);
