@@ -487,16 +487,16 @@
                 var id = document.getElementById("idActual").innerHTML;
                 var fletero = document.getElementById("emailFletero").innerHTML;
                 if (id !== "" && fletero !== "" && document.getElementById("precioAceptar").innerHTML !== "") {
-                    $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response) {
-                        if (response === true) {
+                    $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response1) {
+                        if (response1 === true) {
                             $.get("http://localhost:10070/solicitudes/sugerencias", "solicitud=" + id + "&fletero=" + fletero, function (response) {
-                                if (response !== null) {
+                                    if (response.length !== 0) {
+                                    while (document.getElementById("sugerenciasList").firstChild) {
+                                        document.getElementById("sugerenciasList").removeChild(document.getElementById("sugerenciasList").firstChild);
+                                    }
                                     $.each(response, function (index, x) {
                                         var s = JSON.stringify(x);
                                         var solicitud = JSON.parse(s);
-                                        while (document.getElementById("sugerenciasList").firstChild) {
-                                            document.getElementById("sugerenciasList").removeChild(document.getElementById("sugerenciasList").firstChild);
-                                        }
                                         var segment = document.createElement("div");
                                         segment.className = "ui left aligned segment secondary w3-padding";
                                         var row1 = document.createElement("div");
@@ -530,6 +530,9 @@
                                     });
                                     mostrarMensajeExitoSugerencias();
                                 } else {
+                                    while (document.getElementById("sugerenciasList").firstChild) {
+                                        document.getElementById("sugerenciasList").removeChild(document.getElementById("sugerenciasList").firstChild);
+                                    }
                                     mostrarMensajeExito();
                                 }
                             });

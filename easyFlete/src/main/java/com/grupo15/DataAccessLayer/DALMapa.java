@@ -243,33 +243,33 @@ public class DALMapa implements IMapa {
         ISolicitud sol = new DALSolicitud();
         List<Integer> returnList = new ArrayList<Integer>();
         SolicitudCliente solCliOri = sol.getSolicitudCli(idSol);
-        
+
         Document doc = collection.find(eq("solicitudId", idSol)).first();
-        //System.out.println(doc.toJson());
         String[] tmp = doc.toJson().split("\\[");
         String[] tmp3 = tmp[2].split("\\]");
         Point refPoint = new Point(new Position(Double.parseDouble(tmp3[0].split(",")[0]), Double.parseDouble(tmp3[0].split(",")[1])));
         collection.find(Filters.near("origen", refPoint, 1500.0, 0.0)).forEach(printBlock2);
+        String hora = solCliOri.getHora();
+
+        String[] tmpHora = hora.split(":");
+        double trallecto = ((solCliOri.getSolicitud().getDistancia() * 60) / 30);
+        double horaFin = trallecto + 75;
+        double roundedTime = (double) Math.round(horaFin / 60 * 100) / 100;
+        int minsFin = Integer.parseInt(tmpHora[1]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[1]);
+        int horasFin = Integer.parseInt(tmpHora[0]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[0]);
+        if (minsFin > 60) {
+            minsFin = minsFin - 60;
+            horasFin = horasFin + 1;
+        }
+        
         for (int j = 0; j < listaSug.size(); j++) {
             SolicitudCliente solCli = sol.getSolicitudCli(Integer.parseInt(listaSug.get(j)));
             if (Integer.parseInt(listaSug.get(j)) != idSol && solCli.getFecha().equals(solCliOri.getFecha())) {
-                String hora = solCliOri.getHora();
-                
-                String[] tmpHora = hora.split(":");
-                double trallecto = ((solCli.getSolicitud().getDistancia() * 60) / 30);
-                double horaFin = trallecto + 75;
-                double roundedTime = (double) Math.round(horaFin / 60 * 100) / 100;
-                //System.out.println(String.valueOf(roundedTime));
-                int minsFin = Integer.parseInt(tmpHora[1]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[1]);
-                int horasFin = Integer.parseInt(tmpHora[0]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[0]);
-                if (minsFin > 60) {
-                    minsFin = minsFin - 60;
-                    horasFin = horasFin + 1;
-                }
                 if (horasFin < 24) {
                     //System.out.println("Hora inicio: " + hora + " Hora fin: " + horasFin + ":" + minsFin);
                     int horaNext = Integer.parseInt(solCli.getHora().split(":")[0]);
                     int minNext = Integer.parseInt(solCli.getHora().split(":")[1]);
+                    //System.out.println("Hora inicio2: " + horaNext + ":" + minNext);
                     if (minsFin < 40) {
                         if ((horasFin == horaNext && minsFin + 20 <= minNext) || (horasFin + 1 == horaNext && minNext <= minsFin)) {
                             returnList.add(Integer.parseInt(listaSug.get(j)));
