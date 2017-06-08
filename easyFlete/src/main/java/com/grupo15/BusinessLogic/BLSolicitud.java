@@ -4,7 +4,9 @@ import com.grupo15.DataAccessLayer.DALMapa;
 import com.grupo15.DataAccessLayer.ISolicitud;
 import com.grupo15.DataAccessLayer.DALSolicitud;
 import com.grupo15.DataAccessLayer.IMapa;
+import com.grupo15.ServiceLayer.MailHandler;
 import com.grupo15.easyflete.Cliente;
+import com.grupo15.easyflete.Fletero;
 import com.grupo15.easyflete.Solicitud;
 import com.grupo15.easyflete.SolicitudCliente;
 import java.util.Calendar;
@@ -43,7 +45,11 @@ public class BLSolicitud implements IBLSolicitud {
 
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli, hora);
             DLsol.addSolicitudCliente(solCli);
-            return new BLMapa().guardarSolicitud(s.getId(), origen, destino);
+            if(new BLMapa().guardarSolicitud(s.getId(), origen, destino)){
+                new MailHandler().SendSolicitudCreadaMail(cli, s, fecha, hora);
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -97,7 +103,16 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
-        return DLsol.aceptarSolicitud(solicitud, fletero, precio);
+        if(DLsol.aceptarSolicitud(solicitud, fletero, precio)){
+            BLUsuario u = new BLUsuario();
+            Fletero f = u.getFletero(fletero);
+            Solicitud s = getSolicitud(solicitud);
+            Cliente c = u.getClienteBySolicitud(solicitud);
+            new MailHandler().SendSolicitudAceptadaToFletero(f, s, c, precio);
+            new MailHandler().SendSolicitudAceptadaToCliente(f, s, c, precio);
+            return true;
+        }
+        return false;
     }
 
     @Override
