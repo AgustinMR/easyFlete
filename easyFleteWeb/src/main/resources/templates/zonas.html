@@ -15,15 +15,6 @@
     <body>
         <script>
             $(document).ready(function () {
-                $('.masthead').visibility({
-                    once: false,
-                    onBottomPassed: function () {
-                        $('.fixed.menu').transition('fade in');
-                    },
-                    onBottomPassedReverse: function () {
-                        $('.fixed.menu').transition('fade out');
-                    }
-                });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
                 $('.ui.dropdown').dropdown();
@@ -41,6 +32,31 @@
             </div>
         </div>
         <div class="pusher">
+            <div class="ui active dimmer" style="display: none" id="dimmer">
+                <div class="ui text loader big" id="loading" style="display: none">Por favor espere...</div>
+                <div class="w3-display-middle" id="exito" style="display: none">
+                    <h1 class="ui header text inverted">La Zona se ha creado correctamente!</h1>
+                    <button class="ui circular green huge icon button inverted" onclick="ocultarMensajes()"><i class="checkmark icon"></i></button>
+                </div>
+                <div class="w3-display-middle" id="exitoMod" style="display: none">
+                    <h1 class="ui header text inverted">Informaci&oacute;n actualizada correctamente!</h1>
+                    <button class="ui circular green huge icon button inverted" onclick="ocultarMensajes()"><i class="checkmark icon"></i></button>
+                </div>
+                <div class="w3-display-middle" id="exitoDel" style="display: none">
+                    <h1 class="ui header text inverted">Zona eliminada correctamente!</h1>
+                    <button class="ui circular green huge icon button inverted" onclick="ocultarMensajes()"><i class="checkmark icon"></i></button>
+                </div>
+                <div class="w3-display-middle" id="error" style="display: none">
+                    <h1 class="ui header text inverted">Ha ocurrido un error, por favor vuelve a intentar...</h1>
+                    <button class="ui circular orange huge icon button inverted" onclick="ocultarMensajes()"><i class="warning icon"></i></button>
+                </div>
+                <div class="w3-display-middle" id="warning" style="display: none">
+                    <h2 style="color: white" class="ui text header inverted">Se eliminar&aacute; la zona seleccionada...</h2>
+                    <h2 class="ui horizontal divider text header inverted w3-padding w3-margin-bottom">&iquest;Continuar?</h2>
+                    <button class="ui inverted button w3-center" onclick="ocultarMensajes()">Cancelar</button>
+                    <button class="ui inverted red button w3-center" onclick="eliminarZona()">Eliminar</button>
+                </div>
+            </div>
             <div class="ui inverted vertical masterhead mhead center aligned segment w3-easyFlete-grey w3-bottombar" id="backgr" style="background-image: url(img/ub1610v2.jpg); background-repeat: no-repeat; background-position: bottom">
                 <div class="ui container">
                     <div class="ui large secondary pointing menu w3-border-0">
@@ -67,7 +83,7 @@
                                     <option value="" disabled>Seleccione una zona de trabajo</option>
                                 </select>
                                 <div class="ui icon buttons w3-margin-left">
-                                    <button class="ui button" onclick="eliminarZona()"><i class="trash red icon"></i></button>
+                                    <button class="ui button" onclick="mostrarMensajeWarning()"><i class="trash red icon"></i></button>
                                     <button class="ui button" onclick="modificarZona()"><i class="save green icon"></i></button>
                                     <button class="ui button" onclick="agregar()"><i class="add blue icon"></i></button>
                                 </div>
@@ -283,13 +299,13 @@
                             source.clear();
                             geom = "";
                             cargarC();
-                            alert("Zona ingresada con exito");
+                            mostrarMensajeExito();
                         } else {
-                            alert("Error al ingresar la zona");
+                            mostrarMensajeError();
                         }
                     });
                 } else {
-                    alert("Faltan datos");
+                    mostrarMensajeError();
                 }
             }
 
@@ -312,14 +328,14 @@
                                 map.removeInteraction(modifyInteraction2);
                                 map.removeLayer(vector_layer);
                                 cargarC();
-                                alert("Zona modificada con exito");
+                                mostrarMensajeExitoMod();
                             } else {
-                                alert("Error al modificar la zona");
+                                mostrarMensajeError();
                             }
                         }
                     });
                 } else {
-                    alert("Faltan datos");
+                    mostrarMensajeError();
                 }
             }
 
@@ -338,15 +354,82 @@
                                 map.removeInteraction(modifyInteraction2);
                                 map.removeLayer(vector_layer);
                                 cargarC();
-                                alert("Zona eliminada con exito");
+                                mostrarMensajeExitoMod();
                             } else {
-                                alert("Error al eliminar la zona");
+                                mostrarMensajeError();
                             }
                         }
                     });
                 } else {
                     alert("Debe seleccionar una zona");
                 }
+            }
+            function mostrarMensajeExito() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "block";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "none";
+                document.getElementById("exitoDel").style.display = "none";
+
+            }
+
+            function mostrarMensajeError() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "block";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "none";
+                ocument.getElementById("exitoDel").style.display = "none";
+            }
+
+            function mostrarMensajeWarning() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "block";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "none";
+                ocument.getElementById("exitoDel").style.display = "none";
+            }
+
+            function mostrarMensajeLoading() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "block";
+                document.getElementById("exitoMod").style.display = "none";
+                ocument.getElementById("exitoDel").style.display = "none";
+            }
+            function mostrarMensajeExitoMod() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "block";
+                ocument.getElementById("exitoDel").style.display = "none";
+            }
+            function mostrarMensajeExitoDel() {
+                document.getElementById("dimmer").style.display = "block";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "none";
+                ocument.getElementById("exitoDel").style.display = "block";
+            }
+            function ocultarMensajes() {
+                document.getElementById("dimmer").style.display = "none";
+                document.getElementById("exito").style.display = "none";
+                document.getElementById("error").style.display = "none";
+                document.getElementById("warning").style.display = "none";
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("exitoMod").style.display = "none";
+                ocument.getElementById("exitoDel").style.display = "none";
             }
         </script>
     </body>

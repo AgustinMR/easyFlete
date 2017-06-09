@@ -13,15 +13,6 @@
     <body>
         <script>
             $(document).ready(function () {
-                $('.masthead').visibility({
-                    once: false,
-                    onBottomPassed: function () {
-                        $('.fixed.menu').transition('fade in');
-                    },
-                    onBottomPassedReverse: function () {
-                        $('.fixed.menu').transition('fade out');
-                    }
-                });
                 $('.ui.sidebar').sidebar('attach events', '.toc.item');
                 $('.ui.embed').embed();
             });
@@ -139,7 +130,7 @@
                         var select = document.createElement("select");
                         select.className = "ui dropdown w3-right";
                         select.id = "estado" + solicitud[0];
-                        select.addEventListener("change", function(){
+                        select.addEventListener("change", function () {
                             actualizarEstado(solicitud[0], document.getElementById("estado" + solicitud[0]).value);
                         });
                         var option1 = document.createElement("option");
