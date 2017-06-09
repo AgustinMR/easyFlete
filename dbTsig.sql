@@ -1,6 +1,6 @@
 CREATE TABLE USUARIOS (
   nombre varchar(30) NOT NULL,
-  username varchar(30) NOT NULL,
+  username varchar(50) NOT NULL,
   password varchar(30) NULL,
   enabled smallint NOT NULL DEFAULT 1,
   telefono varchar(20) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE USUARIOS (
 CREATE SEQUENCE ROLES_ID_SEC;
 CREATE TABLE ROLES (
   id integer NOT NULL DEFAULT nextval('ROLES_ID_SEC'),
-  username varchar(30) NOT NULL,
+  username varchar(50) NOT NULL,
   role varchar(45) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (username) REFERENCES USUARIOS (username)
@@ -38,7 +38,7 @@ CREATE TABLE SOLICITUDES (
 ALTER SEQUENCE SOLICITUDES_ID_SEC OWNED BY SOLICITUDES.id;
 
 CREATE TABLE SOLICITUDES_CLIENTES (
-  cliente_email varchar(30) NOT NULL,
+  cliente_email varchar(50) NOT NULL,
   solicitud_id int NOT NULL,
   fecha date NOT NULL,
   hora varchar(10) NULL,
@@ -49,7 +49,7 @@ CREATE TABLE SOLICITUDES_CLIENTES (
 
 CREATE TABLE FLETEROS_SOLICITUDES_CLIENTES (
   solicitud_id int NOT NULL,
-  fletero_email varchar(30) NOT NULL,
+  fletero_email varchar(50) NOT NULL,
   PRIMARY KEY (solicitud_id),
   FOREIGN KEY (fletero_email) REFERENCES USUARIOS (username),
   FOREIGN KEY (solicitud_id) REFERENCES SOLICITUDES (id)
@@ -65,7 +65,7 @@ CREATE TABLE ZONAS (
 ALTER SEQUENCE ZONAS_ID_SEQ OWNED BY ZONAS.id;
 
 CREATE TABLE ZONAS_FLETEROS (
-  fletero_email varchar(30) NOT NULL,
+  fletero_email varchar(50) NOT NULL,
   zona_id int NOT NULL,
   PRIMARY KEY (zona_id),
   FOREIGN KEY (fletero_email) REFERENCES USUARIOS(username),
