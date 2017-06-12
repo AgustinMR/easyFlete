@@ -68,7 +68,7 @@ public class MailHandler {
         String fecha = (Calendar.getInstance().get(Calendar.YEAR) + "/" + Calendar.getInstance().get(Calendar.MONTH) + "/" + Calendar.getInstance().get(Calendar.DATE));
         String hora = (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE));
         String texto = "Estimado " + c.getNombre() + ",<br>"
-                + "Le informamos que su solicitud: <strong>" + s + "</strong> ha sido aceptada por un fletero.<br>"
+                + "Le informamos que su solicitud: <strong>" + s.getTitulo() + "</strong> ha sido aceptada por un fletero.<br>"
                 + "<hr><br><br>"
                 + "<strong>Detalles del Fletero:</strong><br>"
                 + "Nombre: " + f.getNombre() + "<br>"
@@ -93,7 +93,7 @@ public class MailHandler {
         String fecha = (Calendar.getInstance().get(Calendar.YEAR) + "/" + Calendar.getInstance().get(Calendar.MONTH) + "/" + Calendar.getInstance().get(Calendar.DATE));
         String hora = (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE));
         String texto = "Estimado " + f.getNombre() + ",<br>"
-                + "Le informamos que has aceptado la solicitud: <strong>" + s + "</strong><br>"
+                + "Le informamos que has aceptado la solicitud: <strong>" + s.getTitulo() + "</strong><br>"
                 + "<hr><br><br>"
                 + "<strong>Detalles del Cliente:</strong><br>"
                 + "Nombre: " + c.getNombre() + "<br>"
