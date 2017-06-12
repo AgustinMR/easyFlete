@@ -188,11 +188,11 @@ public class DALMapa implements IMapa {
             if (o && d) {
                 Solicitud sol = dalSol.getSolicitud(solId);
                 if (precio != 0) {
-                    if (precio > z.get(i).getPrecio() * sol.getDistancia()) {
+                    if (precio > (z.get(i).getPrecio() * sol.getDistancia())) {
                         precio = z.get(i).getPrecio() * sol.getDistancia();
                     }
                 } else {
-                    precio = z.get(i).getPrecio() * sol.getDistancia();
+                    precio = (z.get(i).getPrecio() * sol.getDistancia());
                 }
             } else {
                 o = false;
