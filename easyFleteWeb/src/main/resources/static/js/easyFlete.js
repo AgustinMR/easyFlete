@@ -5,8 +5,11 @@ function iniciarSesion() {
 }
 
 function registrar() {
-    if (document.getElementById("radio").checked === true) {
-        $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (exito) {
+    if(document.getElementById("pass").value === "" || document.getElementById("email").value === "" || document.getElementById("nombre").value === "" || document.getElementById("telefono").value === ""){
+        $('#error').modal('show');
+    }
+    else if (document.getElementById("radio").checked === true) {
+        $.post("http://localhost:10pombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (exito) {
             if (exito === true) {
                 $('#exito').modal({
                     onHidden: function () {
@@ -20,7 +23,7 @@ function registrar() {
                 $('#error').modal('show');
             }
         });
-    } else {
+        } else {
         $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
             if (exito === true) {
                 $('#exito').modal({
@@ -35,6 +38,7 @@ function registrar() {
                 $('#error').modal('show');
             }
         });
+   
     }
 }
 
