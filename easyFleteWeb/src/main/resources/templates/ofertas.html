@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="w3-padding w3-padding-48">
-                <div class="ui active dimmer" style="display: none" id="dimmer">
+                <div class="ui active page dimmer" style="display: none" id="dimmer">
                     <div class="ui text loader" id="loading" style="display: none">Por favor espere...</div>
                     <div class="w3-display-topmiddle ui text container" id="exitoSugerencia" style="display: none; margin-top: 150px">
                         <h1 class="ui text header horizontal divider inverted">La Solicitud ha sido aceptada!</h1>
@@ -87,19 +87,17 @@
                         </div>
                     </div>
                     <div class="w3-display-middle" id="exito" style="display: none">
-                        <img src="img/success.svg" style="height: 45px"><br>
-                        <h4 style="color: white">La Solicitud ha sido aceptada con exito!</h4>
-                        <button class="ui secondary button green w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                        <h1 class="ui header text inverted">Solicitud aceptada correctamente!</h1>
+                        <button class="ui circular green huge icon button inverted" onclick="ocultarMensajes()"><i class="checkmark icon"></i></button>
                     </div>
                     <div class="w3-display-middle" id="error" style="display: none">
-                        <img src="img/error.svg" style="height: 45px"><br>
-                        <h4 style="color: white">Ha ocurrido un error, y no se podido aceptar la solicitud.<br>Por favor vuelve a intentar</h4>
-                        <button class="ui secondary button green w3-center" onclick="ocultarMensajes()">Aceptar</button>
+                        <h1 class="ui header text inverted">No estas en condiciones de aceptar la solicitud.</h1>
+                        <button class="ui circular orange huge icon button inverted" onclick="ocultarMensajes()"><i class="warning icon"></i></button>
                     </div>
                     <div class="w3-display-middle" id="warning" style="display: none">
-                        <img src="img/warning.svg" style="height: 45px"><br>
-                        <h4 style="color: white" id="precioAceptar"></h4>
-                        <button class="ui inverted red button w3-center" onclick="ocultarMensajes()">Salir</button>
+                        <h1 class="ui header text " style="color: white" id="precioAceptar"></h1>
+                        <h2 class="ui horizontal divider text header inverted w3-padding w3-margin-bottom">&iquest;Continuar?</h2>
+                        <button class="ui inverted button w3-center" onclick="ocultarMensajes()">Salir</button>
                         <button class="ui inverted green button w3-center" onclick="aceptarSolicitud()">Confirmar</button>
                     </div>
                 </div>
@@ -265,6 +263,16 @@
                         content.appendChild(div3);
                         item.appendChild(content);
                         document.getElementById("items").appendChild(item);
+                    });
+                    $('#mapa').sticky({
+                        context: '#fletesContext',
+                        offset: 0,
+                        bottomOffset: 0
+
+                    });
+                    $('.ui.sticky').sticky({
+                        offset: 0,
+                        bottomOffset: 0
                     });
                 });
             }, this);
@@ -465,6 +473,16 @@
                         item.appendChild(content);
                         document.getElementById("items").appendChild(item);
                     });
+                    $('#mapa').sticky({
+                        context: '#fletesContext',
+                        offset: 0,
+                        bottomOffset: 0
+
+                    });
+                    $('.ui.sticky').sticky({
+                        offset: 0,
+                        bottomOffset: 0
+                    });
                 });
             }
             function verificarPrecio() {
@@ -476,7 +494,7 @@
                             mostrarMensajeError();
                         } else {
                             document.getElementById("precioActual").innerHTML = response;
-                            document.getElementById("precioAceptar").innerHTML = "Se le cobrar&aacute;n $" + response + " al cliente. Deseas aceptar la solicitud?";
+                            document.getElementById("precioAceptar").innerHTML = "Se le cobrar&aacute;n $" + response + " al cliente";
                             mostrarMensajeWarning();
                         }
                     });
@@ -490,7 +508,7 @@
                     $.post("http://localhost:10070/solicitudes/aceptar", "solicitud=" + id + "&fletero=" + fletero + "&precio=" + document.getElementById("precioActual").innerHTML, function (response1) {
                         if (response1 === true) {
                             $.get("http://localhost:10070/solicitudes/sugerencias", "solicitud=" + id + "&fletero=" + fletero, function (response) {
-                                    if (response.length !== 0) {
+                                if (response.length !== 0) {
                                     while (document.getElementById("sugerenciasList").firstChild) {
                                         document.getElementById("sugerenciasList").removeChild(document.getElementById("sugerenciasList").firstChild);
                                     }
