@@ -20,8 +20,12 @@ public class BLUsuario implements IBLUsuario {
     public boolean addFletero(String nombre, String password, String email, String telefono, String vehiculoNombre, int vehiculoCarga) {
         Fletero f = new Fletero(nombre, email, password, telefono, vehiculoNombre, vehiculoCarga);
         if (DLusu.addUsuario(f)) {
-            if(DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)))){
-                new MailHandler().SendUsuarioRegistradoMail(f);
+            if (DLusu.addRol(new Rol("FLETERO", DLusu.getFletero(email)))) {
+                try {
+                    new MailHandler().SendUsuarioRegistradoMail(f);
+                } catch (Exception e) {
+                    System.out.println("Error al enviar email");
+                }
                 return true;
             }
             return false;
@@ -39,8 +43,12 @@ public class BLUsuario implements IBLUsuario {
                 c = new Cliente(email, nombre, telefono, password);
             }
             if (DLusu.addUsuario(c)) {
-                if(DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)))){
-                    new MailHandler().SendUsuarioRegistradoMail(c);
+                if (DLusu.addRol(new Rol("CLIENTE", DLusu.getCliente(email)))) {
+                    try {
+                        new MailHandler().SendUsuarioRegistradoMail(c);
+                    } catch (Exception e) {
+                        System.out.println("Error al enviar email");
+                    }
                     return true;
                 }
                 return false;
