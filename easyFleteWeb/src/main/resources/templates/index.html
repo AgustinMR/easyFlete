@@ -65,7 +65,7 @@
                 <div class="ui text container">
                     <h1 class="ui inverted header"> </h1>
                     <h2 class="w3-text-easyFlete-grey">Lugar de encuentro para clientes y fleteros.</h2>
-                    <div class="ui huge grey button w3-margin-top">Ver Demo <i class="right arrow icon"></i></div>
+                    <div class="ui huge grey button w3-margin-top" onclick="goToDemo()">Ver Demo <i class="right arrow icon"></i></div>
                 </div>
             </div>
             <div style="background-color: #FBFBFB">
@@ -207,7 +207,7 @@
                     <div class="ui raised grey segment" id="map" style="height: 500px; width: 100%; padding: 0px"></div>
                 </div>
             </div>
-            <div class="w3-padding-48 w3-card" style="background-color: #FBFBFB">
+            <div class="w3-padding-48 w3-card" id="demo" style="background-color: #FBFBFB">
                 <div class="w3-content w3-padding-48 w3-margin-bottom">
                     <h2 class="w3-center w3-margin-bottom ui horizontal divider header w3-padding w3-padding-24 w3-text-easyFlete-orange">Demo</h2>
                     <h4 class="w3-center ui header">Mir&aacute; la demo para conocer a&uacute;n mas sobre easyFlete</h4>
@@ -255,7 +255,6 @@
 
             var latlonOri = "";
             var latlonDes = "";
-
 
             $(document).ready(function () {
                 "use strict";
@@ -347,6 +346,9 @@
                         }));
                     });
                 }
+            }
+            function goToDemo(){
+                location.href = "#demo";
             }
             function mostrarStep1() {
                 document.getElementById("step1").style.display = "block";
