@@ -347,7 +347,7 @@
                     });
                 }
             }
-            function goToDemo(){
+            function goToDemo() {
                 location.href = "#demo";
             }
             function mostrarStep1() {
@@ -438,11 +438,25 @@
                         var xy2 = latlonDes.split(",");
                         var length = wgs84Sphere.haversineDistance([Number(xy[0]), Number(xy[1])], [Number(xy2[0]), Number(xy2[1])]);
                         var dist = (Math.round(length / 1000 * 100) / 100);
-
                         var postInfo = "origen=" + latlonOri + "&destino=" + latlonDes + "&titulo=" + titulo + "&peso=" + peso + "&hora=" + hora + "&descripcion=" + descripcion + "&fecha=" + fecha + "&precioMax=" + precioMax + "&email=" + email + "&distancia=" + dist;
                         $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
                             if (result === true) {
                                 mostrarMensajeExito();
+                                document.getElementById("titulo").value = "";
+                                document.getElementById("hora").value = "";
+                                document.getElementById("peso").value = "";
+                                document.getElementById("descripcion").value = "";
+                                document.getElementById("fecha").value = "";
+                                document.getElementById("precioMax").value = "";
+                                document.getElementById("email").value = "";
+                                document.getElementById("nombre").value = "";
+                                document.getElementById("telefono").value = "";
+                                latlonOri = "";
+                                latlonDes = "";
+                                map.removeLayer(vector_layerO);
+                                map.removeLayer(vector_layerD);
+                                document.getElementById("origenVapai").value = "";
+                                document.getElementById("destinoVapai").value = "";
                             } else {
                                 mostrarMensajeError();
                             }

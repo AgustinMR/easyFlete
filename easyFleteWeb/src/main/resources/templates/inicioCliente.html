@@ -384,6 +384,18 @@
                     $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
                         if (result === true) {
                             mostrarMensajeExito();
+                            document.getElementById("titulo").value = "";
+                            document.getElementById("hora").value = "";
+                            document.getElementById("peso").value = "";
+                            document.getElementById("descripcion").value = "";
+                            document.getElementById("fecha").value = "";
+                            document.getElementById("precioMax").value = "";
+                            latlonOri = "";
+                            latlonDes = "";
+                            map.removeLayer(vector_layerO);
+                            map.removeLayer(vector_layerD);
+                            document.getElementById("origenVapai").value = "";
+                            document.getElementById("destinoVapai").value = "";
                         } else {
                             mostrarMensajeError();
                         }
