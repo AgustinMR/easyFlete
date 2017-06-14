@@ -1,4 +1,4 @@
-function iniciarSesion() {
+function iniciarSesion() { 
     $.post("http://localhost:10070/autenticar", "email=" + document.getElementById("email").value + "&pass=" + document.getElementById("pass").value, function (result) {
         alert(result);
     });
@@ -9,11 +9,12 @@ function registrar() {
         $('#error').modal('show');
     }
     else if (document.getElementById("radio").checked === true) {
-        $.post("http://localhost:10pombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value, function (exito) {
+        var hash = md5(document.getElementById("pass").value);
+        $.post("http://localhost:10070/clientes","nombre="+ document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value, function (exito) {
             if (exito === true) {
                 $('#exito').modal({
                     onHidden: function () {
-                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + document.getElementById("pass").value, function () {
+                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
                             window.location = "/inicio";
                         });
                     }
@@ -24,11 +25,12 @@ function registrar() {
             }
         });
         } else {
-        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + document.getElementById("pass").value + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
+        var hash = md5(document.getElementById("pass").value);
+        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
             if (exito === true) {
                 $('#exito').modal({
                     onHidden: function () {
-                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + document.getElementById("pass").value, function () {
+                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
                             window.location = "/inicio";
                         });
                     }
