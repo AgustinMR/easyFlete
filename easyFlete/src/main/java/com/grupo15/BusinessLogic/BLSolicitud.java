@@ -45,8 +45,12 @@ public class BLSolicitud implements IBLSolicitud {
 
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli, hora);
             DLsol.addSolicitudCliente(solCli);
-            if(new BLMapa().guardarSolicitud(s.getId(), origen, destino)){
-                new MailHandler().SendSolicitudCreadaMail(cli, s, fecha, hora);
+            if (new BLMapa().guardarSolicitud(s.getId(), origen, destino)) {
+                try {
+                    new MailHandler().SendSolicitudCreadaMail(cli, s, fecha, hora);
+                } catch (Exception e) {
+                    System.out.println("Error al enviar email");
+                }
                 return true;
             }
             return false;
@@ -103,13 +107,21 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
-        if(DLsol.aceptarSolicitud(solicitud, fletero, precio)){
+        if (DLsol.aceptarSolicitud(solicitud, fletero, precio)) {
             BLUsuario u = new BLUsuario();
             Fletero f = u.getFletero(fletero);
             Solicitud s = getSolicitud(solicitud);
             Cliente c = u.getClienteBySolicitud(solicitud);
-            new MailHandler().SendSolicitudAceptadaToFletero(f, s, c, precio);
-            new MailHandler().SendSolicitudAceptadaToCliente(f, s, c, precio);
+            try {
+                new MailHandler().SendSolicitudAceptadaToFletero(f, s, c, precio);
+            } catch (Exception e) {
+                System.out.println("Error al enviar email");
+            }
+            try {
+                new MailHandler().SendSolicitudAceptadaToCliente(f, s, c, precio);
+            } catch (Exception e) {
+                System.out.println("Error al enviar email");
+            }
             return true;
         }
         return false;
@@ -124,9 +136,9 @@ public class BLSolicitud implements IBLSolicitud {
     public boolean actualizarEstado(int solicitud, String estado) {
         return DLsol.actualizarEstado(solicitud, estado);
     }
-    
+
     @Override
-    public List<Object[]> getSolCercanas(String point, int distancia ,String fletero) {
+    public List<Object[]> getSolCercanas(String point, int distancia, String fletero) {
         List<Integer> ids = DLMapa.getSolCercanas(point, distancia);
         return DLsol.getSolicitudesById(ids, fletero);
     }

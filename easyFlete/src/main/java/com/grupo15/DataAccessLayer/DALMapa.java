@@ -252,7 +252,7 @@ public class DALMapa implements IMapa {
         String hora = solCliOri.getHora();
 
         String[] tmpHora = hora.split(":");
-        double trallecto = ((solCliOri.getSolicitud().getDistancia() * 60) / 30);
+        double trallecto = ((new DALSolicitud().getSolicitud(idSol).getDistancia() * 60) / 30);
         double horaFin = trallecto + 75;
         double roundedTime = (double) Math.round(horaFin / 60 * 100) / 100;
         int minsFin = Integer.parseInt(tmpHora[1]) + Integer.parseInt(String.valueOf(roundedTime).split("\\.")[1]);
