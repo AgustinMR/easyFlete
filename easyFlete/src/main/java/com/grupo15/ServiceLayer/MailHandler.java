@@ -38,7 +38,7 @@ public class MailHandler {
             t.sendMessage(mail, mail.getAllRecipients());
             t.close();
         } catch (AddressException ex) {
-            Logger.getLogger(MailHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al enviar email");
         }
     }
 
@@ -60,7 +60,7 @@ public class MailHandler {
         try {
             SendEmail(c.getUsername(), "Solicitud Creada | easyFlete", texto);
         } catch (MessagingException ex) {
-            Logger.getLogger(MailHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al enviar email");
         }
     }
 
@@ -85,7 +85,7 @@ public class MailHandler {
         try {
             SendEmail(c.getUsername(), "Solicitud Aceptada | easyFlete", texto);
         } catch (MessagingException ex) {
-            Logger.getLogger(MailHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al enviar email");
         }
     }
 
@@ -110,7 +110,7 @@ public class MailHandler {
         try {
             SendEmail(c.getUsername(), "Solicitud Aceptada | easyFlete", texto);
         } catch (MessagingException ex) {
-            Logger.getLogger(MailHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al enviar email");
         }
     }
 
@@ -130,7 +130,7 @@ public class MailHandler {
         try {
             SendEmail(c.getUsername(), "Registro completado | easyFlete", texto);
         } catch (MessagingException ex) {
-            Logger.getLogger(MailHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al enviar email");
         }
     }
 

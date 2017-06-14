@@ -104,16 +104,8 @@ public class BLSolicitud implements IBLSolicitud {
             Fletero f = u.getFletero(fletero);
             Solicitud s = getSolicitud(solicitud);
             Cliente c = u.getClienteBySolicitud(solicitud);
-            try {
-                new MailHandler().SendSolicitudAceptadaToFletero(f, s, c, precio);
-            } catch (Exception e) {
-                System.out.println("Error al enviar email");
-            }
-            try {
-                new MailHandler().SendSolicitudAceptadaToCliente(f, s, c, precio);
-            } catch (Exception e) {
-                System.out.println("Error al enviar email");
-            }
+            new MailHandler().SendSolicitudAceptadaToFletero(f, s, c, precio);
+            new MailHandler().SendSolicitudAceptadaToCliente(f, s, c, precio);
             return true;
         }
         return false;
