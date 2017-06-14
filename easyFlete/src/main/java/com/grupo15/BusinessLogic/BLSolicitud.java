@@ -45,15 +45,7 @@ public class BLSolicitud implements IBLSolicitud {
 
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli, hora);
             DLsol.addSolicitudCliente(solCli);
-            if (new BLMapa().guardarSolicitud(s.getId(), origen, destino)) {
-                try {
-                    new MailHandler().SendSolicitudCreadaMail(cli, s, fecha, hora);
-                } catch (Exception e) {
-                    System.out.println("Error al enviar email");
-                }
-                return true;
-            }
-            return false;
+            return new BLMapa().guardarSolicitud(s.getId(), origen, destino);
         }
         return false;
     }

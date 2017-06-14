@@ -184,13 +184,14 @@ public class DALSolicitud implements ISolicitud {
         EntityManager em = new EMHandler().entityManager();
         TypedQuery<Object[]> sql = em.createQuery(query, Object[].class);
         sql.setParameter("p", em.find(Fletero.class, fletero).getVehiculoCarga());
+
         if (fechaDesde != null && !fechaDesde.isEmpty()) {
             Fecha f1 = new Fecha(fechaDesde);
-            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), f1.getMes(), f1.getDia()).getTime(), TemporalType.DATE);
+            sql.setParameter("desde", new GregorianCalendar(f1.getAnio(), (f1.getMes() -1), f1.getDia()).getTime(), TemporalType.DATE);
         }
         if (fechaHasta != null && !fechaHasta.isEmpty()) {
             Fecha f2 = new Fecha(fechaHasta);
-            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), f2.getMes(), f2.getDia()).getTime(), TemporalType.DATE);
+            sql.setParameter("hasta", new GregorianCalendar(f2.getAnio(), (f2.getMes() -1), f2.getDia()).getTime(), TemporalType.DATE);
         }
         if (titulo != null && !titulo.isEmpty()) {
             sql.setParameter("titulo", "%" + titulo + "%");
