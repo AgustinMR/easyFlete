@@ -64,11 +64,11 @@
                     <div class="ui fluid secondary menu w3-padding w3-round w3-easyFlete-grey">
                         <div class="ui icon input">
                             <input placeholder="Ofertas desde..." type="text" id="fechaDesde">
-                            <i class="search icon"></i>
+                            <i onclick="getAllSolicitudes();" class="search inverted link icon"></i>
                         </div>
                         <div class="ui icon input w3-margin-left">
                             <input placeholder="Ofertas hasta..." type="text" id="fechaHasta">
-                            <i class="search icon"></i>
+                            <i onclick="getAllSolicitudes();" class="search inverted link icon"></i>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                         <button class="circular inverted green ui icon button huge w3-margin-top" onclick="ocultarMensajes()"><i class="icon checkmark"></i></button>
                         <div class="ui segment" style="margin-top: 50px">
                             <h2 class="ui text header horizontal divider inverted w3-text-easyFlete-orange w3-padding">Sugerencias de trabajo</h2>
-                            <h3 class="ui text w3-margin-left header">Fletes del dia <span class="w3-text-easyFlete-orange">7/8/2016</span> cercanos al destino de la solicitud aceptada:</h3>
+                            <h3 class="ui text w3-margin-left header">Fletes del dia <span id="spanSpan" class="w3-text-easyFlete-orange"></span> cercanos al destino de la solicitud aceptada:</h3>
                             <div class="ui raised segments w3-margin-top" id="sugerenciasList"></div>
                         </div>
                     </div>
@@ -514,6 +514,7 @@
                                     $.each(response, function (index, x) {
                                         var s = JSON.stringify(x);
                                         var solicitud = JSON.parse(s);
+                                        document.getElementById("spanSpan").innerHTML = solicitud[5];
                                         var segment = document.createElement("div");
                                         segment.className = "ui left aligned segment secondary w3-padding";
                                         var row1 = document.createElement("div");
