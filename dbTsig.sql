@@ -1,7 +1,7 @@
 CREATE TABLE USUARIOS (
   nombre varchar(30) NOT NULL,
   username varchar(50) NOT NULL,
-  password varchar(30) NULL,
+  password varchar(32) NULL,
   enabled smallint NOT NULL DEFAULT 1,
   telefono varchar(20) NOT NULL,
   vehiculo_nombre varchar(40) NULL,
