@@ -84,7 +84,7 @@
                 <div class="eight wide column">
                     <div class="ui segments">
                         <div class="ui mini three steps segment" style="padding: 0px">
-                            <div class="active link step" onClick="mostrarStep1()" id="s1"> 
+                            <div class="active link step" onClick="mostrarStep1()" id="s1">
                                 <i class="info icon w3-text-easyFlete-orange"></i>
                                 <div class="content">
                                     <div class="title">Datos del Flete</div>
@@ -153,7 +153,7 @@
                                     <div class="results"></div>
                                 </div>
                             </div>
-                            <div id="step4" class="w3-padding-16" style="display: none"> 
+                            <div id="step4" class="w3-padding-16" style="display: none">
                                 <h4 class="ui horizontal divider header w3-padding w3-text-easyFlete-orange">Confirmar Solicitud</h4>
                                 <h5 class="ui header text w3-padding centered">Al crear el Flete, tu Solicitud podr&aacute; ser vista y aceptada por fleteros.<br>Te enviaremos un correo cuando esto suceda!</h5>
                                 <div class="w3-padding w3-padding-16 w3-center">
@@ -303,7 +303,6 @@
                 document.getElementById("error").style.display = "none";
                 document.getElementById("warning").style.display = "none";
                 document.getElementById("loading").style.display = "none";
-
             }
 
             function mostrarMensajeError() {
@@ -375,7 +374,6 @@
                     mostrarMensajeLoading();
                     if (peso === "")
                         peso = "0";
-                    
                     var wgs84Sphere = new ol.Sphere(6378137);
                     var xy = latlonOri.split(",");
                     var xy2 = latlonDes.split(",");
@@ -386,6 +384,18 @@
                     $.post("http://localhost:10070/solicitudes", postInfo, function (result) {
                         if (result === true) {
                             mostrarMensajeExito();
+                            document.getElementById("titulo").value = "";
+                            document.getElementById("hora").value = "";
+                            document.getElementById("peso").value = "";
+                            document.getElementById("descripcion").value = "";
+                            document.getElementById("fecha").value = "";
+                            document.getElementById("precioMax").value = "";
+                            latlonOri = "";
+                            latlonDes = "";
+                            map.removeLayer(vector_layerO);
+                            map.removeLayer(vector_layerD);
+                            document.getElementById("origenVapai").value = "";
+                            document.getElementById("destinoVapai").value = "";
                         } else {
                             mostrarMensajeError();
                         }
