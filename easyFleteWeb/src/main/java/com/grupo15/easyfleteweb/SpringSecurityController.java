@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -67,7 +68,9 @@ public class SpringSecurityController extends WebSecurityConfigurerAdapter {
     public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("SELECT username, password, enabled FROM USUARIOS WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, role from ROLES where username=?");
-    }
+                .authoritiesByUsernameQuery("SELECT username, role from ROLES where username=?")
+                //.passwordEncoder(new PasswordEncoder)
+    
+    ;}
 
 }
