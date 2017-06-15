@@ -12,6 +12,9 @@
         <script src="js/md5.min.js" type="text/javascript"></script>
     </head>
     <body>
+        <div class="ui active page dimmer" style="display: none" id="dimmer">
+            <div class="ui text loader big" id="loading" style="display: none">Por favor espere...</div>
+        </div>
         <div class="bgimg-5" id="backgr"></div>
         <div class="w3-content w3-display-topmiddle">
             <div class="w3-panel w3-center" style="width: 500px; min-width: 300px">
@@ -109,6 +112,57 @@
                     document.getElementById('cargaVehiculo3').style.display = "block";
                 }
             }
+            function mostrarMensaje() {
+                document.getElementById("dimmer").style.display = "block";
+
+                document.getElementById("loading").style.display = "block";
+            }
+            function ocultarMensaje() {
+                document.getElementById("dimmer").style.display = "none";
+
+                document.getElementById("loading").style.display = "none";
+            }
+            function registrar() {
+                mostrarMensaje();
+                if (document.getElementById("pass").value === "" || document.getElementById("email").value === "" || document.getElementById("nombre").value === "" || document.getElementById("telefono").value === "") {
+                    $('#error').modal('show');
+                } else if (document.getElementById("radio").checked === true) {
+                    var hash = md5(document.getElementById("pass").value);
+                    $.post("http://localhost:10070/clientes", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value, function (exito) {
+                        if (exito === true) {
+                            ocultarMensaje();
+                            $('#exito').modal({
+                                onHidden: function () {
+                                    $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
+                                        window.location = "/inicio";
+                                    });
+                                }
+                            }).modal('show');
+
+                        } else {
+                            $('#error').modal('show');
+                        }
+                    });
+                } else {
+                    var hash = md5(document.getElementById("pass").value);
+                    $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
+                        if (exito === true) {
+                            $('#exito').modal({
+                                onHidden: function () {
+                                    $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
+                                        window.location = "/inicio";
+                                    });
+                                }
+                            }).modal('show');
+
+                        } else {
+                            $('#error').modal('show');
+                        }
+                    });
+
+                }
+            }
+
         </script>
     </body>
 </html>
