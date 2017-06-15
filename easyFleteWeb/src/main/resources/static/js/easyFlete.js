@@ -4,45 +4,7 @@ function iniciarSesion() {
     });
 }
 
-function registrar() {
-    if(document.getElementById("pass").value === "" || document.getElementById("email").value === "" || document.getElementById("nombre").value === "" || document.getElementById("telefono").value === ""){
-        $('#error').modal('show');
-    }
-    else if (document.getElementById("radio").checked === true) {
-        var hash = md5(document.getElementById("pass").value);
-        $.post("http://localhost:10070/clientes","nombre="+ document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value, function (exito) {
-            if (exito === true) {
-                $('#exito').modal({
-                    onHidden: function () {
-                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
-                            window.location = "/inicio";
-                        });
-                    }
-                }).modal('show');
 
-            } else {
-                $('#error').modal('show');
-            }
-        });
-        } else {
-        var hash = md5(document.getElementById("pass").value);
-        $.post("http://localhost:10070/fleteros", "nombre=" + document.getElementById("nombre").value + "&email=" + document.getElementById("email").value + "&password=" + String(hash) + "&telefono=" + document.getElementById("telefono").value + "&tipoVehiculo=" + document.getElementById("tipoVehiculo").value + "&cargaVehiculo=" + document.getElementById("cargaVehiculo").value, function (exito) {
-            if (exito === true) {
-                $('#exito').modal({
-                    onHidden: function () {
-                        $.post("login", "email=" + document.getElementById("email").value + "&pass=" + String(hash), function () {
-                            window.location = "/inicio";
-                        });
-                    }
-                }).modal('show');
-
-            } else {
-                $('#error').modal('show');
-            }
-        });
-   
-    }
-}
 
 function blurBackground() {
     "use strict";
