@@ -45,11 +45,7 @@ public class BLSolicitud implements IBLSolicitud {
 
             SolicitudCliente solCli = new SolicitudCliente(s.getId(), calendar.getTime(), cli, hora);
             DLsol.addSolicitudCliente(solCli);
-            if(new BLMapa().guardarSolicitud(s.getId(), origen, destino)){
-                new MailHandler().SendSolicitudCreadaMail(cli, s, fecha, hora);
-                return true;
-            }
-            return false;
+            return new BLMapa().guardarSolicitud(s.getId(), origen, destino);
         }
         return false;
     }
@@ -103,7 +99,7 @@ public class BLSolicitud implements IBLSolicitud {
 
     @Override
     public boolean aceptarSolicitud(int solicitud, String fletero, double precio) {
-        if(DLsol.aceptarSolicitud(solicitud, fletero, precio)){
+        if (DLsol.aceptarSolicitud(solicitud, fletero, precio)) {
             BLUsuario u = new BLUsuario();
             Fletero f = u.getFletero(fletero);
             Solicitud s = getSolicitud(solicitud);
@@ -124,9 +120,9 @@ public class BLSolicitud implements IBLSolicitud {
     public boolean actualizarEstado(int solicitud, String estado) {
         return DLsol.actualizarEstado(solicitud, estado);
     }
-    
+
     @Override
-    public List<Object[]> getSolCercanas(String point, int distancia ,String fletero) {
+    public List<Object[]> getSolCercanas(String point, int distancia, String fletero) {
         List<Integer> ids = DLMapa.getSolCercanas(point, distancia);
         return DLsol.getSolicitudesById(ids, fletero);
     }
